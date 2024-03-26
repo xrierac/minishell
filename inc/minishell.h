@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:50:37 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/26 16:46:18 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/26 16:52:12 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 typedef enum e_token_type
 {
-	S_QUOITE, //'
+	S_QUOTE, //'
 	D_QUOTE, //'"
 	R_INPUT, //<
 	R_OUTPUT, //>
