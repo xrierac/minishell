@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/26 17:01:08 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:31:33 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,11 @@ typedef enum e_token_type
 	CMD,
 	ARG
 }	t_token_type;
+
+typedef	enum	e_bool
+{
+	false,
+	true
+}	t_bool;
 
 #endif
