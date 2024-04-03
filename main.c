@@ -6,38 +6,47 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:50:13 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/03 12:12:50 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:56:12 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 #include <strings.h>
+#include "inc/minishell.h"
 
-int	main(void)
+
+void	lexer(char **cmd)
+{
+	printf("%s\n", cmd[0]);
+}
+
+int	main(int ac, char **av, char **env)
 {
 	char	*input;
 
-	input = readline(":) " );
-
-	while (1)
+	if (ac == 1 && env != NULL && av != NULL)
 	{
-		if (strncmp(input, "exit", 4) == 0)
+		while (1)
 		{
-			free(input);
-			exit(0);
+			input = readline(HGRN ":) "reset);
+			add_history(input);
+//			lexer(av);
+			if (strncmp(input, "exit", 4) == 0)
+			{
+				free(input);
+				exit(0);
+			}
+			else if (input[0] != '\0')
+			{
+				printf("You entered: %s\n", input);
+				free(input);
+			}
+			else
+				printf(HRED":(\n"reset);
 		}
-		else if (input[0] != '\0')
-		{
-			printf("You entered: %s", input);
-			free(input);
-		}
-		else
-			printf(":( Booo!");
-		
+		clear_history();
 	}
+	else
+		exit(-1);
 	return (0);
 }
 
