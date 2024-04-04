@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:34:27 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/03 16:27:03 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/04 16:33:07 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-//# include "../lib/libft/libft.h"
+# include "../lib/libft/includes/libft.h"
 
 # define HGRN "\e[0;92m"
 # define HBLK "\e[0;90m"
 # define HRED "\e[0;91m"
 # define reset "\e[0m"
+
 typedef enum e_token_type
 {
 	S_QUOTE, //'
@@ -35,10 +36,11 @@ typedef enum e_token_type
 	ENV, //$
 	STATUS, //$?
 	CMD,
-	ARG
+	ARG,
+	NOT_DEF
 }	t_token_type;
 
-typedef enum	e_bool
+typedef enum e_bool
 {
 	false,
 	true
@@ -50,5 +52,23 @@ typedef struct s_lex
 	char			**lex;
 }	t_lex;
 
+typedef struct s_env
+{
+	char	**env_arr;
+	char	*env_path;
+	char	**path_arr;
+	char	*shlvl;
+} t_env;
+
+typedef struct s_sh
+{
+	t_env	*env;
+	t_lex	*lex;
+}	t_sh;
+
 void	get_input();
+void	get_env(t_sh *msh, t_env *env, char **ev);
+void	initialise(char **ev, t_sh *msh);
+void	exit_error(t_sh *msh, char *msg, int status);
+
 #endif
