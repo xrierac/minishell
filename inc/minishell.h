@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:34:27 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/04 16:33:07 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:18:58 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define HGRN "\e[0;92m"
 # define HBLK "\e[0;90m"
 # define HRED "\e[0;91m"
-# define reset "\e[0m"
+# define RESET "\e[0m"
 
 typedef enum e_token_type
 {
@@ -57,8 +57,8 @@ typedef struct s_env
 	char	**env_arr;
 	char	*env_path;
 	char	**path_arr;
-	char	*shlvl;
-} t_env;
+	int		shlvl;
+}	t_env;
 
 typedef struct s_sh
 {
@@ -66,9 +66,15 @@ typedef struct s_sh
 	t_lex	*lex;
 }	t_sh;
 
-void	get_input();
+void	get_input(void);
 void	get_env(t_sh *msh, t_env *env, char **ev);
 void	initialise(char **ev, t_sh *msh);
 void	exit_error(t_sh *msh, char *msg, int status);
+void	get_path(t_sh *msh, t_env *env, char **ev, int i);
+void	get_lvl(t_sh *msh, char **temp, char **ev, int i);
+void	free_all(t_sh *msh);
+void	free_lex(t_lex *lex);
+void	free_env(t_env *env);
+void	lexer(char *input);
 
 #endif
