@@ -3,7 +3,7 @@ NAME	:= minishell
 #Compiler options#
 
 CC		:= cc
-CFLAGS	:= -Wextra -Wall -Werror -lreadline
+CFLAGS	:= -Wextra -Wall -Werror -lreadline -g
 
 INC_DIR  := ./inc
 SRC_DIR  := ./srcs
@@ -12,7 +12,7 @@ OBJ_DIR  := .
 LIBFT_DIR := ./lib/libft/
 LIBFT		:= $(LIBFT_DIR)/libft.a
 
-SRCS	:= $(SRC_DIR)/main.c $(SRC_DIR)/initialise.c
+SRCS	:= $(SRC_DIR)/main.c $(SRC_DIR)/initialise.c $(SRC_DIR)/free.c $(SRC_DIR)/error.c
 OBJS	:= ${SRCS:.c=.o}
 
 HEADERS := -I ./inc
