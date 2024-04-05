@@ -5,58 +5,62 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/03 11:50:13 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/04 16:53:03 by tcampbel         ###   ########.fr       */
+/*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
+/*   Updated: 2024/04/05 14:38:31 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	lexer(char **cmd)
+void	lexer(char *input, t_sh *msh)
 {
+	int	i;
+
+	i = -1;
+	
+	while (input[++i])
+	{
+		if (input[i] == '|')
+			msh->lex->lex[i]
+			
+	}
 	printf("%s\n", cmd[0]);
 }
 
-void	exit_error(t_sh *msh, char *msg, int status)
+void	get_input(t_sh *msh)
 {
-	if (msh)
+	char	*input;
+
+	while (1)
 	{
-//		free_all(msh);
-		ft_printf(2, HRED":( %s\n"reset, msg);
+		input = readline(HGRN ":) "RESET);
+		add_history(input);
+		lexer(input);
+		if (ft_strncmp(input, "exit", 4) == 0)
+		{
+			free(input);
+			free_all(msh); 
+			exit(0);
+		}
+		else if (input[0] != '\0')
+		{
+			printf("You entered: %s\n", input);
+			free(input);
+		}
+		else
+			printf(HRED":(\n"RESET);
 	}
-	exit(status);
+	clear_history();
 }
 
 int	main(int ac, char **av, char **ev)
 {
 	char	*input;
-	t_sh	msh;
+	t_sh	*msh;
 
-//	msh = NULL;
-	if (ac == 1 && ev != NULL && av != NULL)
-	{
-		initialise(ev, &msh);
-		while (1)
-		{
-			input = readline(HGRN ":) "reset);
-			add_history(input);
-//			lexer(av);
-			if (ft_strncmp(input, "exit", 4) == 0)
-			{
-				free(input);
-				exit(0);
-			}
-			else if (input[0] != '\0')
-			{
-				printf("You entered: %s\n", input);
-				free(input);
-			}
-			else
-				printf(HRED":(\n"reset);
-		}
-		clear_history();
-	}
-	else
-		exit(-1);
+	if (ac != 1)
+		exit_error(msh, "Invalid arg amount\n", 127);
+	initialise(ev, msh);
+	get_input(msh);
 	return (0);
 }
