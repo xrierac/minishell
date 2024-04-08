@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:28 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/05 13:29:33 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/08 16:37:31 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,17 @@ void	free_all(t_sh *msh)
 		free(msh);
 }
 
-void	free_lex(t_lex *lex)
+void	free_lex(t_lex **lex)
 {
-	if (lex->lex != NULL)
-		ft_free_array(lex->lex);
-	free(lex);
+	int	i;
+
+	i = -1;
+	while (lex[++i])
+	{
+		if (lex[i]->lex_arr != NULL)
+			ft_free_array(lex[i]->lex_arr);
+		free(lex[i]);
+	}
 }
 
 void	free_env(t_env *env)

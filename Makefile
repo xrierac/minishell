@@ -22,7 +22,8 @@ all: $(LIBFT) $(NAME)
 
 %.o: %.c
 	@$(CC) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)\n"
-
+	
+		
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
 

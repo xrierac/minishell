@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:34:27 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/05 14:18:58 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:12:44 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef enum e_bool
 typedef struct s_lex
 {
 	t_token_type	token;
-	char			**lex;
+	char			**lex_arr;
 }	t_lex;
 
 typedef struct s_env
@@ -63,18 +63,22 @@ typedef struct s_env
 typedef struct s_sh
 {
 	t_env	*env;
-	t_lex	*lex;
+	t_lex	**lex;
+	int		tok_count;
 }	t_sh;
 
-void	get_input(void);
-void	get_env(t_sh *msh, t_env *env, char **ev);
-void	initialise(char **ev, t_sh *msh);
+void	get_input(t_sh *msh);
+void	ft_envcpy(t_sh *msh, t_env *env, char **ev);
+t_sh	*initialise(char **ev);
 void	exit_error(t_sh *msh, char *msg, int status);
 void	get_path(t_sh *msh, t_env *env, char **ev, int i);
-void	get_lvl(t_sh *msh, char **temp, char **ev, int i);
+void	get_lvl(t_sh *msh, char **temp, int i);
 void	free_all(t_sh *msh);
-void	free_lex(t_lex *lex);
+void	free_lex(t_lex **lex);
 void	free_env(t_env *env);
-void	lexer(char *input);
+void	lexer(char *input, t_sh *msh);
+int		cur_lvl(char *ev);
+void	count_tokens(char *input, t_sh *msh);
+t_lex	**init_lex(t_sh *msh, char *input);
 
 #endif
