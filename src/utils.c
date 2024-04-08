@@ -6,11 +6,10 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 09:54:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/08 10:00:00 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:09:09 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
 #include "../lib/libft/libft.h"
 
 char	*ft_getenv(const char *name, char **env)
@@ -24,5 +23,5 @@ char	*ft_getenv(const char *name, char **env)
 		i++;
 	if (!env[i])
 		return (0);
-	return (env[i]);
+	return (env[i] + len + 1);
 }
