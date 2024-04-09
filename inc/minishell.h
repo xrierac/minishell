@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/03 11:59:10 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:09:11 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,5 @@ typedef struct s_lex
 }	t_lex;
 
 void	get_input();
+char	*ft_getenv(const char *name, char **env);
 #endif
