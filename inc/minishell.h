@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:34:27 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/08 17:12:44 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:28:26 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef enum e_bool
 typedef struct s_lex
 {
 	t_token_type	token;
-	char			**lex_arr;
+	char			**tok_arr;
 }	t_lex;
 
 typedef struct s_env
@@ -63,8 +63,10 @@ typedef struct s_env
 typedef struct s_sh
 {
 	t_env	*env;
-	t_lex	**lex;
+	t_lex	**lex_arr;
 	int		tok_count;
+	int		pipes;
+	int		len;
 }	t_sh;
 
 void	get_input(t_sh *msh);
@@ -79,6 +81,7 @@ void	free_env(t_env *env);
 void	lexer(char *input, t_sh *msh);
 int		cur_lvl(char *ev);
 void	count_tokens(char *input, t_sh *msh);
-t_lex	**init_lex(t_sh *msh, char *input);
+t_lex	**init_lex(t_sh *msh);
+void	count_pipes(t_sh *msh, char *input);
 
 #endif
