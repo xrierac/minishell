@@ -1,8 +1,10 @@
 #include "../../inc/minishell.h"
 
-void	ft_echo(char **arr);
+void	ft_echo(char **arr, char **env);
+void	ft_cd(char *str, char **env);
+void	ft_pwd(void);
 
-int	main(void)
+int	main(int argc, char *argv[], char **env)
 {
 	char	*input;
 	char	**arr;
@@ -12,17 +14,22 @@ int	main(void)
 		input = readline("\e[0;32mminishell>\e[0;37m");
 		if (input == NULL)
 			break ;
-		if (!ft_strncmp(input, "exit", 4))
+		arr = ft_split(input, ' ');
+		if (!arr)
+			return (0);
+		if (!ft_strncmp(arr[0], "exit", ft_strlen(arr[0])))
 		{
 			free(input);
+			ft_free_array(arr);
 			return (0);
 		}
-		if (!ft_strncmp(input, "echo", 4))
-		{
-			arr = ft_split(input, ' ');
-			ft_echo(arr);
-			ft_free_array(arr);
-		}
+		if (!ft_strncmp(arr[0], "echo", ft_strlen(arr[0])))
+			ft_echo(arr, env);
+		if (!ft_strncmp(arr[0], "cd", ft_strlen(arr[0])))
+			ft_cd(arr[1], env);
+		if (!ft_strncmp(arr[0], "pwd", ft_strlen(arr[0])))
+			ft_pwd();
+		ft_free_array(arr);
 		free(input);
 	}
 	return (0);
