@@ -6,18 +6,23 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:52:19 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/05 13:52:29 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:59:19 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	pwd(char *envp[])
-{
-	int	i;
+#include "../../inc/minishell.h"
 
-	i = 0;
-	if (!envp)
-		return (NULL);
-	while (ft_strncmp(envp[i], "PWD=", 4) != 0 && envp[i])
-		i++;
-	ft_printf("%s\n", ft_strchr(envp[i], '='));
+void	ft_pwd(void)
+{
+	size_t size;
+	char *ptr;
+	char *buf;
+
+	size = 2000;
+	buf = (char *)malloc(size);
+	if (!buf)
+		return ;
+	ptr = getcwd(buf, size);
+	printf("%s\n", ptr);
+	free(ptr);
 }
