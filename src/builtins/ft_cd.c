@@ -6,17 +6,13 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:52:42 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/05 14:18:31 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:32:13 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	cd(char *envp[], t_lex *cmd)
+#include "../../inc/minishell.h"
+
+void	ft_cd(char *str, char **env)
 {
-	int	i;
-
-	i = 0;
-	if (!cmd->lex[)
-		return (NULL);
 	chdir(str);
-
 }
