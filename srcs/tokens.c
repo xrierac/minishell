@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:14:34 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/09 17:52:36 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:06:28 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,24 @@ void	lexer(char *input, t_sh *msh)
 	int	j;
 
 	i = 0;
-	j = msh->len + 1;
+	j = msh->len;
 	while (j > 0)
 	{
-		printf("len-%i\n i-%i\n", i, msh->len);
-		msh->lex_arr[i]->tok_arr = ft_split(input, ' ');
+		msh->lex_arr[i]->tok_arr = ft_split(input, '|');
 		if (!msh->lex_arr[i]->tok_arr)
 			printf("malloc error\n");
 		i++;
 		j--;
 	}
-	// i = 0;
-	// while (msh->lex_arr[i]->tok_arr[i])
-	// {
-	// 	printf("%s\n", msh->lex_arr[i]->tok_arr[i]);
-	// 	i++;
-	// 	j++;
-	// }
+	i = 0;
+	while (msh->lex_arr[i])
+	{
+		
+		while (msh->lex_arr[i]->tok_arr[j])
+		{
+			printf("%s\n", msh->lex_arr[i]->tok_arr[j]);
+			j++;
+		}
+		i++;
+	}
 }
