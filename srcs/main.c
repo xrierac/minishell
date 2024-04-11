@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/09 17:12:37 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/11 16:03:58 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,22 @@ void	get_input(t_sh *msh)
 
 	while (1)
 	{
-		input = readline(HGRN ":) "RESET);
+		input = readline(HGRN"TOTO"HRED"ROJO"HGRN":) "RESET);
 		add_history(input);
 		count_pipes(msh, input);
 		msh->lex_arr = init_lex(msh);
-		lexer(input, msh);
+		format_input(msh, input);
+//		lexer(input, msh);
 //		count_tokens(input, msh);
 		if (ft_strncmp(input, "exit", 4) == 0 && ft_strlen(input) == 4)
 		{
 			free(input);
-			free_all(msh); 
+			free_all(msh);
 			exit(0);
 		}
 		// else if (input != NULL)
 		//  	printf("%s\n", input);
-		else
+		else if (input == NULL)
 			printf(HRED":(\n"RESET);
 		free(input);
 		free_lex(msh->lex_arr);
