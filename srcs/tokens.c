@@ -6,11 +6,63 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:14:34 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/11 17:05:32 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:32:32 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+t_bool	is_str(char *str, int i)
+{
+	while (str[i])
+	{
+		if (str[i] == '<' || str[i] == '>' || str[i] == '$' || str[i] == '\'' \
+			|| str[i] == '\"')
+			return (false);
+	}
+	return (true);
+}
+
+int	iter_str(char *str, int i)
+{
+	while (str[i] != ft_isspace(str[i]) && str[i])
+		++i;
+	return (i);
+}
+
+void	is_token(t_sh *msh, char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			i = find_quote(str, str[i], i);
+			msh->tok_count++;
+		}
+		if ((str[i] == '<' && str[i + 1] == '<') \
+			|| (str[i] == '>' && str[i + 1] == '>') \
+			|| (str[i] == '$' && str[i + 1] == '?'))
+		{
+			i += 2;
+			msh->tok_count++;
+		}
+		else if (str[i] == '<' || str[i] == '>')
+			msh->tok_count++;
+		else if (str[i] == '$' && (str[i + 1] != '\'' || str[i + 1] != '\"'))
+		{
+			i = iter_str(str, i + 1);
+			msh->tok_count++;
+		}
+		else if (is_str(str, i) == true)
+		{
+			msh->tok_count++;
+			i = iter_str(str, i);
+		}
+	}
+}
 
 t_bool	ft_isspace(char str)
 {
@@ -19,100 +71,35 @@ t_bool	ft_isspace(char str)
 	return (false);
 }
 
-t_bool	is_op(char *str, int i)
-{
-	if ((str[i] == '<' && str[i + 1] == '<') \
-		|| (str[i] == '>' && str[i + 1] == '>') \
-		|| (str[i] == '$' && str[i + 1] == '?'))
-		return (true);
-	else if (str[i] == '|' || str[i] == '<' || str[i] == '>')
-		return (true);
-	return (false);
-}
-
-// t_bool	is_cmd(t_sh *msh, char *str)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (!str)
-// 		return (false);
-// 	while (ft_isspace(str[i]))
-// 		i++;
-// 	if (access(str, F_OK) == 0)
-// 		return (true);
-// 	else if (is_builtin(msh, str))
-// 		return (true);
-// 	return (false);
-// }
-
-t_bool	is_arg(t_sh *msh, char *str)
-{
-	int	i;
-
-	i = -1;
-	if (!str)
-		return (false);
-	while (str[++i])
-	{
-		if (str[i] == '\'')
-		{
-			++i;
-			while (str[i] && str[i] != '\'')
-				++i;
-			if (str[i] == '\'')
-				return (true);
-		}
-	}
-	return (false);
-}
-
-// Probably don't need this anymore, was made to check how many tokens are 
-// needed to malloc but now splitting with pipes
-
-void	count_tokens(char *input, t_sh *msh)
-{
-	int	i;
-
-	i = -1;
-	msh->tok_count = 0;
-	while (input[++i])
-	{
-		if (is_op(input, i))
-			msh->tok_count++;
-	}
-	//is_cmd(msh, input);
-	//printf("%i\n", msh->tok_count);
-}
 
 void	lexer(char *input, t_sh *msh)
 {
 	int		i;
-	char	**tok_check;
+	int		j;
+	char	**temp;
 
-	i = 0;
-	tok_check = ft_split(input, ' ');
-	if (!tok_check)
+	i = -1;
+	j = -1;
+	count_pipes(msh, input);
+	msh->lex_arr = init_lex(msh);
+	temp = ft_strtok(input, '|', "'\'''\"'");
+	if (!temp)
 	{
 		free_all(msh);
-		exit_error(msh, "ft_split\n", 127);
+		exit_error(msh, "ft_strtok\n", 127);
 	}
-}
-
-void	get_token(t_sh *msh, t_lex *lex)
-{
-	if (ft_strncmp(lex->tok_arr, "$", 2)
-		lex->token = ENV;
-	else if (ft_strncmp(lex->tok_arr, "$?", 3)
-		lex->token = STATUS;
-	else if (ft_strncmp(lex->tok_arr, "<", 2)
-		lex->token = R_INPUT;
-	else if (ft_strncmp(lex->tok_arr, ">", 2)
-		lex->token = R_OUTPUT;
-	else if (ft_strncmp(lex->tok_arr, "<<", 3)
-		lex->token = HEREDOC;
-	else if (ft_strncmp(lex->tok_arr, ">>", 3)
-		lex->token = APPEND;
-	else
-		lex->token = CMD;
+	while (temp[++j])
+	{
+		msh->tok_count = 0;
+		temp[j] = ft_strtrim(temp[j], " ");
+		is_token(msh, temp[j]);
+		printf("%s\n", temp[j]);
+		printf("tok->%i\n", msh->tok_count);
+	}
+	// while (msh->lex_arr[++i])
+	// {
+		//init_token(msh); //Needs to be built, will allocate memory based on token count
+	// }
+	// count_tokens(input, msh);
+	// 	format_input(msh, msh->lex_arr[i][j], input);
 }
