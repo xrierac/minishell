@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/16 17:23:04 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:41:44 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,33 +61,3 @@ char	*deref_env_var(t_sh *msh, char *input)
 	return (var);
 }
 
-void	format_input(t_sh *msh, t_lex *lex_arr, char *input)
-{
-	int		i;
-	int		j;
-	char	*temp;
-
-	i = -1;
-	j = -1;
-	temp = ft_strdup(input);
-	while (*temp)
-	{
-		if (*temp == '$')
-		{
-			lex_arr[i].cmd_arr[j] = deref_env_var(msh, temp);
-			if (!lex_arr[i].cmd_arr)
-			{
-				free_all(msh);
-				exit_error(msh, "malloc\n", 127);
-			}
-			get_token(msh, lex_arr, lex_arr[i].cmd_arr[j]);
-		}
-		if (*temp == '<' && *temp + 1 != '<')
-		{
-			lex_arr[i].cmd_arr[j] = redirect_in(msh, temp);
-			get_token(msh, lex_arr, lex_arr[i].cmd_arr[j]);
-		}
-		temp++;
-	}
-	//free(temp);
-}
