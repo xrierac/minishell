@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/16 14:12:04 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/18 10:36:43 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,17 @@ t_sh	*init_msh(char **ev)
 
 	msh = ft_calloc(1, sizeof(t_sh));
 	if (!msh)
-		exit_error(msh, "calloc\n", 127);
+		exit_error(msh, "calloc", 127);
 	msh->env = ft_calloc(1, sizeof(t_env));
 	if (!msh->env)
 	{
 		free_all(msh);
-		exit_error(msh, "calloc\n", 127);
+		exit_error(msh, "calloc", 127);
 	}
 	init_env(msh->env);
 	msh->pipes = 0;
 	msh->tok_count = 0;
+	msh->error = false;
 	ft_envcpy(msh, msh->env, ev);
 	return (msh);
 }
@@ -49,7 +50,7 @@ t_lex	***init_lex(t_sh *msh)
 	if (!msh->lex_arr)
 	{
 		free_all(msh);
-		exit_error(msh, "ft_calloc\n", 127);
+		exit_error(msh, "ft_calloc", 127);
 	}
 	i = -1;
 	while (++i < msh->len)
@@ -58,8 +59,24 @@ t_lex	***init_lex(t_sh *msh)
 		if (!msh->lex_arr[i])
 		{
 			free_all(msh);
-			exit_error(msh, "ft_calloc\n", 127);
+			exit_error(msh, "ft_calloc", 127);
 		}
 	}
 	return (msh->lex_arr);
+}
+
+void	init_token(t_sh *msh, t_lex **lex_arr)
+{
+	int	i;
+
+	i = -1;
+	while (++i < msh->tok_count)
+	{
+		lex_arr[i] = ft_calloc(sizeof(t_lex), 1);
+		if (!lex_arr[i])
+		{
+			free_all(msh);
+			exit_error(msh, "ft_calloc", 127);
+		}
+	}
 }
