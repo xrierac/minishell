@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:34:27 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/09 16:28:26 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/19 18:15:06 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,27 @@
 # include <readline/history.h>
 # include "../lib/libft/includes/libft.h"
 
-# define HGRN "\e[0;92m"
-# define HBLK "\e[0;90m"
-# define HRED "\e[0;91m"
-# define RESET "\e[0m"
+# define GRN "\e[0;92m"
+# define BLK "\e[0;90m"
+# define RED "\e[0;91m"
+# define END "\e[0m"
+
+# define SYNTAX_ERROR "syntax error near unexpected token"
 
 typedef enum e_token_type
 {
-	S_QUOTE, //'
-	D_QUOTE, //"
 	R_INPUT, //<
 	R_OUTPUT, //>
 	HEREDOC, //<<
 	APPEND, //>>
 	PIPE, //|
 	ENV, //$
-	STATUS, //$?
-	CMD,
-	ARG,
+	STATUS, //!?
+	INFILE, //< str The string after r_input is always considered an infile 
+	OUTFILE, //> str The string after r_output is always considered an outfile
+	CMD, //str
+	ARG, //"str" Any string after a cmd.
+	FLAG, // -str Any string preceded by a '-' and following a str
 	NOT_DEF
 }	t_token_type;
 
@@ -49,7 +52,7 @@ typedef enum e_bool
 typedef struct s_lex
 {
 	t_token_type	token;
-	char			**tok_arr;
+	char			**cmd_arr;
 }	t_lex;
 
 typedef struct s_env
@@ -63,25 +66,62 @@ typedef struct s_env
 typedef struct s_sh
 {
 	t_env	*env;
-	t_lex	**lex_arr;
+	t_lex	***lex_arr;
 	int		tok_count;
 	int		pipes;
 	int		len;
+	t_bool	error;
 }	t_sh;
 
+
 void	get_input(t_sh *msh);
-void	ft_envcpy(t_sh *msh, t_env *env, char **ev);
-t_sh	*initialise(char **ev);
-void	exit_error(t_sh *msh, char *msg, int status);
+
+//initialise sturcts
+
+t_sh	*init_msh(char **ev);
+t_lex	***init_lex(t_sh *msh);
+void	init_token(t_sh *msh, t_lex **lex_arr);
+void	init_env(t_env *env);
+
+//environment 
 void	get_path(t_sh *msh, t_env *env, char **ev, int i);
 void	get_lvl(t_sh *msh, char **temp, int i);
+int		cur_lvl(char *ev);
+void	ft_envcpy(t_sh *msh, t_env *env, char **ev);
+
+//tokens
+void	get_token(t_sh *msh, t_lex *lex_arr, char *str);
+void	lexer(char *input, t_sh *msh);
+void	assign_token(t_sh *msh, t_lex *lex_arr, char **pipe_arr);
+char	*deref_env_var(t_sh *msh, char *input);
+void	is_token(t_sh *msh, char *str);
+void	count_pipes(t_sh *msh, char *input);
+
+//syntax
+
+void	check_r_input(t_sh *msh, char *str, int i);
+void	check_str(t_sh *msh, char *temp);
+void	check_r_output(t_sh *msh, char *str, int i);
+void	check_heredoc(t_sh *msh, char *str, int i);
+void	check_append(t_sh *msh, char *str, int i);
+char	*choose_op(char c);
+char	*syntax_check(t_sh *msh, char *temp);
+
+//errors and free
+
+void	exit_error(t_sh *msh, char *msg, int status);
 void	free_all(t_sh *msh);
 void	free_lex(t_lex **lex);
 void	free_env(t_env *env);
-void	lexer(char *input, t_sh *msh);
-int		cur_lvl(char *ev);
-void	count_tokens(char *input, t_sh *msh);
-t_lex	**init_lex(t_sh *msh);
-void	count_pipes(t_sh *msh, char *input);
+
+//tools
+
+int		find_quote(char *str, char q, int i);
+t_bool	ft_isspace(char str);
+char	*redirect_in(t_sh *msh, char *input);
+t_bool	ft_isspace(char str);
+int		iter_str(char *str, int i);
+t_bool	is_op(char *str, int i);
+
 
 #endif
