@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:19:05 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/03/27 17:07:31 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:07:06 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ typedef struct s_split
 	size_t	len;
 	size_t	i;
 }	t_split;
+
+typedef struct s_tok
+{
+	char	**str;
+	size_t	start;
+	size_t	end;
+	size_t	len;
+	size_t	i;
+	char	*delim;
+	size_t	count;
+}	t_tok;
 
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
@@ -80,5 +91,7 @@ void	ft_free_array(char **str);
 char	**ft_skip_split(char const *s, char c, char q);
 char	*tripjoin(char const *s1, char const *s2, char const *s3);
 void	ft_sleep(unsigned int i);
+char	**ft_strtok(const char *s, char c, char *skip);
+char	**return_free_array(char **result);
 
 #endif
