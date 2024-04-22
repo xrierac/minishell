@@ -3,6 +3,8 @@
 void	ft_echo(char **arr, char **env);
 void	ft_cd(char *str, char **env);
 void	ft_pwd(void);
+void	ft_env(char **env);
+void	ft_export(char **arr);
 
 int	main(int argc, char *argv[], char **env)
 {
@@ -29,6 +31,10 @@ int	main(int argc, char *argv[], char **env)
 			ft_cd(arr[1], env);
 		if (!ft_strncmp(arr[0], "pwd", ft_strlen(arr[0])))
 			ft_pwd();
+		if (!ft_strncmp(arr[0], "env", ft_strlen(arr[0])))
+			ft_env(env);
+		if (!ft_strncmp(arr[0], "export", ft_strlen(arr[0])))
+			ft_export(arr);
 		ft_free_array(arr);
 		free(input);
 	}
