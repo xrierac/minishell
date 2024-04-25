@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/04 10:47:43 by xriera-c          #+#    #+#             */
-/*   Updated: 2023/11/09 11:51:13 by xriera-c         ###   ########.fr       */
+/*   Created: 2024/04/09 16:22:28 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/04/09 16:59:03 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/minishell.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+void	ft_env(char **env)
 {
-	new -> next = *lst;
-	*lst = new;
+	char	*str;
+	int		i;
+
+	i = -1;
+	while (env[++i])
+		printf("%s\n", env[i]);
 }
