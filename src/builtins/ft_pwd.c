@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 16:22:28 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/09 16:59:03 by xriera-c         ###   ########.fr       */
+/*   Created: 2024/04/05 13:52:19 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/04/09 15:59:19 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_env(char **env)
+void	ft_pwd(void)
 {
-	char	*str;
-	int		i;
+	size_t size;
+	char *ptr;
+	char *buf;
 
-	i = -1;
-	while (env[++i])
-		printf("%s\n", env[i]);
+	size = 2000;
+	buf = (char *)malloc(size);
+	if (!buf)
+		return ;
+	ptr = getcwd(buf, size);
+	printf("%s\n", ptr);
+	free(ptr);
 }

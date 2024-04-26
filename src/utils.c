@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 16:22:28 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/09 16:59:03 by xriera-c         ###   ########.fr       */
+/*   Created: 2024/04/08 09:54:17 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/04/08 12:09:09 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../lib/libft/libft.h"
 
-void	ft_env(char **env)
+char	*ft_getenv(const char *name, char **env)
 {
-	char	*str;
 	int		i;
-
-	i = -1;
-	while (env[++i])
-		printf("%s\n", env[i]);
+	size_t	len;
+	
+	len = ft_strlen(name);
+	i = 0;
+	while (env[i] && ft_strncmp(env[i], name, len))
+		i++;
+	if (!env[i])
+		return (0);
+	return (env[i] + len + 1);
 }

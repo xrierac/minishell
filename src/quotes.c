@@ -1,17 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quotes.c                                           :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD:src/quotes.c
 /*   Created: 2024/04/11 15:00:50 by tcampbel          #+#    #+#             */
 /*   Updated: 2024/04/22 17:27:05 by tcampbel         ###   ########.fr       */
+=======
+/*   Created: 2024/03/12 16:49:31 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/03/12 16:50:11 by xriera-c         ###   ########.fr       */
+>>>>>>> a6a4aeae7e2605c1a5007d28e96446c3f67c5fe4:src/main.c
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
 
+<<<<<<< HEAD:src/quotes.c
 int	find_quote(char *str, char q, int i)
 {
 	while (str[i] != q && str[i])
@@ -51,3 +56,5 @@ void	count_quotes(t_sh *msh, char *str)
 		msh->error = 1;
 	}
 }
+=======
+>>>>>>> a6a4aeae7e2605c1a5007d28e96446c3f67c5fe4:src/main.c
