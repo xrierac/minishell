@@ -3,17 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-<<<<<<< HEAD
 /*   Created: 2024/04/03 15:34:27 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/24 17:53:19 by tcampbel         ###   ########.fr       */
-=======
-/*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/24 17:19:40 by xriera-c         ###   ########.fr       */
->>>>>>> a6a4aeae7e2605c1a5007d28e96446c3f67c5fe4
+/*   Updated: 2024/04/26 12:03:17 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -133,12 +129,9 @@ int		is_file(t_sh *msh, char *str, int i);
 
 //environment variables
 
-<<<<<<< HEAD
 char	*update_str(t_sh *msh, char *var, char *str);
 char	*insert_str(char *var, char *str, char *temp, int end);
 char	*check_exit_code(t_sh *msh, char *str, int i);
 char	*expand_env(t_sh *msh, char *str);
 
-=======
->>>>>>> a6a4aeae7e2605c1a5007d28e96446c3f67c5fe4
 #endif
