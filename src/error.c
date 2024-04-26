@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 16:22:28 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/09 16:59:03 by xriera-c         ###   ########.fr       */
+/*   Created: 2024/04/05 13:45:08 by tcampbel          #+#    #+#             */
+/*   Updated: 2024/04/26 14:09:13 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../inc/minishell.h"
 
-void	ft_env(char **env)
+void	exit_error(t_sh *msh, char *msg, int status)
 {
-	char	*str;
-	int		i;
-
-	i = -1;
-	while (env[++i])
-		printf("%s\n", env[i]);
+	if (msh)
+	{
+		free_all(msh);
+		ft_printf(2, RED":( %s\n"END, msg);
+	}
+	exit(status);
 }
