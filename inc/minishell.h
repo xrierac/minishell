@@ -5,8 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
+/*   Created: 2024/04/03 15:34:27 by tcampbel          #+#    #+#             */
+/*   Updated: 2024/04/24 17:53:19 by tcampbel         ###   ########.fr       */
+=======
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
 /*   Updated: 2024/04/24 17:19:40 by xriera-c         ###   ########.fr       */
+>>>>>>> a6a4aeae7e2605c1a5007d28e96446c3f67c5fe4
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -31,7 +36,6 @@ typedef enum e_token_type
 	R_OUTPUT, //>
 	HEREDOC, //<<
 	APPEND, //>>
-	PIPE, //|
 	ENV, //$
 	STATUS, //!?
 	INFILE, //< str The string after r_input is always considered an infile 
@@ -60,6 +64,7 @@ typedef struct s_env
 	char	*env_path;
 	char	**path_arr;
 	int		shlvl;
+	int		var_len;
 }	t_env;
 
 typedef struct s_sh
@@ -69,9 +74,10 @@ typedef struct s_sh
 	int		tok_count;
 	int		pipes;
 	int		len;
+	int		quotes; //Should probably delete
+	int		count; //Should probably delete
 	t_bool	error;
 }	t_sh;
-
 
 void	get_input(t_sh *msh);
 
@@ -121,5 +127,18 @@ char	*redirect_in(t_sh *msh, char *input);
 t_bool	ft_isspace(char str);
 int		iter_str(char *str, int i);
 t_bool	is_op(char *str, int i);
+void	count_quotes(t_sh *msh, char *str);
+char	set_quote(char	*str);
+int		is_file(t_sh *msh, char *str, int i);
 
+//environment variables
+
+<<<<<<< HEAD
+char	*update_str(t_sh *msh, char *var, char *str);
+char	*insert_str(char *var, char *str, char *temp, int end);
+char	*check_exit_code(t_sh *msh, char *str, int i);
+char	*expand_env(t_sh *msh, char *str);
+
+=======
+>>>>>>> a6a4aeae7e2605c1a5007d28e96446c3f67c5fe4
 #endif
