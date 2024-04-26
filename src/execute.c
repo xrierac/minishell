@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:21:51 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/24 17:56:24 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/04/26 12:30:50 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-char	*get_path(char *cmd, t_env *env)
+
+static char	*find_cmd(char *cmd, t_env *env)
 {
 	char	*prog;
 	char	*path;
@@ -23,7 +24,7 @@ char	*get_path(char *cmd, t_env *env)
 	i = 0;
 	while (env->path_arr[i])
 	{
-		path = ft_strjoin(arr[i], prog);
+		path = ft_strjoin(env->path_arr[i], prog);
 		if (access(path, F_OK) == 0)
 			break ;
 		free(path);
@@ -37,8 +38,8 @@ char	*get_path(char *cmd, t_env *env)
 
 void	execute(t_lex *lex, t_env *env)
 {
-	if (execve(lex->cmd_arr[0], lex->cmd_arr, env->env_arr) == -1)
-		if (execve(get_path(lex->cmd_arr[0], env), lex->cmd_arr, env->env_arr) == -1)
+	if (execve(lex->cmd_arr[0], lex->cmd_arr, env->env_arr))
+		if (execve(find_cmd(lex->cmd_arr[0], env), lex->cmd_arr, env->env_arr))
 			error_exit(lex->cmd_arr[0], 127);
 
 }
