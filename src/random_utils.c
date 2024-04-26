@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:13:46 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/19 15:31:45 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:33:22 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,19 @@ char	*choose_op(char c)
 	else if (c == '|')
 		return ("|");
 	return ("");
+}
+
+int	is_file(t_sh *msh, char *str, int i)
+{
+	if (str[i] == '\0')
+		return (i);
+	while (ft_isspace(str[i]) == true)
+		i++;
+	if (ft_isspace(str[i]) == false)
+	{
+		msh->tok_count++;
+		while (ft_isspace(str[i]) == false && str[i])
+			i++;
+	}
+	return (i);
 }

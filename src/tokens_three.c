@@ -1,20 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quotes.c                                           :+:      :+:    :+:   */
+/*   tokens_three.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/11 15:00:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/15 11:41:53 by tcampbel         ###   ########.fr       */
+/*   Created: 2024/04/22 14:15:56 by tcampbel          #+#    #+#             */
+/*   Updated: 2024/04/22 14:35:35 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	find_quote(char *str, char q, int i)
+void	token_split(t_sh *msh, t_lex *lex_arr, char *input)
 {
-	while (str[i] != q && str[i])
-		++i;
-	return (i + 1);
+	int	i;
+
+	i = -1;
+	while (input[++i])
+	{
+		if (is_op(input, i) == true)
+		{
+			lex_arr = init_tok(msh, lex_arr);
+		}
+	}
+}
+
+t_lex	*init_tok(t_sh *msh, t_lex *lex_arr)
+{
+	t_lex	*token;
+
+	token = ft_calloc(1, sizeof(t_lex));
+	if (!token)
+	{
+		free_all(msh);
+		exit_error(msh, "calloc", 127);
+	}
 }

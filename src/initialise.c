@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/18 10:36:43 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:45:15 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_sh	*init_msh(char **ev)
 	msh->pipes = 0;
 	msh->tok_count = 0;
 	msh->error = false;
+	msh->quotes = 0;
 	ft_envcpy(msh, msh->env, ev);
 	return (msh);
 }
@@ -38,6 +39,7 @@ void	init_env(t_env *env)
 	env->env_arr = NULL;
 	env->env_path = NULL;
 	env->path_arr = NULL;
+	env->var_len = 0;
 }
 
 t_lex	***init_lex(t_sh *msh)

@@ -3,17 +3,17 @@ NAME	:= minishell
 #Compiler options#
 
 CC		:= cc
-CFLAGS	:= -Wextra -Wall -Werror -lreadline -g -fsanitize=address
+CFLAGS	:= -Wextra -Wall -Werror -lreadline -g #-fsanitize=address
 
 INC_DIR  := ./inc
-SRC_DIR  := ./srcs
+SRC_DIR  := ./src
 OBJ_DIR  := .
 
 LIBFT_DIR := ./lib/libft/
 LIBFT		:= $(LIBFT_DIR)/libft.a
 
 SRCS	:= 	$(SRC_DIR)/main.c $(SRC_DIR)/initialise.c $(SRC_DIR)/free.c $(SRC_DIR)/error.c $(SRC_DIR)/pipes.c\
-			$(SRC_DIR)/parse_utils.c $(SRC_DIR)/tokens.c $(SRC_DIR)/quotes.c $(SRC_DIR)/tokens_two.c\
+			$(SRC_DIR)/parse_env.c $(SRC_DIR)/tokens.c $(SRC_DIR)/quotes.c $(SRC_DIR)/tokens_two.c\
 			$(SRC_DIR)/expand_env.c $(SRC_DIR)/random_utils.c $(SRC_DIR)/syntax.c $(SRC_DIR)/syntax_two.c
 OBJS	:= ${SRCS:.c=.o}
 
