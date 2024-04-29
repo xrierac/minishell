@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:48:01 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/29 14:18:02 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:21:22 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,4 @@ void	r_output(char **cmd_arr)
 		exit(0);
 	if (dup2(outfile, STDOUT_FILENO) == -1)
 		exit(0);
-	
 }
