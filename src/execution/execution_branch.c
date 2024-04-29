@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 10:46:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/29 14:28:22 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:20:02 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ static void check_token(t_lex *lex, t_env *env)
 		r_input(lex->cmd_arr);
 	if (lex->token == R_OUTPUT)
 		r_output(lex->cmd_arr);
+	if (lex->token == APPEND)
+		r_append(lex->cmd_arr);
+	if (lex->token == HEREDOC)
+		r_heredoc(lex->cmd_arr);
 }
 
 static void	child_start(t_lex **lex_arr, t_env *env)
