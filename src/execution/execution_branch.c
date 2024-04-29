@@ -6,16 +6,18 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 10:46:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/29 12:14:36 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/04/29 14:28:22 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void check_token(t_lex *lex, t_lex *next_lex, t_env *env)
+static void check_token(t_lex *lex, t_env *env)
 {
     if (lex->token == R_INPUT)
-		r_input(next_lex);
+		r_input(lex->cmd_arr);
+	if (lex->token == R_OUTPUT)
+		r_output(lex->cmd_arr);
 }
 
 static void	child_start(t_lex **lex_arr, t_env *env)
@@ -29,13 +31,13 @@ static void	child_start(t_lex **lex_arr, t_env *env)
 		if (lex_arr[i]->token == CMD)
 			cmd_id = i;
 		else
-			check_token(lex_arr[i], lex_arr[i + 1], env);
+			check_token(lex_arr[i], env);
 		i++;
 	}
 	execute(lex_arr[cmd_id], env);
 }
 
-void    execution_branch(t_sh *cmd_info)
+int	execution_branch(t_sh *cmd_info)
 {
 	int 	i;
 	int		status;
@@ -49,6 +51,9 @@ void    execution_branch(t_sh *cmd_info)
 			exit(0);
 		if (cpid == 0)
 			child_start(cmd_info->lex_arr[i], cmd_info->env);
+		if (waitpid(cpid, &status, 0) == -1)
+			exit(0);
     	i++;
 	}
+	return (WEXITSTATUS(status));
 }
