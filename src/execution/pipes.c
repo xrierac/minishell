@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parent.c                                           :+:      :+:    :+:   */
+/*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:29:23 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/24 17:56:13 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/04/29 11:58:48 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,11 @@ void	parent(t_sh *sh)
 	{
 		cpid = fork();
 		if (cpid < 0)
-			error_exit("", 127);
+			exit(0);
 		if (cpid == 0)
 			execute(sh->lex_arr[i], sh->env);
 		i++;
 	}
 	if (waitpid(cpid, &status, 0) == -1)
-		error_exit("", 127);
-	return (WEXITSTATUS(status));
+		exit(1);
 }

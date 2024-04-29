@@ -6,20 +6,19 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:48:01 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/29 11:33:42 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/04/29 11:54:09 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-void	r_input(t_lex *lex)
+void	r_input(t_lex *file)
 {
 	int	infile;
 
-	infile = open(lex->cmd_arr[1], O_RDONLY, 0444);
+	infile = open(file->cmd_arr[0], O_RDONLY, 0444);
 	if (infile == -1)
-		error_exit();
+		exit(0);
 	if (dup2(infile, STDIN_FILENO) == -1)
-		error_exit("", 127);
-
+		exit(0);
 }
