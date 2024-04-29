@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:48:01 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/29 15:21:22 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:30:23 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,24 @@ void	r_output(char **cmd_arr)
 	if (outfile == -1)
 		exit(0);
 	if (dup2(outfile, STDOUT_FILENO) == -1)
+		exit(0);
+}
+
+void	r_append(char **cmd_arr)
+{
+	int	outfile;
+
+	outfile = open(cmd_arr[0], O_WRONLY | O_CREAT | O_APPEND, 0666);
+	if (outfile == -1)
+		exit(0);
+	if (dup2(outfile, STDOUT_FILENO) == -1)
+		exit(0);
+}
+
+void	r_heredoc(char **cmd_arr)
+{
+	int	pipefd[2];
+
+	if (pipe(pipefd) < 0)
 		exit(0);
 }
