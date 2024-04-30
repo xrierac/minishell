@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:48:01 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/29 16:30:23 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:17:05 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,28 @@ void	r_append(char **cmd_arr)
 
 void	r_heredoc(char **cmd_arr)
 {
-	int	pipefd[2];
+	char	*input;
+	char	**arr;
+	int		tmpfd;
 
-	if (pipe(pipefd) < 0)
+	tmpfd = open(".tmpfile", O_WRONLY | O_CREAT | O_APPEND, 0666);
+	if (tmpfd == -1)
 		exit(0);
+	while (1)
+	{
+		input = readline(">");
+		if (input == NULL)
+			exit(0);
+		if (!ft_strncmp(input, cmd_arr[0], ft_strlen(input)) && \
+		ft_strlen(input) == ft_strlen(cmd_arr[0]))
+			break ;
+		ft_putstr_fd(input, tmpfd);
+		ft_putstr_fd("\n", tmpfd);
+		free(input);
+	}
+	arr = ft_split(".tmpfile", ' ');
+	r_input(arr);
+	free(arr);
+	unlink(".tmpfile");
+	
 }
