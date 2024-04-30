@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 10:40:55 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/08 16:22:55 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/04/26 12:30:56 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static void	ft_echo_variable(char *str, char **env)
 		}
 		str++;
 	}
-	
 }
 
 void	ft_echo(char **arr, char **env)

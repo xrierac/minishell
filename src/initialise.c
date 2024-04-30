@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/23 16:45:15 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/30 14:03:41 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_lex	***init_lex(t_sh *msh)
 	i = -1;
 	while (++i < msh->len)
 	{
+		printf("%i\n", i);
 		msh->lex_arr[i] = (t_lex **)ft_calloc(1, sizeof(t_lex *));
 		if (!msh->lex_arr[i])
 		{
@@ -64,6 +65,7 @@ t_lex	***init_lex(t_sh *msh)
 			exit_error(msh, "ft_calloc", 127);
 		}
 	}
+	msh->lex_arr[i] = NULL;
 	return (msh->lex_arr);
 }
 
@@ -72,7 +74,7 @@ void	init_token(t_sh *msh, t_lex **lex_arr)
 	int	i;
 
 	i = -1;
-	while (++i < msh->tok_count)
+	while (++i <= msh->tok_count)
 	{
 		lex_arr[i] = ft_calloc(sizeof(t_lex), 1);
 		if (!lex_arr[i])
@@ -81,4 +83,17 @@ void	init_token(t_sh *msh, t_lex **lex_arr)
 			exit_error(msh, "ft_calloc", 127);
 		}
 	}
+}
+
+char	**init_cmd_arr(t_sh *msh)
+{
+	char	**temp;
+
+	temp = ft_calloc(sizeof(char *), 2);
+	if (!temp)
+	{
+		free_all(msh);
+		exit_error(msh, "ft_calloc", 127);
+	}
+	return (temp);
 }

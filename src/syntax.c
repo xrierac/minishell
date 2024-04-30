@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:43:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/24 11:05:10 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/30 13:21:48 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char	*syntax_check(t_sh *msh, char *temp)
 		return (input);
 	}
 	input = start;
+	//free(start);
 	if (msh->error == 0)
 	{
 		count_quotes(msh, start);
@@ -64,7 +65,7 @@ void	check_str(t_sh *msh, char *temp)
 			ft_printf(2, RED":( "END"Here strings have no power here!\n");
 		}
 		else if (temp[i] == '|' && msh->error == 0)
-			count_pipes(msh, temp);
+			check_pipes(msh, temp);
 		else if (temp[i] == '<' && temp[i + 1] != '<' && msh->error == 0)
 			check_r_input(msh, temp, i + 1);
 		else if (temp[i] == '>' && temp[i + 1] != '>' && msh->error == 0)

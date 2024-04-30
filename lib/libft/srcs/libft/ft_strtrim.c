@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:01:30 by tcampbel          #+#    #+#             */
-/*   Updated: 2023/11/15 17:54:53 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/30 12:55:51 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,22 @@
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	i;
+	char	*res;
+	const char	*temp;
 
 	if (!s1 || !set)
 		return (0);
+	temp = s1;
 	while (*s1 && ft_strchr(set, *s1))
 		s1++;
 	i = ft_strlen(s1);
 	while (i && ft_strchr(set, s1[i]))
 		i--;
-	return (ft_substr(s1, 0, i + 1));
+	res = ft_substr(s1, 0, i + 1);
+	if (!res)
+		return (0);
+	s1 = temp;
+	if (s1)
+		free((char *)s1);
+	return (res);
 }

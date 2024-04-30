@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/26 12:04:08 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/30 13:57:06 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ void	get_input(t_sh *msh)
 	{
 		temp = readline(GRN"TOTO"RED"ROJO"GRN":) "END);
 		add_history(temp);
+		if (ft_strncmp(temp, "exit", 4) == 0 && ft_strlen(temp) == 4)
+		{
+			free_all(msh);
+			exit(0);
+		}
 		if (temp[0] != '\0')
 		{
 			input = syntax_check(msh, temp);
@@ -29,11 +34,6 @@ void	get_input(t_sh *msh)
 			// if (msh->error == 1)
 			// 	free(input);
 			msh->error = 0;
-		}
-		if (ft_strncmp(temp, "exit", 4) == 0 && ft_strlen(temp) == 4)
-		{
-			free_all(msh);
-			exit(0);
 		}
 	}
 }

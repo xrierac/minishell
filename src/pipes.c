@@ -1,34 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parent.c                                           :+:      :+:    :+:   */
+/*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:29:23 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/24 17:56:13 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/04/30 13:19:06 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	parent(t_sh *sh)
+void	count_pipes(t_sh *msh, char *input)
 {
-	int		i;
-	pid_t	cpid;
-	int		status;
+	int	i;
 
-	i = 0;
-	while (sh->lex_arr[i])
+	i = -1;
+	msh->pipes = 0;
+	while (input[++i])
 	{
-		cpid = fork();
-		if (cpid < 0)
-			error_exit("", 127);
-		if (cpid == 0)
-			execute(sh->lex_arr[i], sh->env);
-		i++;
+		if (input[i] == '\'' || input[i] == '\"')
+			i = find_quote(input, input[i], i) + 1;
+		if ((input[i] == '|' && input[i + 1] == '|') \
+			|| (input[i] == '|' && input[i + 1] == '\0'))
+		{
+			ft_printf(2, RED":( "END SYNTAX_ERROR" `|'\n");
+			msh->error = true;
+			return ;
+		}
+		else if (input[i] == '|')
+			msh->pipes++;
 	}
-	if (waitpid(cpid, &status, 0) == -1)
-		error_exit("", 127);
-	return (WEXITSTATUS(status));
+}
+
+void	check_pipes(t_sh *msh, char *input)
+{
+	int	i;
+
+	i = -1;
+	while (input[++i])
+	{
+		if (input[i] == '\'' || input[i] == '\"')
+			i = find_quote(input, input[i], i) + 1;
+		if ((input[i] == '|' && input[i + 1] == '|') \
+			|| (input[i] == '|' && input[i + 1] == '\0'))
+		{
+			ft_printf(2, RED":( "END SYNTAX_ERROR" `|'\n");
+			msh->error = true;
+			return ;
+		}
+	}
 }

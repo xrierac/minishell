@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:13:46 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/22 17:33:22 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/30 11:02:56 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,25 @@ int	is_file(t_sh *msh, char *str, int i)
 		i++;
 	if (ft_isspace(str[i]) == false)
 	{
-		msh->tok_count++;
+		// msh->tok_count++;
 		while (ft_isspace(str[i]) == false && str[i])
 			i++;
 	}
+	return (i);
+}
+
+int	find_space(char *str, int i)
+{
+	while (ft_isspace(str[i]) && str[i])
+		i++;
+	while (ft_isspace(str[i]) == false && str[i])
+		i++;
+	return (i);
+}
+
+int	find_op(char *str, int i)
+{
+	while (is_op(str, i) == false && str[i])
+		i++;
 	return (i);
 }

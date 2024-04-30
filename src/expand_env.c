@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/25 13:55:53 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/26 15:47:31 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,19 @@ char	*expand_env(t_sh *msh, char *res)
 			else
 			{
 				var = check_env_var(msh, msh->env, res, i + 1);
-				i += var_len(res, i);
 			}
+			i += var_len(res, i);
 			temp = ft_strjoin(temp, var);
+			j += ft_strlen(temp);
 			free(var);
 		}
 		else
+		{
+			//j = ft_strlen(temp);
 			temp[j] = res[i];
+			temp[j] = '\0';
+		}
 		i++;
-		j++;
-			//temp = update_str(msh, var, res);
 	}
 	free(res);
 	printf("%s\n", temp);
@@ -103,62 +106,39 @@ char	*expand_env(t_sh *msh, char *res)
 
 //Update the string the dereference env var
 
-char	*update_str(t_sh *msh, char *var, char *str)
-{
-	int		i;
-	int		end;
-	char	*temp;
-	char	*res;
+// char	*update_str(t_sh *msh, char *var, char *str)
+// {
+// 	int		i;
+// 	int		end;
+// 	char	*temp;
+// 	char	*res;
 
-	end = 0;
-	i = 0;
-	if (str[i] == '$')
-	{
-		i++;
-		end++;
-		while (str[i] != '$' && ft_isspace(str[i]) == false && str[i])
-		{
-			i++;
-			end++;
-		}
-	}
-	msh->env->var_len = ft_strlen(var) + ft_strlen(str) - end;
-	printf("Strlen = %zu end = %i Malloced bytes = %i str=%s\n", ft_strlen(str), end, msh->env->var_len + 1, str);
-	temp = ft_calloc(1, msh->env->var_len + 1);
-	if (!temp)
-	{
-		free_all(msh);
-		exit_error(msh, "malloc", 127);	
-	}
-	res = insert_str(var, str, temp, end);
-	free(str);
-	return (res);
-}
-
-char	*insert_str(char *var, char *str, char *temp, int end)
-{
-	int		i;
-	int		j;
-	char	*res;
-
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-		{
-			res = ft_strjoin(temp, var);
-			//printf("var = %s res= %s\n", var, res);
-			while (end-- >= 0)
-				i++;
-		}
-		res[j++] = str[i++];
-	}
-	//free(str);
-	return (res);
-}
+// 	end = 0;
+// 	i = 0;
+// 	if (str[i] == '$')
+// 	{
+// 		i++;
+// 		end++;
+// 		while (str[i] != '$' && ft_isspace(str[i]) == false && str[i])
+// 		{
+// 			i++;
+// 			end++;
+// 		}
+// 	}
+// 	msh->env->var_len = ft_strlen(var) + ft_strlen(str) - end;
+// 	printf("Strlen = %zu end = %i Malloced bytes = %i str=%s\n", ft_strlen(str), end, msh->env->var_len + 1, str);
+// 	temp = ft_calloc(1, msh->env->var_len + 1);
+// 	if (!temp)
+// 	{
+// 		free_all(msh);
+// 		exit_error(msh, "malloc", 127);	
+// 	}
+// 	res = insert_str(var, str, temp, end);
+// 	free(str);
+// 	return (res);
+// }
 
 char	*check_exit_code(t_sh *msh, char *str, int i)
 {
-	return ("123");
+	return (ft_strdup("123"));
 }

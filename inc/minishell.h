@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:34:27 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/26 12:03:17 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/30 13:20:15 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,8 @@ typedef enum e_token_type
 	R_OUTPUT, //>
 	HEREDOC, //<<
 	APPEND, //>>
-	ENV, //$
 	STATUS, //!?
-	INFILE, //< str The string after r_input is always considered an infile 
-	OUTFILE, //> str The string after r_output is always considered an outfile
 	CMD, //str
-	ARG, //"str" Any string after a cmd.
-	FLAG, // -str Any string preceded by a '-' and following a str
-	NOT_DEF
 }	t_token_type;
 
 typedef enum e_bool
@@ -83,6 +77,7 @@ t_sh	*init_msh(char **ev);
 t_lex	***init_lex(t_sh *msh);
 void	init_token(t_sh *msh, t_lex **lex_arr);
 void	init_env(t_env *env);
+char	**init_cmd_arr(t_sh *msh);
 
 //environment 
 void	get_path(t_sh *msh, t_env *env, char **ev, int i);
@@ -93,10 +88,11 @@ void	ft_envcpy(t_sh *msh, t_env *env, char **ev);
 //tokens
 void	get_token(t_sh *msh, t_lex *lex_arr, char *str);
 void	lexer(char *input, t_sh *msh);
-void	assign_token(t_sh *msh, t_lex *lex_arr, char **pipe_arr);
+void	assign_token(t_sh *msh, t_lex **lex_arr, char *cmd);
 char	*deref_env_var(t_sh *msh, char *input);
 void	is_token(t_sh *msh, char *str);
 void	count_pipes(t_sh *msh, char *input);
+void	fill_tok_structs(t_sh *msh, t_lex ***lex_arr, char **temp);
 
 //syntax
 
@@ -105,6 +101,7 @@ void	check_str(t_sh *msh, char *temp);
 void	check_r_output(t_sh *msh, char *str, int i);
 void	check_heredoc(t_sh *msh, char *str, int i);
 void	check_append(t_sh *msh, char *str, int i);
+void	check_pipes(t_sh *msh, char *input);
 char	*choose_op(char c);
 char	*syntax_check(t_sh *msh, char *temp);
 
@@ -112,7 +109,7 @@ char	*syntax_check(t_sh *msh, char *temp);
 
 void	exit_error(t_sh *msh, char *msg, int status);
 void	free_all(t_sh *msh);
-void	free_lex(t_lex **lex);
+void	free_lex(t_lex ***lex);
 void	free_env(t_env *env);
 
 //tools
@@ -126,12 +123,25 @@ t_bool	is_op(char *str, int i);
 void	count_quotes(t_sh *msh, char *str);
 char	set_quote(char	*str);
 int		is_file(t_sh *msh, char *str, int i);
+int		find_space(char *str, int i);
+int		find_op(char *str, int i);
 
 //environment variables
 
 char	*update_str(t_sh *msh, char *var, char *str);
-char	*insert_str(char *var, char *str, char *temp, int end);
 char	*check_exit_code(t_sh *msh, char *str, int i);
 char	*expand_env(t_sh *msh, char *str);
+
+// builtins
+
+void	ft_cd(char *str, char **env);
+void	ft_env(char **env);
+void	ft_pwd(void);
+void	ft_echo(char **arr, char **env);
+char	*ft_getenv(const char *name, char **env);
+
+// execution
+
+void	execute(t_lex *lex, t_env *env);
 
 #endif

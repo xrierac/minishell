@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:21:51 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/24 17:56:24 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/04/26 13:14:08 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
 char	*get_path(char *cmd, t_env *env)
 {
 	char	*prog;
