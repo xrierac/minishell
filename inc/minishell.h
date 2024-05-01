@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/30 15:38:08 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/01 10:44:32 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void	r_input(char **cmd_arr);
 void	r_output(char **cmd_arr);
 void	r_append(char **cmd_arr);
 void	r_heredoc(char **cmd_arr);
-int		execution_branch(t_sh *cmd_info);
+int		execution_branch(t_sh *sh_data);
 
 //EXECUTION UTILS
 char	*ft_getenv(const char *name, char **env);
