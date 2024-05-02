@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/01 10:44:32 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:38:18 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef enum e_token_type
 	R_OUTPUT, //>
 	HEREDOC, //<<
 	APPEND, //>>
-	ENV, //$
 	STATUS, //!?
 	CMD, //str
 }	t_token_type;
@@ -66,6 +65,8 @@ typedef struct s_sh
 	int		tok_count;
 	int		pipes;
 	int		len;
+	int		count;
+	int		quotes;
 	t_bool	error;
 }	t_sh;
 
@@ -77,6 +78,7 @@ t_sh	*init_msh(char **ev);
 t_lex	***init_lex(t_sh *msh);
 void	init_token(t_sh *msh, t_lex **lex_arr);
 void	init_env(t_env *env);
+char	**init_cmd_arr(t_sh *msh);
 
 //environment 
 void	get_path(t_sh *msh, t_env *env, char **ev, int i);
@@ -87,10 +89,11 @@ void	ft_envcpy(t_sh *msh, t_env *env, char **ev);
 //tokens
 void	get_token(t_sh *msh, t_lex *lex_arr, char *str);
 void	lexer(char *input, t_sh *msh);
-void	assign_token(t_sh *msh, t_lex *lex_arr, char **pipe_arr);
+void	assign_token(t_sh *msh, t_lex **lex_arr, char *cmd);
 char	*deref_env_var(t_sh *msh, char *input);
 void	is_token(t_sh *msh, char *str);
 void	count_pipes(t_sh *msh, char *input);
+void	fill_tok_structs(t_sh *msh, t_lex ***lex_arr, char **temp);
 
 //syntax
 
@@ -99,6 +102,7 @@ void	check_str(t_sh *msh, char *temp);
 void	check_r_output(t_sh *msh, char *str, int i);
 void	check_heredoc(t_sh *msh, char *str, int i);
 void	check_append(t_sh *msh, char *str, int i);
+void	check_pipes(t_sh *msh, char *input);
 char	*choose_op(char c);
 char	*syntax_check(t_sh *msh, char *temp);
 
@@ -106,7 +110,7 @@ char	*syntax_check(t_sh *msh, char *temp);
 
 void	exit_error(t_sh *msh, char *msg, int status);
 void	free_all(t_sh *msh);
-void	free_lex(t_lex **lex);
+void	free_lex(t_lex ***lex);
 void	free_env(t_env *env);
 
 //tools
@@ -120,11 +124,13 @@ t_bool	is_op(char *str, int i);
 void	count_quotes(t_sh *msh, char *str);
 char	set_quote(char	*str);
 int		is_file(t_sh *msh, char *str, int i);
+int		find_space(char *str, int i);
+int		find_op(char *str, int i);
+int		find_dollar(char *str, int i);
 
 //environment variables
 
 char	*update_str(t_sh *msh, char *var, char *str);
-char	*insert_str(char *var, char *str, char *temp, int end);
 char	*check_exit_code(t_sh *msh, char *str, int i);
 char	*expand_env(t_sh *msh, char *str);
 
