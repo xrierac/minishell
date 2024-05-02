@@ -6,11 +6,11 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:21:51 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/26 12:30:50 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/04/29 11:55:06 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static char	*find_cmd(char *cmd, t_env *env)
 {
@@ -20,7 +20,7 @@ static char	*find_cmd(char *cmd, t_env *env)
 
 	prog = ft_strjoin("/", cmd);
 	if (!prog)
-		error_exit(0);
+		exit(0);
 	i = 0;
 	while (env->path_arr[i])
 	{
@@ -40,6 +40,5 @@ void	execute(t_lex *lex, t_env *env)
 {
 	if (execve(lex->cmd_arr[0], lex->cmd_arr, env->env_arr))
 		if (execve(find_cmd(lex->cmd_arr[0], env), lex->cmd_arr, env->env_arr))
-			error_exit(lex->cmd_arr[0], 127);
-
+			exit(0);
 }

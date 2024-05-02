@@ -6,11 +6,11 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 09:54:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/26 10:22:27 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/04/29 11:48:23 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/libft/includes/libft.h"
+#include "../../lib/libft/includes/libft.h"
 
 char	*ft_getenv(const char *name, char **env)
 {
