@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/03 15:34:27 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/30 16:58:03 by tcampbel         ###   ########.fr       */
+/*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/05/02 15:38:18 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/includes/libft.h"
+# include <fcntl.h>
 
 # define GRN "\e[0;92m"
 # define BLK "\e[0;90m"
@@ -64,8 +65,8 @@ typedef struct s_sh
 	int		tok_count;
 	int		pipes;
 	int		len;
-	int		quotes; //Should probably delete
-	int		count; //Should probably delete
+	int		count;
+	int		quotes;
 	t_bool	error;
 }	t_sh;
 
@@ -133,16 +134,18 @@ char	*update_str(t_sh *msh, char *var, char *str);
 char	*check_exit_code(t_sh *msh, char *str, int i);
 char	*expand_env(t_sh *msh, char *str);
 
-// builtins
+//ERROR HANDLING
+void error_exit(void);
 
-void	ft_cd(char *str, char **env);
-void	ft_env(char **env);
-void	ft_pwd(void);
-void	ft_echo(char **arr, char **env);
-char	*ft_getenv(const char *name, char **env);
-
-// execution
-
+//EXECUTION
 void	execute(t_lex *lex, t_env *env);
+void	r_input(char **cmd_arr);
+void	r_output(char **cmd_arr);
+void	r_append(char **cmd_arr);
+void	r_heredoc(char **cmd_arr);
+int		execution_branch(t_sh *sh_data);
+
+//EXECUTION UTILS
+char	*ft_getenv(const char *name, char **env);
 
 #endif
