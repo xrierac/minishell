@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:47:46 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/01/11 10:45:17 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/26 13:13:43 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_free(char **str)
 	return (NULL);
 }
 
-char	*find_line(char *storage)
+static char	*find_line(char *storage)
 {
 	char	*new_line;
 	int		i;
@@ -40,7 +40,7 @@ char	*find_line(char *storage)
 	return (new_line);
 }
 
-char	*find_end(char *storage)
+static char	*find_end(char *storage)
 {
 	int		i;
 	char	*end_line;
@@ -57,7 +57,7 @@ char	*find_end(char *storage)
 	return (end_line);
 }
 
-char	*read_line(int fd, char *storage)
+static char	*read_line(int fd, char *storage)
 {
 	char	buffer[BUFFER_SIZE + 1];
 	int		bytes_read;

@@ -4,6 +4,7 @@ NAME	:= minishell
 
 CC		:= cc
 CFLAGS	:= -Wextra -Wall -Werror -lreadline #-fsanitize=address
+CFLAGS	:= -Wextra -Wall -Werror -g -lreadline #-fsanitize=address
 
 INC_DIR  := ./inc
 SRC_DIR  := ./src

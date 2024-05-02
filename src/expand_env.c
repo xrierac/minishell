@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/25 13:55:53 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/02 14:52:49 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,14 @@ int	var_len(char *str, int i)
 char	*expand_env(t_sh *msh, char *res)
 {
 	int		i;
-	int		j;
+	int		len;
 	char	*var;
 	char	*temp;
+	char	*temp2;
 
 	i = 0;
-	j = 0;
-	temp = malloc(ft_strlen(res) + 1);
-	if (!temp)
-	{
-		free_all(msh);
-		exit_error(msh, "malloc", 127);
-	}
+	temp = ft_strdup("");
+	temp2 = ft_strdup("");
 	if (!ft_strchr(res, '$'))
 		return (res);
 	while (res[i])
@@ -75,7 +71,7 @@ char	*expand_env(t_sh *msh, char *res)
 		// else if ((res[i] == '$' && res[i + 1] == '\'') \
 		// || (res[i] == '$' && res[i + 1] == '\"'))
 		// 	i += find_quote(res, res[i + 1], i + 1); //need to remove quotes and $
-		if (res[i] == '$' && res[i + 1] != '\0' && res[i + 1] != ' ')
+		if (res[i] == '$' && (res[i + 1] != '\0' || res[i + 1] != ' '))
 		{
 			if (res[i] == '$' && res[i + 1] == '?')
 			{
@@ -85,80 +81,37 @@ char	*expand_env(t_sh *msh, char *res)
 			else
 			{
 				var = check_env_var(msh, msh->env, res, i + 1);
-				i += var_len(res, i);
 			}
-			temp = ft_strjoin(temp, var);
-			free(var);
+			i += var_len(res, i);
+			printf("%i\n", i);
+			temp = ft_strjoin(temp2, var);
 		}
 		else
-			temp[j] = res[i];
-		i++;
-		j++;
-			//temp = update_str(msh, var, res);
+		{
+			i = find_dollar(res, i);
+			len = i;
+			temp2 = ft_substr(res, i, len);
+			if (!temp2)
+			{
+				free_all(msh);
+				exit_error(msh, "ft_substr", 127);
+			}
+			temp2 = ft_strjoin_free(temp2, temp);
+		}
 	}
+	printf("temp2=%s\ntemp = %s\n", temp2, temp);
 	free(res);
-	printf("%s\n", temp);
-	return (temp);
+	return (temp2);
 }
 
-//Update the string the dereference env var
-
-char	*update_str(t_sh *msh, char *var, char *str)
+int	find_dollar(char *str, int i)
 {
-	int		i;
-	int		end;
-	char	*temp;
-	char	*res;
-
-	end = 0;
-	i = 0;
-	if (str[i] == '$')
-	{
+	while (str[i] != '$' && str[i])
 		i++;
-		end++;
-		while (str[i] != '$' && ft_isspace(str[i]) == false && str[i])
-		{
-			i++;
-			end++;
-		}
-	}
-	msh->env->var_len = ft_strlen(var) + ft_strlen(str) - end;
-	printf("Strlen = %zu end = %i Malloced bytes = %i str=%s\n", ft_strlen(str), end, msh->env->var_len + 1, str);
-	temp = ft_calloc(1, msh->env->var_len + 1);
-	if (!temp)
-	{
-		free_all(msh);
-		exit_error(msh, "malloc", 127);	
-	}
-	res = insert_str(var, str, temp, end);
-	free(str);
-	return (res);
-}
-
-char	*insert_str(char *var, char *str, char *temp, int end)
-{
-	int		i;
-	int		j;
-	char	*res;
-
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-		{
-			res = ft_strjoin(temp, var);
-			//printf("var = %s res= %s\n", var, res);
-			while (end-- >= 0)
-				i++;
-		}
-		res[j++] = str[i++];
-	}
-	//free(str);
-	return (res);
+	return (i);
 }
 
 char	*check_exit_code(t_sh *msh, char *str, int i)
 {
-	return ("123");
+	return (ft_strdup("123"));
 }

@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 11:51:36 by tcampbel          #+#    #+#             */
-/*   Updated: 2023/12/21 11:54:17 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/26 13:13:37 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,5 @@
 
 char	*get_next_line(int fd);
 char	*ft_free(char **str);
-char	*read_line(int fd, char *storage);
-char	*find_end(char *storage);
-char	*find_line(char *storage);
 char	*ft_strjoin_gnl(char *str1, char *str2);
 #endif
