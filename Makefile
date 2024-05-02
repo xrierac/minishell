@@ -3,7 +3,7 @@ NAME	:= minishell
 #Compiler options#
 
 CC		:= cc
-CFLAGS	:= -Wextra -Wall -Werror -g -fsanitize=address -lreadline
+CFLAGS	:= -Wextra -Wall -Werror -g -lreadline #-fsanitize=address
 
 INC_DIR  := ./inc
 SRC_DIR  := ./src

@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:19:05 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/16 17:07:06 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/02 10:38:00 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ char	*tripjoin(char const *s1, char const *s2, char const *s3);
 void	ft_sleep(unsigned int i);
 char	**ft_strtok(const char *s, char c, char *skip);
 char	**return_free_array(char **result);
+char	*ft_strjoin_free(char *str1, char *str2);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:21:51 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/26 13:14:08 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:12:04 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,4 @@ void	execute(t_lex *lex, t_env *env)
 	if (execve(lex->cmd_arr[0], lex->cmd_arr, env->env_arr) == -1)
 		if (execve(get_path(lex->cmd_arr[0], env), lex->cmd_arr, env->env_arr) == -1)
 			error_exit(lex->cmd_arr[0], 127);
-
 }

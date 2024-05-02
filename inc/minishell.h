@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:34:27 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/30 13:20:15 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:58:03 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ char	set_quote(char	*str);
 int		is_file(t_sh *msh, char *str, int i);
 int		find_space(char *str, int i);
 int		find_op(char *str, int i);
+int		find_dollar(char *str, int i);
 
 //environment variables
 

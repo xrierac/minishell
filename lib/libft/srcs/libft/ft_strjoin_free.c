@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 14:15:09 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/02 10:25:35 by tcampbel         ###   ########.fr       */
+/*   Created: 2024/05/02 10:26:20 by tcampbel          #+#    #+#             */
+/*   Updated: 2024/05/02 10:27:18 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *str1, char const *str2)
+char	*ft_strjoin_free(char *str1, char *str2)
 {
 	size_t	i;
 	size_t	j;
@@ -35,5 +35,7 @@ char	*ft_strjoin(char const *str1, char const *str2)
 		i++;
 	}
 	str3[i] = '\0';
+	free(str1);
+	free(str2);
 	return (str3);
 }

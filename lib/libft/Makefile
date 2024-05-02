@@ -33,7 +33,8 @@ LIBFT_FLS = $(LIBFT_DIR)/ft_atoi.c $(LIBFT_DIR)/ft_atol.c $(LIBFT_DIR)/ft_isalph
 			$(LIBFT_DIR)/ft_lstsize.c $(LIBFT_DIR)/ft_lstlast.c $(LIBFT_DIR)/ft_lstadd_back.c\
 			$(LIBFT_DIR)/ft_lstdelone.c $(LIBFT_DIR)/ft_lstclear.c $(LIBFT_DIR)/ft_lstiter.c\
 			$(LIBFT_DIR)/ft_lstmap.c $(LIBFT_DIR)/ft_free_array.c $(LIBFT_DIR)/ft_skip_split.c\
-			$(LIBFT_DIR)/tripjoin.c $(LIBFT_DIR)/ft_sleep.c $(LIBFT_DIR)/ft_strtok.c $(LIBFT_DIR)/return_free_array.c
+			$(LIBFT_DIR)/tripjoin.c $(LIBFT_DIR)/ft_sleep.c $(LIBFT_DIR)/ft_strtok.c $(LIBFT_DIR)/return_free_array.c\
+			$(LIBFT_DIR)/ft_strjoin_free.c
 
 FT_PRINTF_FLS = $(FT_PRINTF_DIR)/ft_printf.c $(FT_PRINTF_DIR)/str_handler.c\
 				$(FT_PRINTF_DIR)/ft_putnbr_count.c $(FT_PRINTF_DIR)/ft_putstr_count.c\
