@@ -6,15 +6,27 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 10:46:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/29 16:20:02 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:46:28 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void check_token(t_lex *lex, t_env *env)
+static int	wait_processes(pid_t cpid[], int i)
 {
-    if (lex->token == R_INPUT)
+	int	status;
+
+	while (--i >= 0)
+	{
+		if (waitpid(cpid[i], &status, 0) == -1)
+			perror("ERROR\n");
+	}
+	return (WEXITSTATUS(status));
+}
+
+static void	check_token(t_lex *lex, t_env *env)
+{
+	if (lex->token == R_INPUT)
 		r_input(lex->cmd_arr);
 	if (lex->token == R_OUTPUT)
 		r_output(lex->cmd_arr);
@@ -24,40 +36,49 @@ static void check_token(t_lex *lex, t_env *env)
 		r_heredoc(lex->cmd_arr);
 }
 
-static void	child_start(t_lex **lex_arr, t_env *env)
+static void	child_start(t_sh *sh_data, int index, int pipefd[][2])
 {
 	int	i;
 	int	cmd_id;
 
 	i = 0;
-	while (lex_arr[i])
+	close_pipes(pipefd, index, sh_data);
+	pipe_management(sh_data, index, pipefd);
+	while (sh_data->lex_arr[index][i])
 	{
-		if (lex_arr[i]->token == CMD)
+		if (sh_data->lex_arr[index][i]->token == CMD)
 			cmd_id = i;
 		else
-			check_token(lex_arr[i], env);
+			check_token(sh_data->lex_arr[index][i], sh_data->env);
 		i++;
 	}
-	execute(lex_arr[cmd_id], env);
+	if (execute(sh_data->lex_arr[index][0], sh_data->env) == -1)
+		error_cmd_not_found(sh_data->lex_arr[index][0]->cmd_arr[0]);
 }
 
-int	execution_branch(t_sh *cmd_info)
+int	execution_branch(t_sh *sh_data)
 {
-	int 	i;
+	int		i;
+	int		pipefd[MAX_FD][2];
+	pid_t	cpid[MAX_FD];
 	int		status;
-	pid_t	cpid;
 
-	i = 0;
-	while (cmd_info->lex_arr[i])
+	i = -1;
+	while (++i < sh_data->pipes)
+		if (pipe(pipefd[i]) == -1)
+			exit(0);
+	i = -1;
+	while (++i < sh_data->len)
 	{
-		cpid = fork();
-		if (cpid < 0)
+		cpid[i] = fork();
+		if (cpid[i] < 0)
 			exit(0);
-		if (cpid == 0)
-			child_start(cmd_info->lex_arr[i], cmd_info->env);
-		if (waitpid(cpid, &status, 0) == -1)
+		if (cpid[i] == 0)
+		{
+			child_start(sh_data, i, pipefd);
 			exit(0);
-    	i++;
+		}
 	}
-	return (WEXITSTATUS(status));
+	close_pipes(pipefd, i, sh_data);
+	return (wait_processes(cpid, i));
 }
