@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/03 16:00:04 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:31:36 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ char	*check_env_var(t_sh *msh, t_env *env, char *var)
 
 	i = -1;
 	temp = ft_strdup("");
+	if (!temp)
+	{
+		free_all(msh);
+		exit_error(msh, "ft_strdup", 127);
+	}
 	while (env->env_arr[++i])
 	{
 		k = 0;
@@ -38,15 +43,6 @@ char	*check_env_var(t_sh *msh, t_env *env, char *var)
 	}
 	free(var);
 	return (temp);
-}
-
-int	var_len(char *str, int i)
-{
-	if (str[i] == '$')
-		i++;
-	while (str[i] != '$' && ft_isspace(str[i]) == false && str[i])
-		i++;
-	return (i);
 }
 
 char	*extract_var(t_sh *msh, char *start, int len)
@@ -71,12 +67,9 @@ char	*expand_env(t_sh *msh, char *cmd)
 	char	*ptr;
 	char	*start;
 	char	*var;
-	char	*result;
 
 	ptr = cmd;
 	buf_len = 0;
-	if (!ft_strchr(cmd, '$'))
-		return (cmd);
 	buffer = ft_calloc(ft_strlen(cmd) + 1, 1);
 	if (!buffer)
 	{
@@ -86,7 +79,7 @@ char	*expand_env(t_sh *msh, char *cmd)
 	while (*ptr)
 	{
 		var_len = 0;
-		if (*ptr == '$' && (*(ptr + 1) != ' ' || *(ptr + 1)) != '\0')
+		if (*ptr == '$' && (*(ptr + 1) != ' ' && *(ptr + 1)) != '\0')
 		{
 			ptr++;
 			start = ptr;
@@ -98,7 +91,12 @@ char	*expand_env(t_sh *msh, char *cmd)
 		if (var[0] != '\0')
 		{
 			exp_len = ft_strlen(var);
-			buffer = ft_strjoin(buffer, var);
+			buffer = ft_strjoin_free(buffer, var);
+			if (!buffer)
+			{
+				free_all(msh);
+				exit_error(msh, "ft_strjoin_free", 127);
+			}
 			buf_len += exp_len;
 			if (ft_isspace(*ptr))
 			{
@@ -122,53 +120,3 @@ char	*check_exit_code(t_sh *msh, char *str, int i)
 {
 	return (ft_strdup("123"));
 }
-// char	*expand_env(t_sh *msh, char *res)
-// {
-// 	int		i;
-// 	int		len;
-// 	char	*var;
-// 	char	*temp;
-// 	char	*temp2;
-
-// 	i = 0;
-// 	temp = ft_strdup("");
-// 	temp2 = ft_strdup("");
-// 	if (!ft_strchr(res, '$'))
-// 		return (res);
-// 	while (res[i])
-// 	{
-// 		// else if ((res[i] == '$' && res[i + 1] == '\'') \
-// 		// || (res[i] == '$' && res[i + 1] == '\"'))
-// 		// 	i += find_quote(res, res[i + 1], i + 1); //need to remove quotes and $
-// 		if (res[i] == '$' && (res[i + 1] != '\0' || res[i + 1] != ' '))
-// 		{
-// 			if (res[i] == '$' && res[i + 1] == '?')
-// 			{
-// 				var = check_exit_code(msh, res, i); //need to build)
-// 				i += 2;
-// 			}
-// 			else
-// 			{
-// 				var = check_env_var(msh, msh->env, res, i + 1);
-// 			}
-// 			i += var_len(res, i);
-// 			printf("%i\n", i);
-// 			temp = ft_strjoin(temp2, var);
-// 		}
-// 		else
-// 		{
-// 			i = find_dollar(res, i);
-// 			len = i;
-// 			temp2 = ft_substr(res, i, len);
-// 			if (!temp2)
-// 			{
-// 				free_all(msh);
-// 				exit_error(msh, "ft_substr", 127);
-// 			}
-// 			temp2 = ft_strjoin_free(temp2, temp);
-// 		}
-// 	}
-// 	printf("temp2=%s\ntemp = %s\n", temp2, temp);
-// 	free(res);
-// 	return (temp2);
-// }
