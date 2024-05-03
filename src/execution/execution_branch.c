@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 10:46:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/29 16:20:02 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/03 10:43:03 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,40 +24,44 @@ static void check_token(t_lex *lex, t_env *env)
 		r_heredoc(lex->cmd_arr);
 }
 
-static void	child_start(t_lex **lex_arr, t_env *env)
+static void	child_start(t_sh *sh_data, int index, int **pipefd)
 {
 	int	i;
 	int	cmd_id;
 
 	i = 0;
-	while (lex_arr[i])
+	pipe_management(sh_data, index, pipefd);
+	while (sh_data->lex_arr[index][i])
 	{
-		if (lex_arr[i]->token == CMD)
+		if (sh_data->lex_arr[index][i]->token == CMD)
 			cmd_id = i;
 		else
-			check_token(lex_arr[i], env);
+			check_token(sh_data->lex_arr[index][i], sh_data->env);
 		i++;
 	}
-	execute(lex_arr[cmd_id], env);
+	execute(sh_data->lex_arr[index][cmd_id], sh_data->env);
 }
 
-int	execution_branch(t_sh *cmd_info)
+int	execution_branch(t_sh *sh_data)
 {
-	int 	i;
-	int		status;
-	pid_t	cpid;
+	int		i;
+	int		pipefd[MAX_FD][2];
+	pid_t	cpid[MAX_FD];
 
-	i = 0;
-	while (cmd_info->lex_arr[i])
+	i = -1;
+	while (++i < sh_data->pipes)
+		if (pipe(pipefd[i]) == -1)
+			exit(0);
+	i = -1;
+	while (++i < sh_data->len)
 	{
-		cpid = fork();
-		if (cpid < 0)
+		cpid[i] = fork();
+		if (cpid[i] < 0)
 			exit(0);
-		if (cpid == 0)
-			child_start(cmd_info->lex_arr[i], cmd_info->env);
-		if (waitpid(cpid, &status, 0) == -1)
-			exit(0);
-    	i++;
+		if (cpid[i] == 0)
+			child_start(sh_data, i, pipefd);
 	}
-	return (WEXITSTATUS(status));
+	while (--i >= sh_data->len)
+		wait(NULL);
+	return (1);
 }
