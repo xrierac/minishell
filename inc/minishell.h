@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/03 16:00:24 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:18:19 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,18 @@ typedef struct s_env
 	int		var_len;
 }	t_env;
 
+// typedef struct s_tool
+// {
+// 	int		var_len;
+// 	char	*start;
+// 	char	*ptr;
+// }	t_tool;
+
 typedef struct s_sh
 {
 	t_env	*env;
 	t_lex	***lex_arr;
+	//t_tool	*tool;
 	int		tok_count;
 	int		pipes;
 	int		len;
@@ -110,7 +118,7 @@ char	*syntax_check(t_sh *msh, char *temp);
 
 void	exit_error(t_sh *msh, char *msg, int status);
 void	free_all(t_sh *msh);
-void	free_lex(t_lex ***lex);
+void	free_lex(t_sh *msh, t_lex ***lex);
 void	free_env(t_env *env);
 
 //tools
