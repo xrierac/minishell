@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/03 12:17:03 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:34:08 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	get_input(t_sh *msh)
 			input = syntax_check(msh, temp);
 			if (msh->error == 0)
 			{
-				free(temp);
+				//free(temp);
 				lexer(input, msh);
 				//execution
 			}

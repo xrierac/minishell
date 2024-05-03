@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 10:26:20 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/02 10:27:18 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:40:54 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,5 @@ char	*ft_strjoin_free(char *str1, char *str2)
 	}
 	str3[i] = '\0';
 	free(str1);
-	free(str2);
 	return (str3);
 }
