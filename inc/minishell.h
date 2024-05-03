@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/03 11:46:18 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:19:49 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,16 +137,18 @@ char	*check_exit_code(t_sh *msh, char *str, int i);
 char	*expand_env(t_sh *msh, char *str);
 
 //ERROR HANDLING
-void error_exit(void);
+void 	error_exit(void);
+void    error_cmd_not_found(char *str);
 
 //EXECUTION
-void	execute(t_lex *lex, t_env *env);
+int		execute(t_lex *lex, t_env *env);
 void	r_input(char **cmd_arr);
 void	r_output(char **cmd_arr);
 void	r_append(char **cmd_arr);
 void	r_heredoc(char **cmd_arr);
 int		execution_branch(t_sh *sh_data);
-int pipe_management(t_sh *sh_data, int index, int pipefd[][2]);
+int 	pipe_management(t_sh *sh_data, int index, int pipefd[][2]);
+int close_pipes(int pipefd[][2], int index, t_sh *sh_data);
 
 
 //EXECUTION UTILS
