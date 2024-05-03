@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:21:51 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/02 15:32:45 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:03:44 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ static char	*find_cmd(char *cmd, t_env *env)
 	return (path);
 }
 
-void	execute(t_lex *lex, t_env *env)
+int	execute(t_lex *lex, t_env *env)
 {
 	if (execve(lex->cmd_arr[0], lex->cmd_arr, env->env_arr))
 		if (execve(find_cmd(lex->cmd_arr[0], env), lex->cmd_arr, env->env_arr))
-			exit(0);
+			return (-1);
+	return (0);
 }
