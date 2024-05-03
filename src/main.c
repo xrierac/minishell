@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/30 16:43:34 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:56:09 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ int	main(int ac, char **av, char **ev)
 		exit_error(msh, "Invalid arg amount\n", 127);
 	msh = init_msh(ev);
 	get_input(msh);
+	execution_branch(msh);
 	return (0);
 }
