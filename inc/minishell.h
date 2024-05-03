@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/02 15:38:18 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:00:24 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ char	set_quote(char	*str);
 int		is_file(t_sh *msh, char *str, int i);
 int		find_space(char *str, int i);
 int		find_op(char *str, int i);
-int		find_dollar(char *str, int i);
 
 //environment variables
 
@@ -135,7 +134,7 @@ char	*check_exit_code(t_sh *msh, char *str, int i);
 char	*expand_env(t_sh *msh, char *str);
 
 //ERROR HANDLING
-void error_exit(void);
+void 	error_exit(void);
 
 //EXECUTION
 void	execute(t_lex *lex, t_env *env);
