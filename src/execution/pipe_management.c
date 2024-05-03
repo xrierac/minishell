@@ -6,13 +6,13 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:13:51 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/03 10:42:07 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/03 11:46:07 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int pipe_management(t_sh *sh_data, int index, int **pipefd)
+int pipe_management(t_sh *sh_data, int index, int pipefd[][2])
 {
     if (sh_data->len == 1)
         return 0;
