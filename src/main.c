@@ -6,11 +6,39 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/03 12:08:54 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:34:08 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void    print_arr(char **str)
+{
+    int i = -1;
+
+    while (str[++i])
+        printf("%s\n", str[i]); 
+}
+
+void	print_lex(t_sh *msh, t_lex	***lex)
+{
+	int	i = 0;
+	int	j = 0;
+
+	while (i < msh->len)
+	{
+		//printf("i = %i processes=%i\n", i, msh->len);
+		j = 0;
+		while (msh->tok_count > j)
+		{
+			//printf("j=%i tok=%i\n", j, msh->tok_count);
+			print_arr(lex[i][j]->cmd_arr);
+			j++;
+		}
+		i++;
+	}
+}
+
 
 void	get_input(t_sh *msh)
 {
@@ -30,13 +58,19 @@ void	get_input(t_sh *msh)
 		{
 			input = syntax_check(msh, temp);
 			if (msh->error == 0)
+			{
+				//free(temp);
 				lexer(input, msh);
+			}
+			if (msh->error == 1)
+				free(input);
 			// if (msh->error == 1)
 			// 	free(input);
 			//execute
 			execution_branch(msh);
 			msh->error = 0;
 		}
+		//print_lex(msh, msh->lex_arr);
 		//need to free input and lex_arr between cl calls
 	}
 }

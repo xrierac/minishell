@@ -60,10 +60,18 @@ typedef struct s_env
 	int		var_len;
 }	t_env;
 
+// typedef struct s_tool
+// {
+// 	int		var_len;
+// 	char	*start;
+// 	char	*ptr;
+// }	t_tool;
+
 typedef struct s_sh
 {
 	t_env	*env;
 	t_lex	***lex_arr;
+	//t_tool	*tool;
 	int		tok_count;
 	int		pipes;
 	int		len;
@@ -112,7 +120,7 @@ char	*syntax_check(t_sh *msh, char *temp);
 
 void	exit_error(t_sh *msh, char *msg, int status);
 void	free_all(t_sh *msh);
-void	free_lex(t_lex ***lex);
+void	free_lex(t_sh *msh, t_lex ***lex);
 void	free_env(t_env *env);
 
 //tools
@@ -128,7 +136,6 @@ char	set_quote(char	*str);
 int		is_file(t_sh *msh, char *str, int i);
 int		find_space(char *str, int i);
 int		find_op(char *str, int i);
-int		find_dollar(char *str, int i);
 
 //environment variables
 
@@ -138,7 +145,8 @@ char	*expand_env(t_sh *msh, char *str);
 
 //ERROR HANDLING
 void 	error_exit(void);
-void    error_cmd_not_found(char *str);
+void  error_cmd_not_found(char *str);
+
 
 //EXECUTION
 int		execute(t_lex *lex, t_env *env);
