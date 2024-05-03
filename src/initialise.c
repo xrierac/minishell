@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/03 11:53:29 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:42:26 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	**init_cmd_arr(t_sh *msh)
 {
 	char	**temp;
 
-	temp = ft_calloc(sizeof(char *), 2);
+	temp = ft_calloc(sizeof(char *), 1);
 	if (!temp)
 	{
 		free_all(msh);
