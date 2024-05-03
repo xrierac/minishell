@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/02 15:56:09 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/03 12:08:54 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	get_input(t_sh *msh)
 			// if (msh->error == 1)
 			// 	free(input);
 			//execute
+			execution_branch(msh);
 			msh->error = 0;
 		}
 		//need to free input and lex_arr between cl calls
@@ -48,6 +49,5 @@ int	main(int ac, char **av, char **ev)
 		exit_error(msh, "Invalid arg amount\n", 127);
 	msh = init_msh(ev);
 	get_input(msh);
-	execution_branch(msh);
 	return (0);
 }
