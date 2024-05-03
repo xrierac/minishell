@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/30 16:38:04 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/03 11:53:29 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,20 @@ t_lex	***init_lex(t_sh *msh)
 	int	i;
 
 	msh->len = msh->pipes + 1;
-	i = -1;
-	msh->lex_arr = (t_lex ***)ft_calloc(msh->len + 1, sizeof(t_lex **));
+	msh->lex_arr = malloc(sizeof(t_lex ***));
 	if (!msh->lex_arr)
 	{
 		free_all(msh);
-		exit_error(msh, "ft_calloc", 127);
+		exit_error(msh, "malloc", 127);
 	}
 	i = -1;
 	while (++i <= msh->len)
 	{
-		msh->lex_arr[i] = (t_lex **)ft_calloc(1, sizeof(t_lex *));
+		msh->lex_arr[i] = malloc(sizeof(t_lex **));
 		if (!msh->lex_arr[i])
 		{
 			free_all(msh);
-			exit_error(msh, "ft_calloc", 127);
+			exit_error(msh, "malloc", 127);
 		}
 	}
 	return (msh->lex_arr);
@@ -78,7 +77,7 @@ void	init_token(t_sh *msh, t_lex **lex_arr)
 		if (!lex_arr[i])
 		{
 			free_all(msh);
-			exit_error(msh, "ft_calloc", 127);
+			exit_error(msh, "malloc", 127);
 		}
 	}
 }
