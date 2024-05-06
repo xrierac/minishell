@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 10:46:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/06 11:38:42 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/06 11:41:37 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	child_start(t_sh *sh_data, int index, int pipefd[][2])
 	{
 		if (sh_data->lex_arr[index][i]->token == CMD)
 			cmd_id = i;
-		else if (sh_data->lex_arr[index][i]->token != CMD)
+		else
 			check_token(sh_data->lex_arr[index][i], sh_data->env);
 		i++;
 	}
