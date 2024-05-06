@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/03 18:34:08 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:14:54 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,11 @@ void	get_input(t_sh *msh)
 				free(input);
 			// if (msh->error == 1)
 			// 	free(input);
-			//execute
 			execution_branch(msh);
 			msh->error = 0;
 		}
 		//print_lex(msh, msh->lex_arr);
-		//need to free input and lex_arr between cl calls
+		//free_lex(msh, msh->lex_arr);
 	}
 }
 

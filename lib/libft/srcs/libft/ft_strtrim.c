@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:01:30 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/30 12:55:51 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/06 14:02:36 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	size_t	i;
-	char	*res;
+	size_t		i;
+	char		*res;
 	const char	*temp;
 
 	if (!s1 || !set)
