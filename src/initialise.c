@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/03 18:23:01 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/06 13:52:50 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_sh	*init_msh(char **ev)
 	msh->tok_count = 0;
 	msh->error = false;
 	msh->quotes = 0;
+	msh->pipe_arr = NULL;
 	ft_envcpy(msh, msh->env, ev);
 	return (msh);
 }
