@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 10:46:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/06 11:41:37 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:48:11 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,10 @@ int	execution_branch(t_sh *sh_data)
 	int		i;
 	int		pipefd[MAX_FD][2];
 	pid_t	cpid[MAX_FD];
-	int		status;
 
 	i = -1;
+	if (parent_builtin(sh_data->lex_arr[0][0], sh_data->env) == 0)
+		return (1);
 	while (++i < sh_data->pipes)
 		if (pipe(pipefd[i]) == -1)
 			exit(0);
