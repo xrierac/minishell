@@ -6,19 +6,14 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:43:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/30 13:21:48 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:31:29 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	*syntax_check(t_sh *msh, char *temp)
+void	pre_check(t_sh *msh, char *start)
 {
-	char	*start;
-	char	*input;
-	char	*res;
-
-	start = ft_strtrim(temp, " ");
 	if (!start)
 	{
 		free_all(msh);
@@ -30,21 +25,32 @@ char	*syntax_check(t_sh *msh, char *temp)
 		msh->error = 1;
 	}
 	if (start[0] == '\0')
-	{
 		msh->error = 1;
-		return (input);
-	}
-	input = start;
-	//free(start);
+}
+
+char	*syntax_check(t_sh *msh, char *temp)
+{
+	char	*start;
+	char	*input;
+	char	*res;
+
+	start = ft_strtrim(temp, " ");
+	pre_check(msh, start);
+	input = ft_strdup(start);
 	if (msh->error == 0)
 	{
-		count_quotes(msh, start);
-		res = expand_env(msh, start);
-		if (!res[0])
+		count_quotes(msh, start); //Needs work
+		if (ft_strchr(start, '$'))
 		{
-			msh->error = 1;
-			return (res);
+			res = expand_env(msh, start);
+			if (!start[0])
+			{
+				msh->error = 1;
+				return (res);
+			}
 		}
+		else
+			res = input;
 		check_str(msh, res);
 		return (res);
 	}
