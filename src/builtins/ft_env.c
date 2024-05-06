@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:22:28 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/09 16:59:03 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:00:06 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_env(char **env)
+int	ft_env(char **env)
 {
 	char	*str;
 	int		i;
@@ -20,4 +20,5 @@ void	ft_env(char **env)
 	i = -1;
 	while (env[++i])
 		printf("%s\n", env[i]);
+	return (0);
 }

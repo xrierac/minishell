@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 10:46:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/03 16:46:28 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/06 11:41:37 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	child_start(t_sh *sh_data, int index, int pipefd[][2])
 	i = 0;
 	close_pipes(pipefd, index, sh_data);
 	pipe_management(sh_data, index, pipefd);
-	while (sh_data->lex_arr[index][i])
+	while (sh_data->lex_arr[index][i]->cmd_arr[0])
 	{
 		if (sh_data->lex_arr[index][i]->token == CMD)
 			cmd_id = i;
@@ -52,7 +52,7 @@ static void	child_start(t_sh *sh_data, int index, int pipefd[][2])
 			check_token(sh_data->lex_arr[index][i], sh_data->env);
 		i++;
 	}
-	if (execute(sh_data->lex_arr[index][0], sh_data->env) == -1)
+	if (execute(sh_data->lex_arr[index][cmd_id], sh_data->env) == -1)
 		error_cmd_not_found(sh_data->lex_arr[index][0]->cmd_arr[0]);
 }
 

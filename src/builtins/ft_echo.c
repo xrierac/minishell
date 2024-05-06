@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 10:40:55 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/04/26 12:30:56 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:25:34 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ static void	ft_echo_variable(char *str, char **env)
 	}
 }
 
-void	ft_echo(char **arr, char **env)
+int	ft_echo(char **arr, char **env)
 {
 	int		i;
 	char	*str;
-
+	
 	i = 0;
 	if (arr[1] && ft_strncmp(arr[1], "-n", 3) == 0)
 		i++;
@@ -68,6 +68,7 @@ void	ft_echo(char **arr, char **env)
 			ft_putstr_fd(arr[i], 1);
 	}
 	if (arr[1] && !ft_strncmp(arr[1], "-n", 3) )
-		return ;
+		return 0;
 	printf("\n");
+	return (0);
 }

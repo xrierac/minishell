@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/03 16:19:49 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:05:38 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,13 @@ int		execution_branch(t_sh *sh_data);
 int 	pipe_management(t_sh *sh_data, int index, int pipefd[][2]);
 int close_pipes(int pipefd[][2], int index, t_sh *sh_data);
 
+//BUILTINS
+int	builtin_check(t_lex *lex, t_env *env);
+int	ft_echo(char **arr, char **env);
+int	ft_cd(char *str, char **env);
+int	ft_pwd(void);
+int	ft_env(char **env);
+int	ft_export(char **arr);
 
 //EXECUTION UTILS
 char	*ft_getenv(const char *name, char **env);

@@ -17,7 +17,8 @@ SRCS	:= 	$(SRC_DIR)/main.c $(SRC_DIR)/initialise.c $(SRC_DIR)/free.c $(SRC_DIR)/
 			$(SRC_DIR)/parse_env.c $(SRC_DIR)/tokens.c $(SRC_DIR)/quotes.c $(SRC_DIR)/tokens_two.c \
 			$(SRC_DIR)/expand_env.c $(SRC_DIR)/random_utils.c $(SRC_DIR)/syntax.c $(SRC_DIR)/syntax_two.c \
 			$(SRC_DIR)/execution/execute.c $(SRC_DIR)/execution/execution_branch.c $(SRC_DIR)/execution/pipe_management.c\
-			$(SRC_DIR)/execution/redirect.c $(SRC_DIR)/execution/utils.c $(SRC_DIR)/pipes.c $(SRC_DIR)/execution/error_handling.c
+			$(SRC_DIR)/execution/redirect.c $(SRC_DIR)/execution/utils.c $(SRC_DIR)/pipes.c $(SRC_DIR)/execution/exit.c \
+			$(SRC_DIR)/builtins/ft_cd.c $(SRC_DIR)/builtins/ft_echo.c $(SRC_DIR)/builtins/ft_env.c $(SRC_DIR)/builtins/ft_pwd.c $(SRC_DIR)/builtins/builtin_check.c
 OBJS	:= ${SRCS:.c=.o}
 
 HEADERS := -I ./inc
