@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/03 16:19:49 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/06 13:35:58 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,13 @@
 
 typedef enum e_token_type
 {
-	R_INPUT, //<
-	R_OUTPUT, //>
-	HEREDOC, //<<
-	APPEND, //>>
-	STATUS, //!?
-	CMD, //str
+	R_INPUT,
+	R_OUTPUT,
+	HEREDOC,
+	APPEND,
+	STATUS,
+	CMD,
+	NOT_DEF,
 }	t_token_type;
 
 typedef enum e_bool
@@ -71,6 +72,7 @@ typedef struct s_sh
 {
 	t_env	*env;
 	t_lex	***lex_arr;
+	char	**pipe_arr;
 	//t_tool	*tool;
 	int		tok_count;
 	int		pipes;
@@ -103,7 +105,6 @@ void	assign_token(t_sh *msh, t_lex **lex_arr, char *cmd);
 char	*deref_env_var(t_sh *msh, char *input);
 void	is_token(t_sh *msh, char *str);
 void	count_pipes(t_sh *msh, char *input);
-void	fill_tok_structs(t_sh *msh, t_lex ***lex_arr, char **temp);
 
 //syntax
 
@@ -156,7 +157,7 @@ void	r_append(char **cmd_arr);
 void	r_heredoc(char **cmd_arr);
 int		execution_branch(t_sh *sh_data);
 int 	pipe_management(t_sh *sh_data, int index, int pipefd[][2]);
-int close_pipes(int pipefd[][2], int index, t_sh *sh_data);
+int 	close_pipes(int pipefd[][2], int index, t_sh *sh_data);
 
 
 //EXECUTION UTILS
