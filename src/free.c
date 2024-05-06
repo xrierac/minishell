@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:28 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/03 18:14:40 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:16:34 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,25 @@ void	free_all(t_sh *msh)
 void	free_lex(t_sh *msh, t_lex ***lex_arr)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
-	while (i < msh->len)
+	while (msh->len--)
 	{
-			while (j < msh->tok_count)
-			{
-				if (lex_arr[i][j]->cmd_arr != NULL)
-					ft_free_array(lex_arr[i][j]->cmd_arr);
-				free(lex_arr[i][j]);
-				j++;
-			}
-		free(lex_arr[i]);
-		lex_arr[i] = NULL;
-		i++;
+		msh->tok_count = 0;
+		is_token(msh, msh->pipe_arr[msh->len]);
+		//printf("Len[%i]", msh->len);
+		while (msh->tok_count--)
+		{
+			//if (lex_arr[msh->len][msh->tok_count]->cmd_arr != NULL)
+				//ft_free_array(lex_arr[msh->len][msh->tok_count]->cmd_arr);
+			free(lex_arr[msh->len][msh->tok_count]);
+			//printf(" tok[%i]\n", msh->tok_count);
+		}
+		free(lex_arr[msh->len]);
+		lex_arr[msh->len] = NULL;
 	}
 	free(lex_arr);
+	lex_arr = NULL;
 }
 
 void	free_env(t_env *env)
