@@ -61,16 +61,15 @@ void	get_input(t_sh *msh)
 			{
 				//free(temp);
 				lexer(input, msh);
+				execution_branch(msh);
+				free_lex(msh, msh->lex_arr);
 			}
 			if (msh->error == 1)
 				free(input);
-			// if (msh->error == 1)
-			// 	free(input);
-			execution_branch(msh);
 			msh->error = 0;
 		}
 		//print_lex(msh, msh->lex_arr);
-		//free_lex(msh, msh->lex_arr);
+		
 	}
 }
 
