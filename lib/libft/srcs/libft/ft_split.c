@@ -70,7 +70,7 @@ char	**ft_split(char const *s, char c)
 			end++;
 		result[i] = ft_substr(s, start, end - start);
 		start = end;
-		if (result[i++] == '\0')
+		if (result[i++] == NULL)
 			return (free_str(result));
 	}
 	return (result);
