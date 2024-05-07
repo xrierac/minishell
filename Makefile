@@ -3,8 +3,8 @@ NAME	:= minishell
 #Compiler options#
 
 CC		:= cc
-CFLAGS	:= -Wextra -Wall -Werror -lreadline #-fsanitize=address
-CFLAGS	:= -Wextra -Wall -Werror -g -lreadline #-fsanitize=address
+CFLAGS	:= -Wextra -Wall -Werror 
+LFLAGS	:= -lreadline
 
 INC_DIR  := ./inc
 SRC_DIR  := ./src
@@ -31,7 +31,7 @@ all: $(LIBFT) $(NAME)
 	
 		
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) $(LIBS) $(HEADERS) -o $(NAME)
 
 $(LIBFT) :
 	make -C $(LIBFT_DIR)
