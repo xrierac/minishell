@@ -88,7 +88,7 @@ char	**malloc_strings(char const *s, char c, char q, t_split *split)
 			split->str[split->i] = ft_substr(s, split->start, split->len);
 		}
 		split->start = split->end;
-		if (split->str[split->i++] == '\0')
+		if (split->str[split->i++] == NULL)
 			return (free_str(split->str));
 	}
 	return (split->str);

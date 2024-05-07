@@ -86,7 +86,7 @@ char	**malloc_strings(char const *s, char c, char q, t_tok *tok)
 		tok->str[tok->i] = ft_substr(s, tok->start, tok->len);
 		tok->start = tok->end;
 		q = find_delim(s, tok->delim, tok->end);
-		if (tok->str[tok->i++] == '\0')
+		if (tok->str[tok->i++] == NULL)
 			return (return_free_array(tok->str));
 	}
 	return (tok->str);

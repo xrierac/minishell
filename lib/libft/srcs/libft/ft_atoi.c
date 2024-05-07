@@ -45,9 +45,7 @@ int	ft_atoi(const char *str)
 	if (*str == 43 || *str == 45)
 	{
 		if (*str == 45)
-		{
 			neg = -1;
-		}
 		str++;
 	}
 	num = convert_char(str, neg);
