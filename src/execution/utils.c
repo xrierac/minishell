@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 09:54:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/02 15:34:30 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/07 09:38:11 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/libft/includes/libft.h"
+
+size_t	array_size(char **arr)
+{
+	size_t	i;
+
+	i = 0;
+	while (arr[i])
+		i++;
+	return (i);
+}
 
 char	*ft_getenv(const char *name, char **env)
 {
