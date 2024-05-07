@@ -43,7 +43,7 @@ char	*syntax_check(t_sh *msh, char *temp)
 		if (ft_strchr(start, '$'))
 		{
 			res = expand_env(msh, start);
-			if (!start[0])
+			if (!res[0])
 			{
 				msh->error = 1;
 				return (res);
