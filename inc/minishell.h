@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/07 10:48:40 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/08 10:53:33 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void	r_append(char **cmd_arr);
 void	r_heredoc(char **cmd_arr);
 int		execution_branch(t_sh *sh_data);
 int 	pipe_management(t_sh *sh_data, int index, int pipefd[][2]);
-int close_pipes(int pipefd[][2], int index, t_sh *sh_data);
+int 	close_pipes(int pipefd[][2], int index, t_sh *sh_data);
 
 //BUILTINS
 int	builtin_check(t_lex *lex, t_env *env);
@@ -170,5 +170,6 @@ int	ft_export(t_env *env_s, char *str);
 //EXECUTION UTILS
 char	*ft_getenv(const char *name, char **env);
 size_t	array_size(char **arr);
+int		new_path_arr(t_env *env_s, char *str);
 
 #endif
