@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 09:36:11 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/07 10:39:58 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/08 11:26:21 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,6 @@ static int	existing_var(t_env *env_struct, char *str)
 	return (-1);
 }
 
-static int	new_path_arr(t_env *env_s, char *str)
-{
-	if (ft_strncmp(str, "PATH=", 5) == 0)
-	{
-		ft_free_array(env_s->path_arr);
-		env_s->path_arr = ft_split(ft_getenv("PATH=", env_s->env_arr), ':');
-		if (!env_s->path_arr)
-			return (-1);
-	}
-	return (0);
-}
-
 static int	check_export(t_env *env_s, char *str)
 {
 	int	i;
@@ -66,10 +54,29 @@ static int	check_export(t_env *env_s, char *str)
 	if (!str)
 	{
 		while (env_s->env_arr[++i])
-			printf("declare -x %s\n", env_s->env_arr[i]);
+			printf("%s\n", env_s->env_arr[i]);
 		return (0);
 	}
 	return (1);
+}
+
+static int	check_validity(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=' && i != 0)
+			break ;
+		if (ft_isalpha(str[i]) == 0)
+		{
+			printf("minishell: export: '%s': not a valid identifier\n", str);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }
 
 int	ft_export(t_env *env_s, char *str)
@@ -78,6 +85,8 @@ int	ft_export(t_env *env_s, char *str)
 	int		i;
 
 	if (check_export(env_s, str) != 1)
+		return (0);
+	if (check_validity(str) == 1)
 		return (0);
 	if (existing_var(env_s, str) == -1)
 	{
