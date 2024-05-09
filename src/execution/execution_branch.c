@@ -44,7 +44,7 @@ static void	child_start(t_sh *sh_data, int index, int pipefd[][2])
 	i = 0;
 	close_pipes(pipefd, index, sh_data);
 	pipe_management(sh_data, index, pipefd);
-	while (sh_data->lex_arr[index][i]->cmd_arr[0])
+	while (sh_data->lex_arr[index][i])
 	{
 		if (sh_data->lex_arr[index][i]->token == CMD)
 			cmd_id = i;
@@ -68,7 +68,7 @@ int	execution_branch(t_sh *sh_data)
 		if (pipe(pipefd[i]) == -1)
 			exit(0);
 	i = -1;
-	while (++i < sh_data->len)
+	while (++i < sh_data->processes)
 	{
 		cpid[i] = fork();
 		if (cpid[i] < 0)
