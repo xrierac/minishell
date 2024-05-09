@@ -29,10 +29,7 @@ char	*check_env_var(t_sh *msh, t_env *env, char *var)
 			temp = ft_substr(env->env_arr[i], ft_strlen(var) + 1, \
 					ft_strlen(env->env_arr[i]) - ft_strlen(var) + 1);
 			if (!temp)
-			{
-				free_all(msh);
 				exit_error(msh, "ft_substr", 127);
-			}
 			break ;
 		}
 	}
@@ -40,10 +37,7 @@ char	*check_env_var(t_sh *msh, t_env *env, char *var)
 	{
 		temp = ft_strdup("");
 		if (!temp)
-		{
-			free_all(msh);
 			exit_error(msh, "ft_strdup", 127);
-		}
 	}
 	free(var);
 	return (temp);
@@ -56,18 +50,12 @@ char	*extract_var(t_sh *msh, char *start, int len)
 	if (len == 0 || start == NULL)
 		var_name = ft_strdup("");
 		if (!var_name)
-		{
-			free_all(msh);
 			exit_error(msh, "ft_strdup", 127);
-		}
 	else
 	{
 		var_name = ft_substr(start, 0, len);
 		if (!var_name)
-		{
-			free_all(msh);
 			exit_error(msh, "ft_substr", 127);
-		}
 	}
 	return (var_name);
 }
@@ -87,10 +75,7 @@ char	*expand_env(t_sh *msh, char *cmd)
 	buf_len = 0;
 	buffer = ft_calloc(ft_strlen(cmd) + 1, 1);
 	if (!buffer)
-	{
-		free_all(msh);
 		exit_error(msh, "calloc", 127);
-	}
 	while (*ptr)
 	{
 		var_len = 0;
@@ -108,10 +93,7 @@ char	*expand_env(t_sh *msh, char *cmd)
 			exp_len = ft_strlen(var);
 			buffer = ft_strjoin_free(buffer, var);
 			if (!buffer)
-			{
-				free_all(msh);
 				exit_error(msh, "ft_strjoin_free", 127);
-			}
 			buf_len += exp_len;
 			if (ft_isspace(*ptr))
 			{
