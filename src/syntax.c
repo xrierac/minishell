@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:43:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/06 11:07:47 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/10 17:01:43 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ char	*syntax_check(t_sh *msh, char *temp)
 	start = ft_strtrim(temp, " ");
 	pre_check(msh, start);
 	input = ft_strdup(start);
+	if (!input)
+		exit_error(msh, "ft_strdup", 127);
 	if (msh->error == 0)
 	{
 		count_quotes(msh, start); //Needs work
-		if (ft_strchr(start, '$'))
+		if (ft_strchr(start, '$')) //need to add heredoc check
 		{
 			res = expand_env(msh, start);
 			if (!res[0])
