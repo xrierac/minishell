@@ -5,6 +5,7 @@ NAME	:= minishell
 CC		:= cc
 CFLAGS	:= -Wextra -Wall -Werror 
 LFLAGS	:= -lreadline
+DFLAGS	:= -g -fsanitize=address,undefined
 
 INC_DIR  := ./inc
 SRC_DIR  := ./src
@@ -36,6 +37,9 @@ $(NAME): $(OBJS)
 $(LIBFT) :
 	make -C $(LIBFT_DIR)
 
+debug: CFLAGS += $(DFLAGS)
+debug: clean all
+
 clean:
 	make -C $(LIBFT_DIR) clean
 	@rm -rf $(OBJS)
@@ -46,4 +50,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all, clean, fclean, re, libft
+.PHONY: all, clean, fclean, re, libft, debug

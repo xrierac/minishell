@@ -17,6 +17,7 @@ void	exit_error(t_sh *msh, char *msg, int status)
 {
 	if (msh)
 	{
+		printf("Check\n");
 		free_all(msh);
 		ft_printf(2, RED":( %s\n"END, msg);
 	}

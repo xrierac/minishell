@@ -27,6 +27,7 @@ t_sh	*init_msh(char **ev)
 	}
 	init_env(msh->env);
 	msh->pipes = 0;
+	msh->processes = 0;
 	msh->tok_count = 0;
 	msh->error = false;
 	msh->quotes = 0;
@@ -47,23 +48,18 @@ t_lex	***init_lex(t_sh *msh)
 {
 	int	i;
 
-	msh->len = msh->pipes + 1;
-	msh->lex_arr = malloc(sizeof(t_lex ***));
-	if (!msh->lex_arr)
-	{
-		free_all(msh);
-		exit_error(msh, "malloc", 127);
-	}
 	i = -1;
-	while (++i <= msh->len)
+	msh->processes = msh->pipes + 1;
+	msh->lex_arr = (t_lex ***)malloc((msh->processes + 1) * sizeof(t_lex **));
+	if (!msh->lex_arr)
+		exit_error(msh, "malloc", 127);
+	while (++i <= msh->processes)
 	{
-		msh->lex_arr[i] = malloc(sizeof(t_lex **));
+		msh->lex_arr[i] = (t_lex **)malloc(sizeof(t_lex *));
 		if (!msh->lex_arr[i])
-		{
-			free_all(msh);
 			exit_error(msh, "malloc", 127);
-		}
 	}
+	msh->lex_arr[msh->processes] = NULL;
 	return (msh->lex_arr);
 }
 
@@ -72,15 +68,13 @@ void	init_token(t_sh *msh, t_lex **lex_arr)
 	int	i;
 
 	i = -1;
-	while (++i <= msh->tok_count)
+	while (++i < msh->tok_count)
 	{
 		lex_arr[i] = ft_calloc(sizeof(t_lex), 1);
 		if (!lex_arr[i])
-		{
-			free_all(msh);
 			exit_error(msh, "malloc", 127);
-		}
 	}
+	lex_arr[msh->tok_count] = NULL;
 }
 
 char	**init_cmd_arr(t_sh *msh)
@@ -95,3 +89,4 @@ char	**init_cmd_arr(t_sh *msh)
 	}
 	return (temp);
 }
+

@@ -30,15 +30,15 @@ int	close_pipes(int pipefd[][2], int index, t_sh *sh_data)
 
 int	pipe_management(t_sh *sh_data, int index, int pipefd[][2])
 {
-	if (sh_data->len == 1)
+	if (sh_data->processes == 1)
 		return (0);
-	if (index > 0 && index <= sh_data->len - 1)
+	if (index > 0 && index <= sh_data->processes - 1)
 	{
 		if (dup2(pipefd[index - 1][0], STDIN_FILENO) == -1)
 			return (1);
 		close(pipefd[index -1][0]);
 	}
-	if (index < sh_data->len - 1)
+	if (index < sh_data->processes - 1)
 	{
 		if (dup2(pipefd[index][1], STDOUT_FILENO) == -1)
 			return (1);
