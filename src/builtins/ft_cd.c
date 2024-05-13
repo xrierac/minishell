@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:52:42 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/07 11:09:56 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:48:18 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ int	ft_cd(char *str, t_env *env_s)
 		return (0);
 	ptr = getcwd(buf, size);
 	change_oldpwd(env_s, ptr);
+	if (!str)
+		str = ft_getenv("HOME", env_s->env_arr);
 	if (chdir(str))
-		printf("Error\n");
+		return (1);
 	ptr = getcwd(buf, size);
 	change_pwd(env_s, ptr);
 	free(ptr);
