@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:00:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/10 15:16:18 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:22:52 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,13 @@ int	find_quote(char *str, char q, int i)
 	return (i + 1);
 }
 
-char	set_quote(char	*str)
+char	set_quote(char	*str, int i)
 {
-	int	i;
-
-	i = -1;
-	while (str[++i])
+	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 			return (str[i]);
+		i++;
 	}
 	return (0);
 }
@@ -38,16 +36,59 @@ void	count_quotes(t_sh *msh, char *str)
 	char	q;
 
 	msh->count = 0;
-	i = -1;
-	q = set_quote(str);
-	while (str[++i])
+	i = 0;
+	while (str[i])
 	{
+		q = set_quote(str, i);
 		if (str[i] == q)
+		{
 			msh->count++;
+			i++;
+			while (str[i] != q && str[i])
+				i++;
+			if (str[i] == q)
+				msh->count++;
+		}
+		i++;
 	}
 	if (msh->count % 2 != 0)
 	{
 		ft_printf(2, "Close your quotes puta!\n");
 		msh->error = 1;
 	}
+}
+
+char	*remove_quotes(t_sh *msh, char *str)
+{
+	int		i;
+	int		j;
+	char	*result;
+	char	quote;
+
+	i = 0;
+	j = 0;
+	result = ft_calloc(ft_strlen(str), 1);
+	if (!result)
+		exit_error(msh, "ft_calloc", 127);
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			quote = str[i];
+			i++;
+			while (str[i] != quote && str[i])
+			{
+				result[j] = str[i];
+				j++;
+				i++;
+			}
+			i++;
+		}
+		result[j] = str[i];
+		j++;
+		i++;
+	}
+	result[j] = '\0';
+	free(str);
+	return (result);
 }

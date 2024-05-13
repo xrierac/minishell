@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/10 14:02:54 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:08:37 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	*check_env_var(t_sh *msh, t_env *env, char *var)
 	char	*temp;
 
 	i = -1;
+	var = remove_quotes(msh, var);
 	while (env->env_arr[++i])
 	{
 		k = 0;
@@ -71,6 +72,7 @@ char	*expand_env(t_sh *msh, char *cmd)
 	char	*ptr;
 	char	*start;
 	char	*var;
+	char	quote;
 
 	ptr = cmd;
 	start = NULL;
@@ -81,13 +83,33 @@ char	*expand_env(t_sh *msh, char *cmd)
 	while (*ptr)
 	{
 		var_len = 0;
-		if (*ptr == '$' && (*(ptr + 1) != ' ' && *(ptr + 1)) != '\0')
+		if (*ptr == '\"' || *ptr == '$')
 		{
-			ptr++;
-			start = ptr;
-			while (*ptr && ((ft_isalnum(*ptr) == 1) || *ptr == '_'))
+			if (*ptr == '$' && (*(ptr + 1) != ' ' && *(ptr + 1)) != '\0')
+			{
 				ptr++;
-			var_len = ptr - start;
+				start = ptr;
+				while (*ptr && ((ft_isalnum(*ptr) == 1) || *ptr == '_') && *ptr != '\"')
+					ptr++;
+				var_len = ptr - start;
+			}
+			// else
+			// {
+			// 	ptr++;
+			// 	while (*ptr && *ptr != '\"')
+			// 	{
+			// 		if (*ptr == '$' && (*(ptr + 1) != ' ' && *(ptr + 1)) != '\0')
+			// 		{
+			// 			ptr++;
+			// 			start = ptr;
+			// 			while (*ptr && ((ft_isalnum(*ptr) == 1) || *ptr == '_') && *ptr != '\"')
+			// 				ptr++;
+			// 			var_len = ptr - start;
+			// 		}
+			// 		buffer[buf_len++] = *ptr++;
+			// 		buffer[buf_len] = '\0';
+			// 	}
+			// }
 		}
 		var = check_env_var(msh, msh->env, extract_var(msh, start, var_len));
 		if (var[0] != '\0')
@@ -108,6 +130,13 @@ char	*expand_env(t_sh *msh, char *cmd)
 			free (var);
 			break ;
 		}
+		else if (*ptr == '\'')
+		{
+			ptr++;
+			while (*ptr != '\'' && *ptr)
+				buffer[buf_len++] = *ptr++;
+			buffer[buf_len] = '\0';
+		}
 		else
 		{
 			buffer[buf_len++] = *ptr++;
@@ -118,7 +147,6 @@ char	*expand_env(t_sh *msh, char *cmd)
 	free (cmd);
 	return (buffer);
 }
-
 
 char	*check_exit_code(t_sh *msh, char *str, int i)
 {
