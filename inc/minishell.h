@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/13 10:56:38 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:19:29 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ int 	close_pipes(int pipefd[][2], int index, t_sh *sh_data);
 
 //BUILTINS
 int	builtin_check(char **cmd, t_env *env);
-int	parent_builtin(char **cmd, t_env *env);
+int	run_builtin(t_sh *sh_data, char **cmd);
 int	ft_echo(char **arr, char **env);
 int	ft_cd(char *str, t_env *env_s);
 int	ft_pwd(void);

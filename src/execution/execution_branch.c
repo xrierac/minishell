@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 10:46:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/13 10:52:20 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:44:45 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static int	wait_processes(pid_t cpid[], int i)
 
 	while (--i >= 0)
 	{
-		if (cpid[i] && waitpid(cpid[i], &status, 0) == -1)
-			perror("ERROR\n");
+		if (waitpid(cpid[i], &status, 0) == -1)
+			perror("ERROR");
 	}
 	return (WEXITSTATUS(status));
 }
@@ -66,11 +66,11 @@ int	execution_branch(t_sh *sh_data)
 	while (++i < sh_data->pipes)
 		if (pipe(pipefd[i]) == -1)
 			exit(0);
+	if (run_builtin(sh_data, sh_data->lex_arr[0][0]->cmd_arr) == 0)
+		return (close_pipes(pipefd, i, sh_data), 0);
 	i = -1;
 	while (++i < sh_data->processes)
 	{
-		if (parent_builtin(sh_data->lex_arr[i][0]->cmd_arr, sh_data->env) == 1)
-		{
 			cpid[i] = fork();
 			if (cpid[i] < 0)
 				exit(0);
@@ -79,7 +79,6 @@ int	execution_branch(t_sh *sh_data)
 				child_start(sh_data, i, pipefd);
 				exit(0);
 			}
-		}
 	}
 	close_pipes(pipefd, i, sh_data);
 	return (wait_processes(cpid, i));
