@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/13 14:19:29 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:06:58 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,5 +173,7 @@ int	ft_unset(t_env *env_s, char **cmd, int arg);
 char	*ft_getenv(const char *name, char **env);
 size_t	array_size(char **arr);
 int		new_path_arr(t_env *env_s, char *str);
+char	*get_name(char *str);
+size_t	find_equal_sign(char *str);
 
 #endif

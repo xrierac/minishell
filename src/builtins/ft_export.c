@@ -6,25 +6,11 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 09:36:11 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/08 11:26:21 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:14:09 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-static size_t	find_equal_sign(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-	{
-		i++;
-		if (str[i] == '=')
-			break ;
-	}
-	return (i);
-}
 
 static int	existing_var(t_env *env_struct, char *str)
 {
@@ -48,13 +34,24 @@ static int	existing_var(t_env *env_struct, char *str)
 
 static int	check_export(t_env *env_s, char *str)
 {
-	int	i;
+	int		i;
+	char	*name;
 
 	i = -1;
 	if (!str)
 	{
 		while (env_s->env_arr[++i])
-			printf("%s\n", env_s->env_arr[i]);
+		{
+			if (find_equal_sign(env_s->env_arr[i]) != -1)
+			{
+				name = get_name(env_s->env_arr[i]);
+				printf("declare -x %s=\"%s\"\n", name,
+					ft_getenv(name, env_s->env_arr));
+				free(name);
+			}
+			else
+				printf("declare -x %s\n", env_s->env_arr[i]);
+		}
 		return (0);
 	}
 	return (1);
