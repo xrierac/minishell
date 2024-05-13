@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:21:51 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/06 15:24:28 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:47:40 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*find_cmd(char *cmd, t_env *env)
 
 int	execute(t_lex *lex, t_env *env)
 {
-	if (builtin_check(lex, env) == 0)
+	if (builtin_check(lex->cmd_arr, env) == 0)
 		return (0);
 	if (execve(lex->cmd_arr[0], lex->cmd_arr, env->env_arr))
 		if (execve(find_cmd(lex->cmd_arr[0], env), lex->cmd_arr, env->env_arr))
