@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 10:54:41 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/16 17:09:32 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:29:18 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ char	**malloc_strings(char const *s, char c, char q, t_tok *tok)
 		{
 			if (s[tok->end] == q)
 				skip_char(s, q, tok);
-			tok->end++;
+			if (s[tok->end] != c)
+				tok->end++;
 		}
 		tok->len = tok->end - tok->start;
 		tok->str[tok->i] = ft_substr(s, tok->start, tok->len);
