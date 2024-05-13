@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/03 18:31:36 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/10 14:02:54 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@ char	*extract_var(t_sh *msh, char *start, int len)
 	char	*var_name;
 
 	if (len == 0 || start == NULL)
+	{
 		var_name = ft_strdup("");
 		if (!var_name)
 			exit_error(msh, "ft_strdup", 127);
+	}
 	else
 	{
 		var_name = ft_substr(start, 0, len);

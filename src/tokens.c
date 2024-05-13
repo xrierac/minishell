@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:14:34 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/06 13:57:15 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/10 17:09:05 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,13 @@ void	is_token(t_sh *msh, char *str)
 		}
 	}
 }
+void    print_arr(char **str)
+{
+    int i = -1;
+
+    while (str[++i])
+        printf("%s\n", str[i]); 
+}
 
 void	create_tok_struct(t_sh *msh)
 {
@@ -55,7 +62,7 @@ void	create_tok_struct(t_sh *msh)
 		msh->tok_count = 0;
 		msh->pipe_arr[i] = ft_strtrim(msh->pipe_arr[i], " ");
 		if (!msh->pipe_arr[i])
-			exit_error(msh, "ft_strtrim\n", 127);
+			exit_error(msh, "ft_strtrim", 127);
 		is_token(msh, msh->pipe_arr[i]);
 		init_token(msh, msh->lex_arr[i]);
 		assign_token(msh, msh->lex_arr[i], msh->pipe_arr[i]);
@@ -80,8 +87,10 @@ void	assign_token(t_sh *msh, t_lex **lex_arr, char *cmd)
 			lex_arr[i]->cmd_arr = init_cmd_arr(msh);
 			lex_arr[i]->token = R_INPUT;
 			j += 1;
-			lex_arr[i]->cmd_arr[0] = ft_substr(cmd, j, find_space(cmd, j));
+			temp = ft_substr(cmd, j, find_space(cmd, j));
+			lex_arr[i]->cmd_arr[0] = ft_strtrim(temp, " ");
 			j = find_space(cmd , j);
+			printf("%s\n", lex_arr[i]->cmd_arr[0]);
 		}
 		else if (cmd[j] == '>' && cmd[j + 1] != '>')
 		{
@@ -116,6 +125,11 @@ void	assign_token(t_sh *msh, t_lex **lex_arr, char *cmd)
 			if (!lex_arr)
 				exit_error(msh, "ft_split", 127);
 			lex_arr[i]->token = CMD;
+		}
+		else 
+		{
+			lex_arr[i]->cmd_arr = init_cmd_arr(msh);
+			lex_arr[i]->token = NOT_DEF;
 		}
 	}
 }
