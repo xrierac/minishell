@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
 /*   Updated: 2024/05/13 09:34:40 by xriera-c         ###   ########.fr       */
@@ -31,12 +31,13 @@
 
 typedef enum e_token_type
 {
-	R_INPUT, //<
-	R_OUTPUT, //>
-	HEREDOC, //<<
-	APPEND, //>>
-	STATUS, //!?
-	CMD, //str
+	R_INPUT,
+	R_OUTPUT,
+	HEREDOC,
+	APPEND,
+	STATUS,
+	CMD,
+	NOT_DEF,
 }	t_token_type;
 
 typedef enum e_bool
@@ -60,21 +61,21 @@ typedef struct s_env
 	int		var_len;
 }	t_env;
 
-// typedef struct s_tool
+// typedef struct s_util
 // {
 // 	int		var_len;
 // 	char	*start;
 // 	char	*ptr;
-// }	t_tool;
+// }	t_util;
 
 typedef struct s_sh
 {
 	t_env	*env;
 	t_lex	***lex_arr;
-	//t_tool	*tool;
+	char	**pipe_arr;
 	int		tok_count;
 	int		pipes;
-	int		len;
+	int		processes;
 	int		count;
 	int		quotes;
 	t_bool	error;
@@ -99,11 +100,10 @@ void	ft_envcpy(t_sh *msh, t_env *env, char **ev);
 //tokens
 void	get_token(t_sh *msh, t_lex *lex_arr, char *str);
 void	lexer(char *input, t_sh *msh);
-void	assign_token(t_sh *msh, t_lex **lex_arr, char *cmd);
+void		assign_token(t_sh *msh, t_lex **lex_arr, char *cmd);
 char	*deref_env_var(t_sh *msh, char *input);
 void	is_token(t_sh *msh, char *str);
 void	count_pipes(t_sh *msh, char *input);
-void	fill_tok_structs(t_sh *msh, t_lex ***lex_arr, char **temp);
 
 //syntax
 
@@ -122,6 +122,7 @@ void	exit_error(t_sh *msh, char *msg, int status);
 void	free_all(t_sh *msh);
 void	free_lex(t_sh *msh, t_lex ***lex);
 void	free_env(t_env *env);
+void	free_msh(t_sh *msh);
 
 //tools
 

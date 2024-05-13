@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:36:48 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/30 14:11:44 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/06 14:51:08 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	ft_free_array(char **str)
 	size_t	i;
 
 	i = 0;
-	if (!str)
+	if (str == NULL)
 		return ;
-	else ;
+	else
 	{
 		if (str[i])
 		{

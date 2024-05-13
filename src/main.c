@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/03 18:34:08 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:14:54 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_lex(t_sh *msh, t_lex	***lex)
 	int	i = 0;
 	int	j = 0;
 
-	while (i < msh->len)
+	while (i < msh->processes)
 	{
 		//printf("i = %i processes=%i\n", i, msh->len);
 		j = 0;
@@ -48,6 +48,8 @@ void	get_input(t_sh *msh)
 	while (1)
 	{
 		temp = readline(GRN"TOTO"RED"ROJO"GRN":) "END);
+		if (!temp)
+			exit_error(msh, "readline", 127);
 		add_history(temp);
 		if (ft_strncmp(temp, "exit", 4) == 0 && ft_strlen(temp) == 4)
 		{
@@ -61,17 +63,15 @@ void	get_input(t_sh *msh)
 			{
 				//free(temp);
 				lexer(input, msh);
+				execution_branch(msh);
+				free_lex(msh, msh->lex_arr);
 			}
 			if (msh->error == 1)
 				free(input);
-			// if (msh->error == 1)
-			// 	free(input);
-			//execute
-			execution_branch(msh);
 			msh->error = 0;
 		}
 		//print_lex(msh, msh->lex_arr);
-		//need to free input and lex_arr between cl calls
+		
 	}
 }
 
@@ -80,7 +80,10 @@ int	main(int ac, char **av, char **ev)
 	t_sh	*msh;
 
 	if (ac != 1)
-		exit_error(msh, "Invalid arg amount\n", 127);
+	{
+		ft_printf(2, "Invalid arg amount\n");
+		exit(1);
+	}
 	msh = init_msh(ev);
 	get_input(msh);
 	return (0);

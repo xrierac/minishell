@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:43:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/03 18:31:29 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/06 11:07:47 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 void	pre_check(t_sh *msh, char *start)
 {
 	if (!start)
-	{
-		free_all(msh);
 		exit_error(msh, "ft_strtrim", 127);
-	}
 	if (start[0] == '|' && msh->error == 0)
 	{
 		ft_printf(2, RED":( "END SYNTAX_ERROR" `|'\n");
@@ -43,17 +40,19 @@ char	*syntax_check(t_sh *msh, char *temp)
 		if (ft_strchr(start, '$'))
 		{
 			res = expand_env(msh, start);
-			if (!start[0])
+			if (!res[0])
 			{
 				msh->error = 1;
 				return (res);
 			}
 		}
 		else
-			res = input;
+			res = start;
 		check_str(msh, res);
+		free(input);
 		return (res);
 	}
+	free(start);
 	return (input);
 }
 

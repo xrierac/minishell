@@ -3,8 +3,9 @@ NAME	:= minishell
 #Compiler options#
 
 CC		:= cc
-CFLAGS	:= -Wextra -Wall -Werror -lreadline #-fsanitize=address
-CFLAGS	:= -Wextra -Wall -Werror -g -lreadline #-fsanitize=address
+CFLAGS	:= -Wextra -Wall -Werror 
+LFLAGS	:= -lreadline
+DFLAGS	:= -g -fsanitize=address,undefined
 
 INC_DIR  := ./inc
 SRC_DIR  := ./src
@@ -33,10 +34,13 @@ all: $(LIBFT) $(NAME)
 	
 		
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) $(LIBS) $(HEADERS) -o $(NAME)
 
 $(LIBFT) :
 	make -C $(LIBFT_DIR)
+
+debug: CFLAGS += $(DFLAGS)
+debug: clean all
 
 clean:
 	make -C $(LIBFT_DIR) clean
@@ -48,4 +52,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all, clean, fclean, re, libft
+.PHONY: all, clean, fclean, re, libft, debug
