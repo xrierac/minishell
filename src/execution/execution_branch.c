@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_branch.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 10:46:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/10 14:24:06 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:52:20 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	wait_processes(pid_t cpid[], int i)
 
 	while (--i >= 0)
 	{
-		if (waitpid(cpid[i], &status, 0) == -1)
+		if (cpid[i] && waitpid(cpid[i], &status, 0) == -1)
 			perror("ERROR\n");
 	}
 	return (WEXITSTATUS(status));
@@ -61,7 +61,6 @@ int	execution_branch(t_sh *sh_data)
 	int		i;
 	int		pipefd[MAX_FD][2];
 	pid_t	cpid[MAX_FD];
-	int		status;
 
 	i = -1;
 	while (++i < sh_data->pipes)
@@ -70,13 +69,16 @@ int	execution_branch(t_sh *sh_data)
 	i = -1;
 	while (++i < sh_data->processes)
 	{
-		cpid[i] = fork();
-		if (cpid[i] < 0)
-			exit(0);
-		if (cpid[i] == 0)
+		if (parent_builtin(sh_data->lex_arr[i][0]->cmd_arr, sh_data->env) == 1)
 		{
-			child_start(sh_data, i, pipefd);
-			exit(0);
+			cpid[i] = fork();
+			if (cpid[i] < 0)
+				exit(0);
+			if (cpid[i] == 0)
+			{
+				child_start(sh_data, i, pipefd);
+				exit(0);
+			}
 		}
 	}
 	close_pipes(pipefd, i, sh_data);

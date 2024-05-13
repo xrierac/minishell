@@ -3,14 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 09:54:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/02 15:34:30 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/07 11:52:34 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../lib/libft/includes/libft.h"
+#include "../../inc/minishell.h"
+
+int	new_path_arr(t_env *env_s, char *str)
+{
+	if (ft_strncmp(str, "PATH=", 5) == 0)
+	{
+		ft_free_array(env_s->path_arr);
+		env_s->path_arr = ft_split(ft_getenv("PATH=", env_s->env_arr), ':');
+		if (!env_s->path_arr)
+			return (-1);
+	}
+	return (0);
+}
+
+size_t	array_size(char **arr)
+{
+	size_t	i;
+
+	i = 0;
+	while (arr[i])
+		i++;
+	return (i);
+}
 
 char	*ft_getenv(const char *name, char **env)
 {

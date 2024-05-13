@@ -6,40 +6,46 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:52:42 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/06 12:10:51 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/07 11:09:56 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	change_pwd(char **env, char *pwd)
+static void	change_oldpwd(t_env *env_s, char *pwd)
 {
-	int	i;
-
-	i = -1;
-	while (env[++i])
-		if (!ft_strncmp(env[i], "PWD=", 4))
-			break ;
-	if (!env[i])
-		return ;
-	free(env[i]);
-	env[i] = ft_strjoin("PWD=", pwd);
+	char *temp;
+	
+	temp = ft_strjoin("OLDPWD=", pwd);
+	ft_export(env_s, temp);
+	free(temp);
 }
 
-int	ft_cd(char *str, char **env)
+static void	change_pwd(t_env *env_s, char *pwd)
+{
+	char *temp;
+	
+	temp = ft_strjoin("PWD=", pwd);
+	ft_export(env_s, temp);
+	free(temp);
+}
+
+int	ft_cd(char *str, t_env *env_s)
 {
 	size_t	size;
-	char *ptr;
-	char *buf;
+	char	*ptr;
+	char	*buf;
 
-	chdir(str);
 	size = 2000;
 	buf = (char *)malloc(size);
 	if (!buf)
-		return 0;
+		return (0);
 	ptr = getcwd(buf, size);
-	printf("%s\n", ptr);
-	change_pwd(env, ptr);
+	change_oldpwd(env_s, ptr);
+	if (chdir(str))
+		printf("Error\n");
+	ptr = getcwd(buf, size);
+	change_pwd(env_s, ptr);
 	free(ptr);
 	return (0);
 }

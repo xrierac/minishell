@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/06 15:24:43 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:56:38 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,14 +160,18 @@ int 	pipe_management(t_sh *sh_data, int index, int pipefd[][2]);
 int 	close_pipes(int pipefd[][2], int index, t_sh *sh_data);
 
 //BUILTINS
-int	builtin_check(t_lex *lex, t_env *env);
+int	builtin_check(char **cmd, t_env *env);
+int	parent_builtin(char **cmd, t_env *env);
 int	ft_echo(char **arr, char **env);
-int	ft_cd(char *str, char **env);
+int	ft_cd(char *str, t_env *env_s);
 int	ft_pwd(void);
 int	ft_env(char **env);
-int	ft_export(char **arr);
+int	ft_export(t_env *env_s, char *str);
+int	ft_unset(t_env *env_s, char **cmd, int arg);
 
 //EXECUTION UTILS
 char	*ft_getenv(const char *name, char **env);
+size_t	array_size(char **arr);
+int		new_path_arr(t_env *env_s, char *str);
 
 #endif
