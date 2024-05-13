@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:13:46 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/30 11:02:56 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:06:23 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,6 @@ t_bool	is_op(char *str, int i)
 	else if (str[i] == '<' || str[i] == '>')
 		return (true);
 	return (false);
-}
-
-int	iter_str(char *str, int i)
-{
-	while (str[i])
-	{
-		if (ft_isspace(str[i]) == true || str[i] == '<' || str[i] == '>' \
-						|| str[i] == '$' || str[i] == '!')
-			break ;
-		i++;
-	}
-	return (i);
 }
 
 t_bool	ft_isspace(char c)
@@ -55,13 +43,13 @@ char	*choose_op(char c)
 
 int	is_file(t_sh *msh, char *str, int i)
 {
+	msh->tok_count++;
 	if (str[i] == '\0')
 		return (i);
 	while (ft_isspace(str[i]) == true)
 		i++;
 	if (ft_isspace(str[i]) == false)
 	{
-		// msh->tok_count++;
 		while (ft_isspace(str[i]) == false && str[i])
 			i++;
 	}
