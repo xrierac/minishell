@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/08 10:53:33 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 09:34:40 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ int	ft_cd(char *str, t_env *env_s);
 int	ft_pwd(void);
 int	ft_env(char **env);
 int	ft_export(t_env *env_s, char *str);
+int	ft_unset(t_env *env_s, char **cmd, int arg);
 
 //EXECUTION UTILS
 char	*ft_getenv(const char *name, char **env);

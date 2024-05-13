@@ -20,7 +20,7 @@ SRCS	:= 	$(SRC_DIR)/main.c $(SRC_DIR)/initialise.c $(SRC_DIR)/free.c $(SRC_DIR)/
 			$(SRC_DIR)/execution/redirect.c $(SRC_DIR)/execution/utils.c $(SRC_DIR)/pipes.c $(SRC_DIR)/execution/exit.c \
 			$(SRC_DIR)/builtins/ft_cd.c $(SRC_DIR)/builtins/ft_echo.c \
 			$(SRC_DIR)/builtins/ft_env.c $(SRC_DIR)/builtins/ft_pwd.c $(SRC_DIR)/builtins/builtin_check.c \
-			$(SRC_DIR)/builtins/ft_export.c
+			$(SRC_DIR)/builtins/ft_export.c $(SRC_DIR)/builtins/ft_unset.c
 OBJS	:= ${SRCS:.c=.o}
 
 HEADERS := -I ./inc
