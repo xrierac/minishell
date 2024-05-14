@@ -5,12 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/07 09:36:11 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/13 15:14:09 by xriera-c         ###   ########.fr       */
+/*   Created: 2024/05/14 10:54:17 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/05/14 11:18:24 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static int	new_envarr(t_env *env_s, char *str)
+{
+	int		i;
+	char	**new_env;
+
+	i = -1;
+	new_env = ft_calloc(array_size(env_s->env_arr) + 2, sizeof(char *));
+	if (!new_env)
+		return (1);
+	while (env_s->env_arr[++i])
+		new_env[i] = env_s->env_arr[i];
+	new_env[i] = ft_strdup(str);
+	new_env[++i] = NULL;
+	free(env_s->env_arr);
+	env_s->env_arr = new_env;
+	return (0);	
+}
 
 static int	existing_var(t_env *env_struct, char *str)
 {
@@ -30,6 +48,25 @@ static int	existing_var(t_env *env_struct, char *str)
 		i++;
 	}
 	return (-1);
+}
+
+static int	check_validity(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=' && i != 0)
+			break ;
+		if (ft_isalpha(str[i]) == 0)
+		{
+			printf("minishell: export: '%s': not a valid identifier\n", str);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }
 
 static int	check_export(t_env *env_s, char *str)
@@ -57,47 +94,20 @@ static int	check_export(t_env *env_s, char *str)
 	return (1);
 }
 
-static int	check_validity(char *str)
+int	ft_export(t_env *env_s, char **cmd, int arg)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
+	if (cmd[arg + 1])
+		ft_export(env_s, cmd, arg + 1);
+	if (arg == 0 && cmd[1] == NULL)
+		return (check_export(env_s, cmd[1]));
+	if (arg > 0)
 	{
-		if (str[i] == '=' && i != 0)
-			break ;
-		if (ft_isalpha(str[i]) == 0)
-		{
-			printf("minishell: export: '%s': not a valid identifier\n", str);
-			return (1);
-		}
-		i++;
+		if (check_validity(cmd[arg]) == 1)
+			return (0);
+		if (existing_var(env_s, cmd[arg]) == -1)
+			if (new_envarr(env_s, cmd[arg]) == 1)
+				return (0);
+		new_path_arr(env_s, cmd[arg]);
 	}
-	return (0);
-}
-
-int	ft_export(t_env *env_s, char *str)
-{
-	char	**new_env;
-	int		i;
-
-	if (check_export(env_s, str) != 1)
-		return (0);
-	if (check_validity(str) == 1)
-		return (0);
-	if (existing_var(env_s, str) == -1)
-	{
-		new_env = ft_calloc(array_size(env_s->env_arr) + 2, sizeof(char *));
-		if (!new_env)
-			return (1);
-		i = -1;
-		while (env_s->env_arr[++i])
-			new_env[i] = env_s->env_arr[i];
-		new_env[i] = ft_strdup(str);
-		new_env[++i] = NULL;
-		free(env_s->env_arr);
-		env_s->env_arr = new_env;
-	}
-	new_path_arr(env_s, str);
 	return (0);
 }
