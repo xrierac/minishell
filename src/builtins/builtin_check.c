@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:48:20 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/14 11:58:54 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/14 12:01:42 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	builtin_check(char **cmd, t_env *env)
 	if (!ft_strncmp(cmd[0], "export", 6) && ft_strlen(cmd[0]) == 6)
 		return (ft_export(env, cmd, 0));
 	if (!ft_strncmp(cmd[0],"cd", 2) && ft_strlen(cmd[0]) == 2)
-		return (0);
+		return (ft_cd(cmd[1], env));
 	if (!ft_strncmp(cmd[0], "unset", 5) && ft_strlen(cmd[0]) == 5)
 		return (0);
 	return (1);
