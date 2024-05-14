@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/13 10:56:38 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:33:53 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <readline/history.h>
 # include "../lib/libft/includes/libft.h"
 # include <fcntl.h>
+# include <sys/types.h>
+# include <dirent.h>
 
 # define GRN "\e[0;92m"
 # define BLK "\e[0;90m"
@@ -146,7 +148,8 @@ char	*expand_env(t_sh *msh, char *str);
 
 //ERROR HANDLING
 void 	error_exit(void);
-void  error_cmd_not_found(char *str);
+void 	error_cmd_not_found(char *str);
+int		generic_error(char *str, char *cmd);
 
 
 //EXECUTION
@@ -161,17 +164,19 @@ int 	close_pipes(int pipefd[][2], int index, t_sh *sh_data);
 
 //BUILTINS
 int	builtin_check(char **cmd, t_env *env);
-int	parent_builtin(char **cmd, t_env *env);
+int	run_builtin(t_sh *sh_data, char **cmd);
 int	ft_echo(char **arr, char **env);
 int	ft_cd(char *str, t_env *env_s);
 int	ft_pwd(void);
 int	ft_env(char **env);
-int	ft_export(t_env *env_s, char *str);
+int	ft_export(t_env *env_s, char **cmd, int arg);
 int	ft_unset(t_env *env_s, char **cmd, int arg);
 
 //EXECUTION UTILS
 char	*ft_getenv(const char *name, char **env);
 size_t	array_size(char **arr);
 int		new_path_arr(t_env *env_s, char *str);
+char	*get_name(char *str);
+size_t	find_equal_sign(char *str);
 
 #endif
