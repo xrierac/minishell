@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:43:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/13 16:03:27 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/14 11:38:18 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char	*syntax_check(t_sh *msh, char *temp)
 		}
 		else
 			res = start;
+		printf("%s\n", res);
 		check_str(msh, res);
 		free(input);
 		return (res);
