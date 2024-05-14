@@ -6,12 +6,11 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:33:02 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/14 14:49:05 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/14 15:54:22 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
 
 void	error_cmd_not_found(char *str)
 {
@@ -28,4 +27,3 @@ int	generic_error(char *str, char *cmd)
 	perror(str);
 	return (1);
 }
-
