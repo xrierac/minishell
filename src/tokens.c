@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:14:34 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/13 18:05:43 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/14 11:26:04 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ void	create_tok_struct(t_sh *msh)
 			exit_error(msh, "ft_strtrim", 127);
 		is_token(msh, msh->pipe_arr[i]);
 		init_token(msh, msh->lex_arr[i]);
-		// printf("Before=%s\n", msh->pipe_arr[i]);
-		// msh->pipe_arr[i] = remove_quotes(msh, msh->pipe_arr[i]);
 		// printf("After=%s\n", msh->pipe_arr[i]);
 		assign_token(msh, msh->lex_arr[i], msh->pipe_arr[i]);
 	}
