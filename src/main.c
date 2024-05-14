@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/10 14:49:41 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:14:21 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ void	get_input(t_sh *msh)
 		temp = readline(GRN"TOTO"RED"ROJO"GRN":) "END);
 		if (!temp)
 			exit_error(msh, "readline", 127);
-		add_history(temp);
-		if (ft_strncmp(temp, "exit", 4) == 0 && ft_strlen(temp) == 4)
+		if (temp)
+			add_history(temp);
+		if (ft_strncmp(temp, "exit", 5) == 0 && ft_strlen(temp) == 4)
 		{
 			//free_all(msh);
 			exit(0);
