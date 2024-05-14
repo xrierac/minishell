@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:54:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:23:53 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/14 15:33:54 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ static int	check_export(t_env *env_s, char *str)
 		if (find_equal_sign(env_s->env_arr[i]) != -1)
 		{
 			name = get_name(env_s->env_arr[i]);
+			if (!name)
+				return (1);
 			printf("declare -x %s=\"%s\"\n", name,
 				ft_getenv(name, env_s->env_arr));
 			free(name);
