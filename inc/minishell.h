@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/13 18:08:30 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/14 15:48:12 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,6 @@ typedef struct s_env
 	int		var_len;
 }	t_env;
 
-// typedef struct s_util
-// {
-// 	int		var_len;
-// 	char	*start;
-// 	char	*ptr;
-// }	t_util;
-
 typedef struct s_sh
 {
 	t_env	*env;
@@ -79,6 +72,9 @@ typedef struct s_sh
 	int		count;
 	int		quotes;
 	t_bool	error;
+	char	*buffer;
+	char	*var;
+	int		buf_len;
 }	t_sh;
 
 void	get_input(t_sh *msh);
@@ -137,6 +133,7 @@ int		is_file(t_sh *msh, char *str, int i);
 int		find_space(char *str, int i);
 int		find_op(char *str, int i);
 char	*remove_quotes(t_sh *msh, char *str);
+int		quote_search(char *str);
 
 //environment variables
 
@@ -146,8 +143,8 @@ char	*check_env_var(t_sh *msh, t_env *env, char *var);
 char	*extract_var(t_sh *msh, char *start, int len);
 
 //ERROR HANDLING
-void 	error_exit(void);
-void  error_cmd_not_found(char *str);
+void	error_exit(void);
+void	error_cmd_not_found(char *str);
 
 
 
