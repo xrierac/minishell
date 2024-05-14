@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 09:02:56 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/13 09:55:16 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/14 15:51:01 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	new_envarr(t_env *env_s, int index)
 	j = -1;
 	new_env = ft_calloc(array_size(env_s->env_arr), sizeof(char *));
 	if (!new_env)
-		return (1);
+		return (generic_error("", "unset"));
 	while (env_s->env_arr[++i])
 	{
 		if (i != index)
@@ -80,18 +80,20 @@ static int	check_exist(char **env, char *str)
 
 int	ft_unset(t_env *env_s, char **cmd, int arg)
 {
+	int	exit;
 	int	index;
 	
+	exit = 0;
 	if (cmd[arg + 1])
-		ft_unset(env_s, cmd, arg + 1);
+		exit += ft_unset(env_s, cmd, arg + 1);
 	if (arg == 0)
-		return (0);
+		return (exit);
 	if (check_validity(cmd[arg]) == 1)
-		return (0);
+		return (1);
 	index = check_exist(env_s->env_arr, cmd[arg]);
 	if (index == -1)
 		return (0);
 	if (new_envarr(env_s, index) == 1)
-		printf("MALLOC ERROR\n");
-	return (0);
+		exit++;
+	return (exit);
 }
