@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:00:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/13 16:22:52 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/14 15:55:16 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,24 @@ char	*remove_quotes(t_sh *msh, char *str)
 				j++;
 				i++;
 			}
-			i++;
 		}
-		result[j] = str[i];
-		j++;
 		i++;
 	}
 	result[j] = '\0';
 	free(str);
 	return (result);
+}
+
+int	quote_search(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			return (1);
+		i++;
+	}
+	return (0);
 }
