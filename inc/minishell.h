@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/14 11:57:32 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:33:53 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ char	*expand_env(t_sh *msh, char *str);
 //ERROR HANDLING
 void 	error_exit(void);
 void 	error_cmd_not_found(char *str);
-void	generic_error(char *str, char *cmd);
+int		generic_error(char *str, char *cmd);
 
 
 //EXECUTION

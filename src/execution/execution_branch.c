@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 10:46:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/13 14:44:45 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:56:57 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	execution_branch(t_sh *sh_data)
 	while (++i < sh_data->pipes)
 		if (pipe(pipefd[i]) == -1)
 			exit(0);
-	if (run_builtin(sh_data, sh_data->lex_arr[0][0]->cmd_arr) == 0)
+	if (run_builtin(sh_data, sh_data->lex_arr[0][0]->cmd_arr) >= 0)
 		return (close_pipes(pipefd, i, sh_data), 0);
 	i = -1;
 	while (++i < sh_data->processes)
