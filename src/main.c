@@ -6,19 +6,19 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/14 17:14:21 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/15 14:51:57 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-// void    print_arr(char **str)
-// {
-//     int i = -1;
+void    print_arr(char **str)
+{
+    int i = -1;
 
-//     while (str[++i])
-//         printf("%s\n", str[i]); 
-// }
+    while (str[++i])
+        printf("%s\n", str[i]); 
+}
 
 // void	print_lex(t_sh *msh, t_lex	***lex)
 // {
