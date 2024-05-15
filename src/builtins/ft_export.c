@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:54:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:33:54 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/15 11:10:59 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,19 @@ static int	new_envarr(t_env *env_s, char *str)
 static int	existing_var(t_env *env_struct, char *str)
 {
 	int		i;
-	size_t	len;
+	size_t	old;
+	size_t	new;
 
 	i = 0;
-	len = find_equal_sign(str);
+	new = find_equal_sign(str);
+	if (new == -1)
+		new = ft_strlen(str);
 	while (env_struct->env_arr[i])
 	{
-		if (ft_strncmp(env_struct->env_arr[i], str, len) == 0)
+		old = find_equal_sign(env_struct->env_arr[i]);
+		if (old == -1)
+			old = ft_strlen(env_struct->env_arr[i]);
+		if (ft_strncmp(env_struct->env_arr[i], str, old) == 0 && new == old)
 		{
 			free(env_struct->env_arr[i]);
 			env_struct->env_arr[i] = ft_strdup(str);
@@ -63,9 +69,9 @@ static int	check_validity(char *str)
 	{
 		if (str[i] == '=' && i != 0)
 			break ;
-		if (ft_isalpha(str[i]) == 0)
+		if (ft_isalnum(str[i]) == 0 && str[i] != '_')
 		{
-			generic_error(str, "export");
+			printf("minishell: export: `%s': not a valid identifier\n", str);
 			return (1);
 		}
 		i++;
@@ -108,6 +114,8 @@ int	ft_export(t_env *env_s, char **cmd, int arg)
 		return (check_export(env_s, cmd[1]));
 	if (arg > 0)
 	{
+		if (cmd[arg][0] == '_' && (cmd[arg][1] == '\0' || cmd[arg][1] == '='))
+			return (0);
 		if (check_validity(cmd[arg]) == 1)
 			return (1);
 		status = existing_var(env_s, cmd[arg]);
