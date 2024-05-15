@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/14 17:58:47 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/15 10:30:20 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,14 +119,15 @@ char	*deref_var(t_sh *msh, char *ptr)
 
 char	*handle_dquote(t_sh *msh, char *ptr)
 {
-	msh->buffer[msh->buf_len++] = *ptr++;
+	if (*ptr == '\"')
+		msh->buffer[msh->buf_len++] = *ptr++;
 	while (*ptr && *ptr != '\"')
 	{
-		if (*ptr == '$' && (*(ptr + 1) != ' ' && *(ptr + 1)) != '\0')
-		{
+		if (*ptr == '$' && *(ptr + 1) != ' ' && *(ptr + 1) \
+				&& *(ptr + 1) != '\"')
 			ptr = deref_var(msh, ptr + 1);
-		}
-		msh->buffer[msh->buf_len++] = *ptr++;
+		else
+			msh->buffer[msh->buf_len++] = *ptr++;
 	}
 	if (*ptr == '\"')
 		msh->buffer[msh->buf_len++] = *ptr++;
