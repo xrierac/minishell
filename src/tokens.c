@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:14:34 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/14 11:26:04 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:09:29 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	is_token(t_sh *msh, char *str)
 			i = is_file(msh, str, i + 1);
 		else if (is_op(str, i) == false && str[i])
 		{
-			msh->tok_count++;
 			while (is_op(str, i) == false && str[i])
 				i++;
+			msh->tok_count++;
 		}
 	}
 }
@@ -49,7 +49,6 @@ void	create_tok_struct(t_sh *msh)
 			exit_error(msh, "ft_strtrim", 127);
 		is_token(msh, msh->pipe_arr[i]);
 		init_token(msh, msh->lex_arr[i]);
-		// printf("After=%s\n", msh->pipe_arr[i]);
 		assign_token(msh, msh->lex_arr[i], msh->pipe_arr[i]);
 	}
 	ft_free_array(msh->pipe_arr);

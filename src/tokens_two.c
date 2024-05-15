@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:44:06 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/14 15:51:18 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:01:20 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	tokenise_cmd(t_sh *msh, t_lex *lex, char *cmd, int j)
 	while (lex->cmd_arr[++i])
 	{
 		lex->cmd_arr[i] = ft_strtrim(lex->cmd_arr[i], " ");
+		if (!lex->cmd_arr[i])
+			exit_error(msh, "ft_strtrim", 127);
 		if (quote_search(lex->cmd_arr[i]) == 1)
 			lex->cmd_arr[i] = remove_quotes(msh, lex->cmd_arr[i]);
 	}
@@ -64,6 +66,8 @@ int	tokenise_op(t_sh *msh, t_lex  *lex, char *cmd, int j)
 	lex->cmd_arr[0] = ft_strtrim(temp, " ");
 	if (!lex->cmd_arr[0])
 		exit_error(msh, "ft_strtrim", 127);
+	if (quote_search(lex->cmd_arr[0]) == 1)
+		lex->cmd_arr[0] = remove_quotes(msh, lex->cmd_arr[0]);
 	j = find_space(cmd, j);
 	return (j);
 }
