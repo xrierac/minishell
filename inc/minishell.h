@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:48:12 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:23:55 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,12 @@ void	token_type(t_sh *msh, t_lex *lex, char *cmd, int j);
 
 //syntax
 
-void	check_r_input(t_sh *msh, char *str, int i);
 void	check_str(t_sh *msh, char *temp);
-void	check_r_output(t_sh *msh, char *str, int i);
-void	check_heredoc(t_sh *msh, char *str, int i);
-void	check_append(t_sh *msh, char *str, int i);
 void	check_pipes(t_sh *msh, char *input);
-char	*choose_op(char c);
+char	*choose_op(char *c);
 char	*syntax_check(t_sh *msh, char *temp);
+char	*check_op_syntax(t_sh *msh, char *str);
+int		current_op(char *str);
 
 //errors and free
 
@@ -136,6 +134,7 @@ int		find_space(char *str, int i);
 int		find_op(char *str, int i);
 char	*remove_quotes(t_sh *msh, char *str);
 int		quote_search(char *str);
+char	*find_quote_ptr(char *str, char q);
 
 //environment variables
 
@@ -176,5 +175,10 @@ size_t	array_size(char **arr);
 int		new_path_arr(t_env *env_s, char *str);
 char	*get_name(char *str);
 size_t	find_equal_sign(char *str);
+
+
+//TESTING TO BE DELETED
+
+void    print_arr(char **str);
 
 #endif

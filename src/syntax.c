@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:43:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/14 11:38:18 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/15 13:43:35 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ char	*syntax_check(t_sh *msh, char *temp)
 		}
 		else
 			res = start;
-		printf("%s\n", res);
 		check_str(msh, res);
 		free(input);
 		return (res);
@@ -61,27 +60,23 @@ char	*syntax_check(t_sh *msh, char *temp)
 
 void	check_str(t_sh *msh, char *temp)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (*temp)
 	{
-		if ((ft_strncmp(temp, "<<<", 4) == 0 \
+		if ((*temp == '\'' || *temp == '\"') && msh->error == 0)
+			temp = find_quote_ptr(temp, *temp);
+		else if ((ft_strncmp(temp, "<<<", 4) == 0 \
 			|| ft_strncmp(temp, "<<< ", 4) == 0) && msh->error == 0)
 		{
 			msh->error = 1;
 			ft_printf(2, RED":( "END"Here strings have no power here!\n");
 		}
-		else if (temp[i] == '|' && msh->error == 0)
+		else if (*temp == '|' && msh->error == 0)
 			check_pipes(msh, temp);
-		else if (temp[i] == '<' && temp[i + 1] != '<' && msh->error == 0)
-			check_r_input(msh, temp, i + 1);
-		else if (temp[i] == '>' && temp[i + 1] != '>' && msh->error == 0)
-			check_r_output(msh, temp, i + 1);
-		else if (temp[i] == '>' && temp[i + 1] == '>' && msh->error == 0)
-			check_append(msh, temp, i + 2);
-		else if (temp[i] == '<' && temp[i + 1] == '<' && msh->error == 0)
-			check_heredoc(msh, temp, i + 2);
+		else if (current_op(temp) && msh->error == 0)
+			temp = check_op_syntax(msh, temp);
 		if (msh->error == 1)
 			return ;
 		temp++;

@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:00:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/14 15:55:16 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/15 11:13:47 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,12 @@ int	quote_search(char *str)
 		i++;
 	}
 	return (0);
+}
+
+char	*find_quote_ptr(char *str, char q)
+{
+	str++;
+	while (*str != q && *str)
+		str++;
+	return (str + 1);
 }

@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:13:46 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/13 18:06:23 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/15 12:17:03 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 t_bool	is_op(char *str, int i)
 {
 	if ((str[i] == '<' && str[i + 1] == '<') \
-		|| (str[i] == '>' && str[i + 1] == '>') \
-		|| (str[i] == '!' && str[i + 1] == '?'))
+		|| (str[i] == '>' && str[i + 1] == '>'))
 		return (true);
 	else if (str[i] == '<' || str[i] == '>')
 		return (true);
@@ -30,16 +29,6 @@ t_bool	ft_isspace(char c)
 	return (false);
 }
 
-char	*choose_op(char c)
-{
-	if (c == '<')
-		return ("<");
-	else if (c == '>')
-		return (">");
-	else if (c == '|')
-		return ("|");
-	return ("");
-}
 
 int	is_file(t_sh *msh, char *str, int i)
 {
@@ -67,7 +56,15 @@ int	find_space(char *str, int i)
 
 int	find_op(char *str, int i)
 {
-	while (is_op(str, i) == false && str[i])
-		i++;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			i = find_quote(str, str[i], i + 1);
+		else
+		{
+			while (is_op(str, i) == false && str[i])
+				i++;
+		}
+	}
 	return (i);
 }
