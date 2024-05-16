@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/15 14:51:57 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:55:04 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,22 @@ void    print_arr(char **str)
         printf("%s\n", str[i]); 
 }
 
-// void	print_lex(t_sh *msh, t_lex	***lex)
-// {
-// 	int	i = 0;
-// 	int	j = 0;
+void	print_lex(t_sh *msh, t_lex	***lex)
+{
+	int	i = 0;
+	int	j = 0;
 
-// 	while (i < msh->processes)
-// 	{
-// 		//printf("i = %i processes=%i\n", i, msh->len);
-// 		j = 0;
-// 		while (msh->tok_count > j)
-// 		{
-// 			//printf("j=%i tok=%i\n", j, msh->tok_count);
-// 			print_arr(lex[i][j]->cmd_arr);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
+	while (i < msh->processes)
+	{
+		j = 0;
+		while (msh->tok_count > j)
+		{
+			print_arr(lex[i][j]->cmd_arr);
+			j++;
+		}
+		i++;
+	}
+}
 
 
 void	get_input(t_sh *msh)

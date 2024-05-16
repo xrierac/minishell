@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:00:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/15 11:13:47 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:53:21 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ char	*remove_quotes(t_sh *msh, char *str)
 		{
 			quote = str[i];
 			i++;
+			if (str[i] == quote)
+				i++;
 			while (str[i] != quote && str[i])
 			{
 				result[j] = str[i];

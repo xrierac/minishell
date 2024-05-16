@@ -6,31 +6,29 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:01:30 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/06 14:02:36 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/16 15:28:11 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char *s1, char *set)
 {
 	size_t		i;
 	char		*res;
-	const char	*temp;
+	char		*temp;
 
 	if (!s1 || !set)
 		return (0);
 	temp = s1;
-	while (*s1 && ft_strchr(set, *s1))
-		s1++;
-	i = ft_strlen(s1);
-	while (i && ft_strchr(set, s1[i]))
+	while (*temp && ft_strchr(set, *temp))
+		temp++;
+	i = ft_strlen(temp);
+	while (i && ft_strchr(set, temp[i]))
 		i--;
-	res = ft_substr(s1, 0, i + 1);
+	res = ft_substr(temp, 0, i + 1);
 	if (!res)
 		return (0);
-	s1 = temp;
-	if (s1)
-		free((char *)s1);
+	free(s1);
 	return (res);
 }

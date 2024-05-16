@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:28 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/06 15:16:34 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:17:17 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,19 @@ void	free_lex(t_sh *msh, t_lex ***lex_arr)
 
 	i = -1;
 	j = -1;
-	while(lex_arr[++i] != NULL)
+	while (lex_arr[++i] != NULL)
 	{
 		j = -1;
 		while (lex_arr[i][++j] != NULL)
 		{
 			if (lex_arr[i][j]->cmd_arr != NULL)
 				ft_free_array(lex_arr[i][j]->cmd_arr);
-			free(lex_arr[i][j]);
+			if (lex_arr[i][j] != NULL)
+				free(lex_arr[i][j]);
 			lex_arr[i][j] = NULL;
 		}
-		free(lex_arr[i]);
+		if (lex_arr[i] != NULL)
+			free(lex_arr[i]);
 		lex_arr[i] = NULL;
 	}
 	free(lex_arr);

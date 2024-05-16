@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/14 12:23:06 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:14:12 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,23 @@ t_lex	***init_lex(t_sh *msh)
 	return (msh->lex_arr);
 }
 
-void	init_token(t_sh *msh, t_lex **lex_arr)
+t_lex	**init_token(t_sh *msh)
 {
-	int	i;
+	t_lex	**arr;
+	int		i;
 
 	i = -1;
-	while (++i < msh->tok_count)
+	arr = malloc(sizeof(t_lex *) * (msh->tok_count + 1));
+	if (!arr)
+		exit_error(msh, "malloc", 127);
+	while (++i <= msh->tok_count)
 	{
-		lex_arr[i] = ft_calloc(sizeof(t_lex), 1);
-		if (!lex_arr[i])
+		arr[i] = malloc(sizeof(t_lex));
+		if (!arr[i])
 			exit_error(msh, "malloc", 127);
 	}
-	lex_arr[msh->tok_count] = NULL;
+	arr[msh->tok_count] = NULL;
+	return (arr);
 }
 
 char	**init_cmd_arr(t_sh *msh)
