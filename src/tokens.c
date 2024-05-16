@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:14:34 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/15 15:09:29 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:59:11 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,36 @@ void	is_token(t_sh *msh, char *str)
 		else if (is_op(str, i) == false && str[i])
 		{
 			while (is_op(str, i) == false && str[i])
+			{
+				if (str[i] == '\'' || str[i] == '\"')
+					i = find_quote(str, str[i], i + 1);
 				i++;
+			}
+			i++;
 			msh->tok_count++;
 		}
 	}
 }
 
-void	create_tok_struct(t_sh *msh)
+void	create_tok_struct(t_sh *msh, char **pipe_arr)
 {
 	int		i;
+	int		j;
 
 	i = -1;
-	while (++i < msh->processes)
+	j = -1;
+	while (pipe_arr[++j] && ++i < msh->processes)
 	{
 		msh->tok_count = 0;
-		msh->pipe_arr[i] = ft_strtrim(msh->pipe_arr[i], " ");
-		if (!msh->pipe_arr[i])
+		pipe_arr[j] = ft_strtrim(msh->pipe_arr[j], " ");
+		if (pipe_arr[j] == 0)
 			exit_error(msh, "ft_strtrim", 127);
-		is_token(msh, msh->pipe_arr[i]);
-		init_token(msh, msh->lex_arr[i]);
-		assign_token(msh, msh->lex_arr[i], msh->pipe_arr[i]);
+		is_token(msh, pipe_arr[j]);
+		printf("%i\n", msh->tok_count);
+		msh->lex_arr[i] = init_token(msh);
+		assign_token(msh, msh->lex_arr[i], msh->pipe_arr[j]);
 	}
-	ft_free_array(msh->pipe_arr);
+	ft_free_array(pipe_arr);
 }
 
 void	assign_token(t_sh *msh, t_lex **lex, char *cmd)
@@ -64,16 +72,21 @@ void	assign_token(t_sh *msh, t_lex **lex, char *cmd)
 	while (++i < msh->tok_count)
 	{
 		if (is_op(cmd, j) == true)
+		{
+			printf("Entering tok_op\n");
 			j = tokenise_op(msh, lex[i], cmd, j);
+		}
 		else
+		{
+			printf("Entering tok_cmd\n");
 			j = tokenise_cmd(msh, lex[i], cmd, j);
+		}
 	}
 }
 
 void	lexer(char *input, t_sh *msh)
 {
 	int		i;
-	char	**pipe_arr;
 
 	i = -1;
 	count_pipes(msh, input);
@@ -81,6 +94,6 @@ void	lexer(char *input, t_sh *msh)
 	msh->pipe_arr = ft_strtok(input, '|', "'\'''\"'");
 	if (!msh->pipe_arr)
 		exit_error(msh, "ft_strtok\n", 127);
-	create_tok_struct(msh);
+	create_tok_struct(msh, msh->pipe_arr);
 	//free(input);
 }

@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:44:06 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/15 15:01:20 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:50:36 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	token_type(t_sh *msh, t_lex *lex, char *cmd, int j)
 	else if (cmd[j] == '>' && cmd[j + 1] != '>')
 		lex->token = R_OUTPUT;
 	else if (cmd[j] == '>' && cmd[j + 1] == '>')
+
 		lex->token = APPEND;
 	else if (cmd[j] == '<' && cmd[j + 1] == '<')
 		lex->token = HEREDOC;
@@ -31,7 +32,9 @@ int	tokenise_cmd(t_sh *msh, t_lex *lex, char *cmd, int j)
 
 	temp = NULL;
 	i = -1;
-	temp = ft_substr(cmd, j, find_op(cmd, j));
+	temp = ft_substr(cmd, j, find_op(cmd, j) - j);
+	if (!temp)
+		exit_error(msh, "ft_substr", 127);
 	j = find_op(cmd, j);
 	lex->cmd_arr = ft_strtok(temp, ' ', "'\'''\"'");
 	free(temp);
@@ -49,7 +52,17 @@ int	tokenise_cmd(t_sh *msh, t_lex *lex, char *cmd, int j)
 	return (j);
 }
 
-int	tokenise_op(t_sh *msh, t_lex  *lex, char *cmd, int j)
+int	iter_str(char *str, int i)
+{
+	while (ft_isspace(str[i]) == false && str[i])
+	{
+		printf("%c\n", str[i]);
+		i++;
+	}
+	return (i);
+}
+
+int	tokenise_op(t_sh *msh, t_lex *lex, char *cmd, int j)
 {
 	char	*temp;
 
@@ -60,14 +73,16 @@ int	tokenise_op(t_sh *msh, t_lex  *lex, char *cmd, int j)
 		j++;
 	else if (lex->token == APPEND || lex->token == HEREDOC)
 		j += 2;
-	temp = ft_substr(cmd, j, find_space(cmd, j));
+	temp = ft_substr(cmd, j, find_space(cmd, j) - j);
 	if (!temp)
 		exit_error(msh, "ft_substr", 127);
+	j = find_space(cmd, j);
+	while (ft_isspace(cmd[j]) == true && cmd[j])
+		j++;
 	lex->cmd_arr[0] = ft_strtrim(temp, " ");
 	if (!lex->cmd_arr[0])
 		exit_error(msh, "ft_strtrim", 127);
 	if (quote_search(lex->cmd_arr[0]) == 1)
 		lex->cmd_arr[0] = remove_quotes(msh, lex->cmd_arr[0]);
-	j = find_space(cmd, j);
 	return (j);
 }

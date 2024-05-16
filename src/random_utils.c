@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:13:46 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/15 12:17:03 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:48:17 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ t_bool	is_op(char *str, int i)
 	if ((str[i] == '<' && str[i + 1] == '<') \
 		|| (str[i] == '>' && str[i + 1] == '>'))
 		return (true);
-	else if (str[i] == '<' || str[i] == '>')
+	else if ((str[i] == '<' && str[i + 1] != '<') \
+		|| (str[i] == '>' && str[i + 1] != '>'))
 		return (true);
 	return (false);
 }
@@ -56,15 +57,12 @@ int	find_space(char *str, int i)
 
 int	find_op(char *str, int i)
 {
-	while (str[i])
+	while (str[i] && is_op(str, i) == false)
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 			i = find_quote(str, str[i], i + 1);
 		else
-		{
-			while (is_op(str, i) == false && str[i])
-				i++;
-		}
+			i++;
 	}
 	return (i);
 }
