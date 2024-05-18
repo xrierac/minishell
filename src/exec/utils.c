@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 09:54:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:35:55 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/15 10:53:23 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,12 @@ char	*ft_getenv(const char *name, char **env)
 	
 	len = ft_strlen(name);
 	i = 0;
-	while (env[i] && ft_strncmp(env[i], name, len))
+	while (env[i])
+	{
+		if (!ft_strncmp(env[i], name, len) && len == find_equal_sign(env[i]))
+			break ;
 		i++;
+	}
 	if (!env[i])
 		return (0);
 	return (env[i] + len + 1);

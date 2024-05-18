@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:48:01 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/03 14:38:54 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/17 11:44:34 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	r_heredoc(char **cmd_arr)
 		exit(0);
 	while (1)
 	{
-		input = readline(">");
+		input = readline("> ");
 		if (input == NULL)
 			exit(0);
 		if (!ft_strncmp(input, cmd_arr[0], ft_strlen(input)) && \
