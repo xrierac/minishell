@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:13:46 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/30 11:02:56 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:48:17 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,12 @@
 t_bool	is_op(char *str, int i)
 {
 	if ((str[i] == '<' && str[i + 1] == '<') \
-		|| (str[i] == '>' && str[i + 1] == '>') \
-		|| (str[i] == '!' && str[i + 1] == '?'))
+		|| (str[i] == '>' && str[i + 1] == '>'))
 		return (true);
-	else if (str[i] == '<' || str[i] == '>')
+	else if ((str[i] == '<' && str[i + 1] != '<') \
+		|| (str[i] == '>' && str[i + 1] != '>'))
 		return (true);
 	return (false);
-}
-
-int	iter_str(char *str, int i)
-{
-	while (str[i])
-	{
-		if (ft_isspace(str[i]) == true || str[i] == '<' || str[i] == '>' \
-						|| str[i] == '$' || str[i] == '!')
-			break ;
-		i++;
-	}
-	return (i);
 }
 
 t_bool	ft_isspace(char c)
@@ -42,26 +30,16 @@ t_bool	ft_isspace(char c)
 	return (false);
 }
 
-char	*choose_op(char c)
-{
-	if (c == '<')
-		return ("<");
-	else if (c == '>')
-		return (">");
-	else if (c == '|')
-		return ("|");
-	return ("");
-}
 
 int	is_file(t_sh *msh, char *str, int i)
 {
+	msh->tok_count++;
 	if (str[i] == '\0')
 		return (i);
 	while (ft_isspace(str[i]) == true)
 		i++;
 	if (ft_isspace(str[i]) == false)
 	{
-		// msh->tok_count++;
 		while (ft_isspace(str[i]) == false && str[i])
 			i++;
 	}
@@ -79,7 +57,12 @@ int	find_space(char *str, int i)
 
 int	find_op(char *str, int i)
 {
-	while (is_op(str, i) == false && str[i])
-		i++;
+	while (str[i] && is_op(str, i) == false)
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			i = find_quote(str, str[i], i + 1);
+		else
+			i++;
+	}
 	return (i);
 }

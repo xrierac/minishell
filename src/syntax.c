@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:43:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/10 17:01:43 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:49:38 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ char	*syntax_check(t_sh *msh, char *temp)
 	char	*start;
 	char	*input;
 	char	*res;
+	int		heredoc_flag;
 
+	heredoc_flag = 0;
 	start = ft_strtrim(temp, " ");
 	pre_check(msh, start);
 	input = ft_strdup(start);
@@ -38,8 +40,8 @@ char	*syntax_check(t_sh *msh, char *temp)
 		exit_error(msh, "ft_strdup", 127);
 	if (msh->error == 0)
 	{
-		count_quotes(msh, start); //Needs work
-		if (ft_strchr(start, '$')) //need to add heredoc check
+		count_quotes(msh, start);
+		if (ft_strchr(start, '$') && heredoc_flag == 0) //need to add heredoc check
 		{
 			res = expand_env(msh, start);
 			if (!res[0])
@@ -50,6 +52,7 @@ char	*syntax_check(t_sh *msh, char *temp)
 		}
 		else
 			res = start;
+		printf("%s\n", res);
 		check_str(msh, res);
 		free(input);
 		return (res);
@@ -60,27 +63,23 @@ char	*syntax_check(t_sh *msh, char *temp)
 
 void	check_str(t_sh *msh, char *temp)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (*temp)
 	{
-		if ((ft_strncmp(temp, "<<<", 4) == 0 \
+		if ((*temp == '\'' || *temp == '\"') && msh->error == 0)
+			temp = find_quote_ptr(temp, *temp);
+		else if ((ft_strncmp(temp, "<<<", 4) == 0 \
 			|| ft_strncmp(temp, "<<< ", 4) == 0) && msh->error == 0)
 		{
 			msh->error = 1;
 			ft_printf(2, RED":( "END"Here strings have no power here!\n");
 		}
-		else if (temp[i] == '|' && msh->error == 0)
+		else if (*temp == '|' && msh->error == 0)
 			check_pipes(msh, temp);
-		else if (temp[i] == '<' && temp[i + 1] != '<' && msh->error == 0)
-			check_r_input(msh, temp, i + 1);
-		else if (temp[i] == '>' && temp[i + 1] != '>' && msh->error == 0)
-			check_r_output(msh, temp, i + 1);
-		else if (temp[i] == '>' && temp[i + 1] == '>' && msh->error == 0)
-			check_append(msh, temp, i + 2);
-		else if (temp[i] == '<' && temp[i + 1] == '<' && msh->error == 0)
-			check_heredoc(msh, temp, i + 2);
+		else if (current_op(temp) && msh->error == 0)
+			temp = check_op_syntax(msh, temp);
 		if (msh->error == 1)
 			return ;
 		temp++;

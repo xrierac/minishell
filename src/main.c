@@ -6,38 +6,36 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/10 14:49:41 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:55:04 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-// void    print_arr(char **str)
-// {
-//     int i = -1;
+void    print_arr(char **str)
+{
+    int i = -1;
 
-//     while (str[++i])
-//         printf("%s\n", str[i]); 
-// }
+    while (str[++i])
+        printf("%s\n", str[i]); 
+}
 
-// void	print_lex(t_sh *msh, t_lex	***lex)
-// {
-// 	int	i = 0;
-// 	int	j = 0;
+void	print_lex(t_sh *msh, t_lex	***lex)
+{
+	int	i = 0;
+	int	j = 0;
 
-// 	while (i < msh->processes)
-// 	{
-// 		//printf("i = %i processes=%i\n", i, msh->len);
-// 		j = 0;
-// 		while (msh->tok_count > j)
-// 		{
-// 			//printf("j=%i tok=%i\n", j, msh->tok_count);
-// 			print_arr(lex[i][j]->cmd_arr);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
+	while (i < msh->processes)
+	{
+		j = 0;
+		while (msh->tok_count > j)
+		{
+			print_arr(lex[i][j]->cmd_arr);
+			j++;
+		}
+		i++;
+	}
+}
 
 
 void	get_input(t_sh *msh)
@@ -50,8 +48,9 @@ void	get_input(t_sh *msh)
 		temp = readline(GRN"TOTO"RED"ROJO"GRN":) "END);
 		if (!temp)
 			exit_error(msh, "readline", 127);
-		add_history(temp);
-		if (ft_strncmp(temp, "exit", 4) == 0 && ft_strlen(temp) == 4)
+		if (temp)
+			add_history(temp);
+		if (ft_strncmp(temp, "exit", 5) == 0 && ft_strlen(temp) == 4)
 		{
 			//free_all(msh);
 			exit(0);

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
 /*   Updated: 2024/05/18 18:17:20 by xriera-c         ###   ########.fr       */
@@ -63,13 +63,6 @@ typedef struct s_env
 	int		var_len;
 }	t_env;
 
-// typedef struct s_util
-// {
-// 	int		var_len;
-// 	char	*start;
-// 	char	*ptr;
-// }	t_util;
-
 typedef struct s_sh
 {
 	t_env	*env;
@@ -81,6 +74,9 @@ typedef struct s_sh
 	int		count;
 	int		quotes;
 	t_bool	error;
+	char	*buffer;
+	char	*var;
+	int		buf_len;
 }	t_sh;
 
 void	get_input(t_sh *msh);
@@ -89,7 +85,7 @@ void	get_input(t_sh *msh);
 
 t_sh	*init_msh(char **ev);
 t_lex	***init_lex(t_sh *msh);
-void	init_token(t_sh *msh, t_lex **lex_arr);
+t_lex	**init_token(t_sh *msh);
 void	init_env(t_env *env);
 char	**init_cmd_arr(t_sh *msh);
 
@@ -100,23 +96,23 @@ int		cur_lvl(char *ev);
 void	ft_envcpy(t_sh *msh, t_env *env, char **ev);
 
 //tokens
-void	get_token(t_sh *msh, t_lex *lex_arr, char *str);
 void	lexer(char *input, t_sh *msh);
-void		assign_token(t_sh *msh, t_lex **lex_arr, char *cmd);
+void	assign_token(t_sh *msh, t_lex **lex_arr, char *cmd);
 char	*deref_env_var(t_sh *msh, char *input);
 void	is_token(t_sh *msh, char *str);
 void	count_pipes(t_sh *msh, char *input);
+int		tokenise_cmd(t_sh *msh, t_lex *lex, char *cmd, int j);
+int		tokenise_op(t_sh *msh, t_lex *lex, char *cmd, int j);
+void	token_type(t_sh *msh, t_lex *lex, char *cmd, int j);
 
 //syntax
 
-void	check_r_input(t_sh *msh, char *str, int i);
 void	check_str(t_sh *msh, char *temp);
-void	check_r_output(t_sh *msh, char *str, int i);
-void	check_heredoc(t_sh *msh, char *str, int i);
-void	check_append(t_sh *msh, char *str, int i);
 void	check_pipes(t_sh *msh, char *input);
-char	*choose_op(char c);
+char	*choose_op(char *c);
 char	*syntax_check(t_sh *msh, char *temp);
+char	*check_op_syntax(t_sh *msh, char *str);
+int		current_op(char *str);
 
 //errors and free
 
@@ -130,21 +126,22 @@ void	free_msh(t_sh *msh);
 
 int		find_quote(char *str, char q, int i);
 t_bool	ft_isspace(char str);
-char	*redirect_in(t_sh *msh, char *input);
-t_bool	ft_isspace(char str);
-int		iter_str(char *str, int i);
 t_bool	is_op(char *str, int i);
 void	count_quotes(t_sh *msh, char *str);
-char	set_quote(char	*str);
+char	set_quote(char	*str, int i);
 int		is_file(t_sh *msh, char *str, int i);
 int		find_space(char *str, int i);
 int		find_op(char *str, int i);
+char	*remove_quotes(t_sh *msh, char *str);
+int		quote_search(char *str);
+char	*find_quote_ptr(char *str, char q);
 
 //environment variables
 
-char	*update_str(t_sh *msh, char *var, char *str);
 char	*check_exit_code(t_sh *msh, char *str, int i);
 char	*expand_env(t_sh *msh, char *str);
+char	*check_env_var(t_sh *msh, t_env *env, char *var);
+char	*extract_var(t_sh *msh, char *start, int len);
 
 //ERROR HANDLING
 void 	error_exit(void);
@@ -178,5 +175,10 @@ size_t	array_size(char **arr);
 int		new_path_arr(t_env *env_s, char *str);
 char	*get_name(char *str);
 size_t	find_equal_sign(char *str);
+
+
+//TESTING TO BE DELETED
+
+void    print_arr(char **str);
 
 #endif
