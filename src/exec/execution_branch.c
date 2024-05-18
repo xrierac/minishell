@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/26 10:46:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/15 14:13:35 by xriera-c         ###   ########.fr       */
+/*   Created: 2024/05/18 18:14:21 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/05/18 18:21:20 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,72 +36,68 @@ static void	check_token(t_lex *lex, t_env *env)
 		r_heredoc(lex->cmd_arr);
 }
 
-static void	child_start(t_sh *sh_data, int index, int pipefd[][2])
+static void	child_start(t_sh *sh, int index, int in, int fd[])
 {
 	int	i;
 	int	cmd_id;
 
 	i = 0;
-	close_pipes(pipefd, index, sh_data);
-	pipe_management(sh_data, index, pipefd);
-	while (sh_data->lex_arr[index][i])
+	if (sh->processes == 1)
+		close_pipes(in, fd[0], fd[1]);
+	pipe_management(sh, index, in, fd[1]);
+	while (sh->lex_arr[index][i])
 	{
-		if (sh_data->lex_arr[index][i]->token == CMD)
+		if (sh->lex_arr[index][i]->token == CMD)
 			cmd_id = i;
 		else
-			check_token(sh_data->lex_arr[index][i], sh_data->env);
+			check_token(sh->lex_arr[index][i], sh->env);
 		i++;
 	}
-	if (execute(sh_data->lex_arr[index][cmd_id], sh_data->env) == -1)
-		error_cmd_not_found(sh_data->lex_arr[index][0]->cmd_arr[0]);
+	if (execute(sh->lex_arr[index][cmd_id], sh->env) == -1)
+		error_cmd_not_found(sh->lex_arr[index][0]->cmd_arr[0]);
+	exit(1);
 }
 
-static int	open_processes(t_sh *sh_data, int pipefd[][2])
+static int	start_proc(t_sh *sh, int in, int i)
 {
-	pid_t	cpid[MAX_FD];
-	int		i;
+	int		fd[2];
+	pid_t	cpid[900];
 
-	i = -1;
-	while (++i < sh_data->processes)
+	while (++i < sh->processes)
 	{
+		if (pipe(fd) == -1)
+			return (generic_error("", "pipe"));
 		cpid[i] = fork();
 		if (cpid[i] < 0)
 		{
+			generic_error("", "fork");
+			close_pipes(in, fd[0], fd[1]);
 			wait_processes(cpid, i);
-			return (generic_error("", "fork"));
+			return (1);
 		}
 		if (cpid[i] == 0)
-		{
-			child_start(sh_data, i, pipefd);
-			exit(0);
-		}
+			child_start(sh, i, in, fd);
+		if (in > 0)
+			close(in);
+		in = fd[0];
+		close(fd[1]);
 	}
+	if (in > 0)
+		close(in);
 	return (wait_processes(cpid, i));
 }
 
-int	execution_branch(t_sh *sh_data)
+int	execution_branch(t_sh *sh)
 {
-	int		i;
-	int		pipefd[MAX_FD][2];
-	int		val;
-
-	i = run_builtin(sh_data, sh_data->lex_arr[0][0]->cmd_arr);
-	if (i >= 0)
-		return (i);
+	int	val;
+	int	in;
+	int	i;
+	
 	i = -1;
-	while (++i < sh_data->pipes)
-	{
-		if (pipe(pipefd[i]) == -1)
-		{
-			while (--i > -1)
-			{
-				close(pipefd[i][0]);
-				close(pipefd[i][1]);
-			}
-			return (generic_error("", "pipe"));
-		}
-	}
-	val = open_processes(sh_data, pipefd);
-	close_pipes(pipefd, i, sh_data);
+	in = 0;
+	val = run_builtin(sh, sh->lex_arr[0][0]->cmd_arr);
+	if (val >= 0)
+		return (val);
+	val = start_proc(sh, in, i);
 	return (val);
 }
