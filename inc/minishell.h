@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/18 18:17:20 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:07:49 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,9 +151,9 @@ int		generic_error(char *str, char *cmd);
 
 //EXECUTION
 int		execute(t_lex *lex, t_env *env);
-void	r_input(char **cmd_arr);
-void	r_output(char **cmd_arr);
-void	r_append(char **cmd_arr);
+int		r_input(char **cmd_arr);
+int		r_output(char **cmd_arr);
+int		r_append(char **cmd_arr);
 void	r_heredoc(char **cmd_arr);
 int		execution_branch(t_sh *sh);
 int 	pipe_management(t_sh *sh, int index, int in, int out);
