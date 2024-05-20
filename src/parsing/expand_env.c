@@ -6,11 +6,11 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/15 10:30:20 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:56:30 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 char	*add_var(t_sh *msh, t_env *env, char *var)
 {

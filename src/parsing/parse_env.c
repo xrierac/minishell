@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:36:36 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/04/11 15:00:34 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:56:42 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 //Creates path directory 2d array
 void	get_path(t_sh *msh, t_env *env, char **ev, int i)

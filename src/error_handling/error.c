@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	exit_error(t_sh *msh, char *msg, int status)
 {

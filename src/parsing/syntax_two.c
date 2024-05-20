@@ -6,11 +6,11 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:30:53 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/15 12:25:43 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:57:01 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 int	current_op(char *str)
 {

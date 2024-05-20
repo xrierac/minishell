@@ -6,11 +6,11 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:00:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/16 18:53:21 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:56:52 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 int	find_quote(char *str, char q, int i)
 {

@@ -6,11 +6,11 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:44:06 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/16 16:50:36 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/20 17:57:12 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	token_type(t_sh *msh, t_lex *lex, char *cmd, int j)
 {
@@ -19,10 +19,14 @@ void	token_type(t_sh *msh, t_lex *lex, char *cmd, int j)
 	else if (cmd[j] == '>' && cmd[j + 1] != '>')
 		lex->token = R_OUTPUT;
 	else if (cmd[j] == '>' && cmd[j + 1] == '>')
-
 		lex->token = APPEND;
 	else if (cmd[j] == '<' && cmd[j + 1] == '<')
-		lex->token = HEREDOC;
+	{
+		if (check_heredoc(cmd, j + 2) == true)
+			lex->token = VALID_HD;
+		else
+			lex->token = SKIP_HD;
+	}
 }
 
 int	tokenise_cmd(t_sh *msh, t_lex *lex, char *cmd, int j)
@@ -71,7 +75,8 @@ int	tokenise_op(t_sh *msh, t_lex *lex, char *cmd, int j)
 	token_type(msh, lex, cmd, j);
 	if (lex->token == R_INPUT || lex->token == R_OUTPUT)
 		j++;
-	else if (lex->token == APPEND || lex->token == HEREDOC)
+	else if (lex->token == APPEND || lex->token == VALID_HD \
+			|| lex->token == SKIP_HD)
 		j += 2;
 	temp = ft_substr(cmd, j, find_space(cmd, j) - j);
 	if (!temp)

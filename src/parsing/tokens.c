@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:14:34 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/16 18:59:11 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:37:40 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	is_token(t_sh *msh, char *str)
 			{
 				if (str[i] == '\'' || str[i] == '\"')
 					i = find_quote(str, str[i], i + 1);
-				i++;
+				else
+					i++;
 			}
-			i++;
 			msh->tok_count++;
 		}
 	}
@@ -55,7 +55,6 @@ void	create_tok_struct(t_sh *msh, char **pipe_arr)
 		if (pipe_arr[j] == 0)
 			exit_error(msh, "ft_strtrim", 127);
 		is_token(msh, pipe_arr[j]);
-		printf("%i\n", msh->tok_count);
 		msh->lex_arr[i] = init_token(msh);
 		assign_token(msh, msh->lex_arr[i], msh->pipe_arr[j]);
 	}
@@ -72,15 +71,11 @@ void	assign_token(t_sh *msh, t_lex **lex, char *cmd)
 	while (++i < msh->tok_count)
 	{
 		if (is_op(cmd, j) == true)
-		{
-			printf("Entering tok_op\n");
 			j = tokenise_op(msh, lex[i], cmd, j);
-		}
 		else
-		{
-			printf("Entering tok_cmd\n");
 			j = tokenise_cmd(msh, lex[i], cmd, j);
-		}
+		if (lex[i]->token == SKIP_HD)
+			close_hd_fd(msh);
 	}
 }
 

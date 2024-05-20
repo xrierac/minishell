@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/16 11:24:16 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/20 18:05:57 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ typedef enum e_token_type
 {
 	R_INPUT,
 	R_OUTPUT,
-	HEREDOC,
+	VALID_HD,
+	SKIP_HD,
 	APPEND,
 	STATUS,
 	CMD,
@@ -77,11 +78,12 @@ typedef struct s_sh
 	char	*buffer;
 	char	*var;
 	int		buf_len;
+	int		hd_fd[2];
 }	t_sh;
 
 void	get_input(t_sh *msh);
 
-//initialise sturcts
+//INITIALISE
 
 t_sh	*init_msh(char **ev);
 t_lex	***init_lex(t_sh *msh);
@@ -89,13 +91,15 @@ t_lex	**init_token(t_sh *msh);
 void	init_env(t_env *env);
 char	**init_cmd_arr(t_sh *msh);
 
-//environment 
+//ENVIRONMENT 
+
 void	get_path(t_sh *msh, t_env *env, char **ev, int i);
 void	get_lvl(t_sh *msh, char **temp, int i);
 int		cur_lvl(char *ev);
 void	ft_envcpy(t_sh *msh, t_env *env, char **ev);
 
-//tokens
+//TOKENS
+
 void	lexer(char *input, t_sh *msh);
 void	assign_token(t_sh *msh, t_lex **lex_arr, char *cmd);
 char	*deref_env_var(t_sh *msh, char *input);
@@ -105,7 +109,7 @@ int		tokenise_cmd(t_sh *msh, t_lex *lex, char *cmd, int j);
 int		tokenise_op(t_sh *msh, t_lex *lex, char *cmd, int j);
 void	token_type(t_sh *msh, t_lex *lex, char *cmd, int j);
 
-//syntax
+//SYNTAX
 
 void	check_str(t_sh *msh, char *temp);
 void	check_pipes(t_sh *msh, char *input);
@@ -114,7 +118,14 @@ char	*syntax_check(t_sh *msh, char *temp);
 char	*check_op_syntax(t_sh *msh, char *str);
 int		current_op(char *str);
 
-//errors and free
+// HEREDOC
+
+void	heredoc(t_sh *msh, char *str);
+void	close_hd_fd(t_sh *msh);
+t_bool	check_heredoc(char *cmd, int j);
+
+
+//ERROR HANDLING
 
 void	exit_error(t_sh *msh, char *msg, int status);
 void	free_all(t_sh *msh);

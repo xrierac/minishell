@@ -6,11 +6,11 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:43:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/16 18:49:38 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/20 18:07:18 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	pre_check(t_sh *msh, char *start)
 {
@@ -30,9 +30,7 @@ char	*syntax_check(t_sh *msh, char *temp)
 	char	*start;
 	char	*input;
 	char	*res;
-	int		heredoc_flag;
 
-	heredoc_flag = 0;
 	start = ft_strtrim(temp, " ");
 	pre_check(msh, start);
 	input = ft_strdup(start);
@@ -41,7 +39,8 @@ char	*syntax_check(t_sh *msh, char *temp)
 	if (msh->error == 0)
 	{
 		count_quotes(msh, start);
-		if (ft_strchr(start, '$') && heredoc_flag == 0) //need to add heredoc check
+		heredoc(msh, start);
+		if (ft_strchr(start, '$'))
 		{
 			res = expand_env(msh, start);
 			if (!res[0])
@@ -52,7 +51,6 @@ char	*syntax_check(t_sh *msh, char *temp)
 		}
 		else
 			res = start;
-		printf("%s\n", res);
 		check_str(msh, res);
 		free(input);
 		return (res);
