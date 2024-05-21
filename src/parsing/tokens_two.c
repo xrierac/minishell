@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:44:06 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/20 17:57:12 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/21 11:29:37 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	token_type(t_sh *msh, t_lex *lex, char *cmd, int j)
 		lex->token = APPEND;
 	else if (cmd[j] == '<' && cmd[j + 1] == '<')
 	{
-		if (check_heredoc(cmd, j + 2) == true)
-			lex->token = VALID_HD;
-		else
-			lex->token = SKIP_HD;
+		// if (check_heredoc(cmd, j + 2) == true)
+		// 	lex->token = VALID_HD;
+		// else
+		// 	lex->token = SKIP_HD;
 	}
 }
 

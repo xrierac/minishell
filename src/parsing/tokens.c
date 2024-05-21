@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:14:34 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/20 16:37:40 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/21 11:30:01 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	assign_token(t_sh *msh, t_lex **lex, char *cmd)
 			j = tokenise_op(msh, lex[i], cmd, j);
 		else
 			j = tokenise_cmd(msh, lex[i], cmd, j);
-		if (lex[i]->token == SKIP_HD)
-			close_hd_fd(msh);
+		// if (lex[i]->token == SKIP_HD)
+		// 	close_hd_fd(msh);
 	}
 }
 
@@ -89,6 +89,7 @@ void	lexer(char *input, t_sh *msh)
 	msh->pipe_arr = ft_strtok(input, '|', "'\'''\"'");
 	if (!msh->pipe_arr)
 		exit_error(msh, "ft_strtok\n", 127);
+	//syntax check
 	create_tok_struct(msh, msh->pipe_arr);
 	//free(input);
 }
