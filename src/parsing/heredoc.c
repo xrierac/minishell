@@ -6,22 +6,30 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:44:04 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/20 18:25:04 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/21 16:52:30 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_bool	check_delim(char c)
+void	close_all_hd_fd(t_sh *msh)
 {
-	if (c >= 33 && c <= 126)
+	int	i;
+	int len;
+
+	i = 0;
+	len = msh->pipes + 1;
+	while (i < len)
 	{
-		if (c == '<' || c == '>' || c == '|')
-			return (false);
-		return (true);
+		if (msh->hd_fd[i][0] > 0)
+			close(msh->hd_fd[i][0]);
 	}
-	else
-		return (false);
+}
+
+void	close_hd_fd(int fd)
+{
+	if (fd > 0)
+		close(fd);
 }
 
 static char	*find_delimeter(t_sh *msh, char *str, int i)
@@ -30,44 +38,53 @@ static char	*find_delimeter(t_sh *msh, char *str, int i)
 	char	*delim;
 	int		quotes;
 
+	quotes = 0;
 	while (ft_isspace(str[i]) == true && str[i])
 		i++;
-	if (str[i] == '\0' && msh->error == 0)
+	if (!str[i])
 	{
-		ft_printf(2, RED":( "END SYNTAX_ERROR" `newline'\n");
 		msh->error = 1;
+		return ("");
 	}
 	start = i;
-	if (check_delim(str[i]) == true && msh->error == 0)
+	while (check_delim(str[i]) == 1 && msh->error == 0 && str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 		{
 			quotes = 1;
 			i = find_quote(str, str[i], i + 1);
 		}
-		while (check_delim(str[i]) == true && str[i])
+		else
 			i++;
-		printf("i=%i\n", i);
-		delim = ft_substr(str, start, i - start);
-		if (!delim)
-			exit_error(msh, "ft_substr", 127);
-		if (quotes)
-			delim = remove_quotes(msh, delim);
 	}
-	else
-	{
-		ft_printf(2, RED":( "END SYNTAX_ERROR" `CHECK'\n");
-		msh->error = 1;
-	}
+	delim = ft_substr(str, start, i - start);
+	if (!delim)
+		exit_error(msh, "ft_substr", 127);
+	if (quotes)
+		delim = remove_quotes(msh, delim);
 	return (delim);
 }
 
-void	open_heredoc(t_sh *msh, char *delim)
+void	open_hd_pipe(t_sh *msh)
+{
+	int	i;
+
+	i = 0;
+	while (i < (msh->pipes + 1))
+	{
+		if (pipe(msh->hd_fd[i]) == -1)
+		{
+			close_all_hd_fd(msh);
+			exit_error(msh, "pipe", 1);
+		}
+		i++;
+	}
+}
+
+void	open_heredoc(t_sh *msh, char *delim, int *fd)
 {
 	char	*input;
 
-	if (pipe(msh->hd_fd) == -1)
-		exit_error(msh, "pipe", 1);
 	while (1)
 	{
 		input = readline("> ");
@@ -78,65 +95,68 @@ void	open_heredoc(t_sh *msh, char *delim)
 			break ;
 		// if (ft_strchr(input, '$'))
 		// 	input = expand_env(msh, input);
-		ft_printf(msh->hd_fd[1], "%s\n", input);
+		ft_printf(fd[1], "%s\n", input);
 		free(input);
 	}
-	close (msh->hd_fd[1]);
+	close (fd[1]);
 	free(delim);
 	free(input);
+}
+
+void	count_hd(t_sh *msh, char *str)
+{
+	int		hd_count;
+	int		i;
+
+	hd_count = 0;
+	while (str[i])
+	{
+		i = skip_quotes(str, i);
+		if (str[i] == '<' && str[i + 1] == '<')
+			hd_count++;
+		i++;
+	}
+	if (hd_count > 16)
+		exit_error(msh, "maximum here-document count exceeded", 1);
 }
 
 void	heredoc(t_sh *msh, char *str)
 {
 	int		i;
+	int		j;
+	int		valid_hd_count;
 	char	*delim;
 
 	i = 0;
+	valid_hd_count = 0;
+	count_hd(msh, str);
 	while (str[i])
 	{
-		if (str[i] == '\'' || str[i] == '\"')
-			i = find_quote(str, str[i], i + 1);
-		else if (str[i] == '<' && str[i + 1] == '<')
+		i = skip_quotes(str, i);
+		if (str[i] == '<' && str[i + 1] == '<')
 		{
 			i += 2;
 			delim = find_delimeter(msh, str, i);
-			printf("Delim=%s\n", delim);
-			if (msh->error == 1 || !delim)
-				return ;
-			i = is_file(msh, str, i);
-			if (check_heredoc(str, i) == true)
-				open_heredoc(msh, delim);
-			else
+			heredoc_syntax(msh, delim, i);
+			if (msh->error == 1)
 			{
-				open_heredoc(msh, delim);
-				close_hd_fd(msh);
+				close_all_hd_fd(msh);
+				return ;
 			}
+			i = is_file(msh, str, i);
+			// open_hd_pipe(msh);
+			// if (check_heredoc(str, i) == true)
+			// {
+			// 	open_heredoc(msh, delim, msh->hd_fd[valid_hd_count]);
+			// 	valid_hd_count++;
+			// }
+			// else
+			// {
+			// 	open_heredoc(msh, delim, msh->hd_fd[valid_hd_count]);
+			// 	close_hd_fd(msh->hd_fd[valid_hd_count][0]);
+			// }
 		}
 		else
 			i++;
 	}
-}
-
-t_bool	is_hd_valid(char *cmd, int j)
-{
-	if (cmd[j] == '<' || (cmd[j] == '<' && cmd[j + 1] == '<'))
-		return (false);
-	return (true);
-}
-
-t_bool	check_heredoc(char *cmd, int j)
-{
-	while (cmd[j])
-	{
-		if (is_hd_valid(cmd, j) == false)
-			return (false);
-		j++;
-	}
-	return (true);
-}
-
-void	close_hd_fd(t_sh *msh)
-{
-	if (msh->hd_fd[0] > 0)
-		close(msh->hd_fd[0]);
 }
