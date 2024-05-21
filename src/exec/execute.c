@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:21:51 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:24:50 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:29:23 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,28 @@ static char	*find_cmd(char *cmd, t_env *env)
 
 int	execute(t_lex *lex, t_env *env)
 {
-	if (builtin_check(lex->cmd_arr, env) == -1)
+	char	*cmd;
+
+	if (builtin_check(lex->cmd_arr, env) != -1)
+		return (0);
+	if (access(lex->cmd_arr[0], F_OK) == 0)
 	{
-		if (execve(lex->cmd_arr[0], lex->cmd_arr, env->env_arr))
-			if (execve(find_cmd(lex->cmd_arr[0], env), lex->cmd_arr, env->env_arr))
-				return (-1);
+		if (access(lex->cmd_arr[0], X_OK) == 0)
+		{
+			execve(lex->cmd_arr[0], lex->cmd_arr, env->env_arr);
+			return (generic_error("", lex->cmd_arr[0]));
+		}
+		return (127 - generic_error("", lex->cmd_arr[0]));
 	}
-	return (0);
+	cmd = find_cmd(lex->cmd_arr[0], env);
+	if (access(cmd, F_OK) == 0)
+	{
+		if (access(cmd, X_OK) == 0)
+		{
+			execve(cmd, lex->cmd_arr, env->env_arr);
+			return (generic_error("", cmd));
+		}
+		return (127 - generic_error("", cmd));
+	}
+	return (error_cmd_not_found(lex->cmd_arr[0]));
 }

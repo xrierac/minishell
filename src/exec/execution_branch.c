@@ -6,11 +6,12 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/20 12:23:01 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:43:42 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+#include <signal.h>
 
 static int	wait_processes(pid_t cpid[], int nproc)
 {
@@ -60,15 +61,15 @@ static void	child_start(t_sh *sh, int index, int in, int fd[])
 		}
 		i++;
 	}
-	if (execute(sh->lex_arr[index][cmd_id], sh->env) == -1)
-		error_cmd_not_found(sh->lex_arr[index][0]->cmd_arr[0]);
-	exit(1);
+	exit(execute(sh->lex_arr[index][cmd_id], sh->env));
 }
 
 static int	start_proc(t_sh *sh, int in, int i)
 {
 	int		fd[2];
 	pid_t	cpid[900];
+	struct sigaction sa;
+
 
 	while (++i < sh->processes)
 	{
@@ -87,6 +88,8 @@ static int	start_proc(t_sh *sh, int in, int i)
 			close(in);
 		in = fd[0];
 		close(fd[1]);
+		sa.sa_handler = &handle_sigtstp;
+		sigaction(SIGTSTP, &sa, NULL);
 	}
 	if (in > 0)
 		close(in);

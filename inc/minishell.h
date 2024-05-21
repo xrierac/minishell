@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/20 12:07:49 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:40:28 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ char	*extract_var(t_sh *msh, char *start, int len);
 
 //ERROR HANDLING
 void 	error_exit(void);
-void 	error_cmd_not_found(char *str);
+int 	error_cmd_not_found(char *str);
 int		generic_error(char *str, char *cmd);
 
 
@@ -158,6 +158,7 @@ void	r_heredoc(char **cmd_arr);
 int		execution_branch(t_sh *sh);
 int 	pipe_management(t_sh *sh, int index, int in, int out);
 int 	close_pipes(int in, int fda, int fdb);
+void	handle_sigtstp(int sig);
 
 //BUILTINS
 int	builtin_check(char **cmd, t_env *env);
