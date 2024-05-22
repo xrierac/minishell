@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/21 16:49:31 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:47:30 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_sh
 	char	*buffer;
 	char	*var;
 	int		buf_len;
-	int		*hd_fd[2];
+	int		hd_fd[16][2];
 }	t_sh;
 
 void	get_input(t_sh *msh);
@@ -121,22 +121,22 @@ int		current_op(char *str);
 // HEREDOC
 
 void	heredoc(t_sh *msh, char *str);
-void	close_hd_fd(int fd);
 t_bool	check_heredoc(char *cmd, int j);
-char	*find_e_op(t_sh *msh, char *str, int i);
-void	heredoc_syntax(t_sh *msh, char *str, int i);
 int		check_delim(char c);
 t_bool	check_heredoc(char *cmd, int j);
 t_bool	is_hd_valid(char *cmd, int j);
+int		is_eof(char *str, int i);
 
 
-//ERROR HANDLING
+//ERROR/FREE/CLOSE
 
 void	exit_error(t_sh *msh, char *msg, int status);
 void	free_all(t_sh *msh);
 void	free_lex(t_sh *msh, t_lex ***lex);
 void	free_env(t_env *env);
 void	free_msh(t_sh *msh);
+void	close_hd_fd(int fd);
+void	close_all_hd_fd(t_sh *msh);
 
 //TOOLS
 

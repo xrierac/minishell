@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:43:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/21 15:59:11 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:13:53 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,13 @@ char	*syntax_check(t_sh *msh, char *temp)
 	return (trim_str);
 }
 
-void	check_str(t_sh *msh, char *temp)
+void	check_str(t_sh *msh, char *res)
 {
-	int	i;
+	int		i;
+	char	*temp;
 
 	i = 0;
+	temp = res;
 	while (*temp)
 	{
 		if ((*temp == '\'' || *temp == '\"') && msh->error == 0)
@@ -78,8 +80,9 @@ void	check_str(t_sh *msh, char *temp)
 			check_pipes(msh, temp);
 		else if (current_op(temp) && msh->error == 0)
 			temp = check_op_syntax(msh, temp);
+		else
+			temp++;
 		if (msh->error == 1)
 			return ;
-		temp++;
 	}
 }
