@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:00:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/21 16:03:17 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:07:19 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,14 @@ char	*remove_quotes(t_sh *msh, char *str)
 			if (str[i] == quote)
 				i++;
 			while (str[i] != quote && str[i])
-			{
-				result[j] = str[i];
-				j++;
-				i++;
-			}
+				result[j++] = str[i++];
 		}
-		i++;
+		else
+			result[j++] = str[i++];
 	}
 	result[j] = '\0';
 	free(str);
+	printf("tok = %i Result = %s\n", msh->tok_count, result);
 	return (result);
 }
 

@@ -6,41 +6,11 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:00:36 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/21 16:46:56 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:21:28 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-char	*find_e_op(t_sh *msh, char *str, int i)
-{
-	if (str[i] == '<' && str[i + 1] == '<')
-		return ("<<");
-	else if (str[i] == '>' && str[i + 1] == '>')
-		return (">>");
-	else if (str[i] == '<')
-		return ("<");
-	else if (str[i] == '>')
-		return (">");
-	else if (str[i] == '|')
-		return ("|");
-	else
-		return ("");
-}
-
-void	heredoc_syntax(t_sh *msh, char *str, int i)
-{
-	char	*e_op;
-
-	e_op = find_e_op(msh, str, i);
-	if (msh->error == 1)
-	{
-		if (!e_op[0])
-			ft_printf(2, RED":( "END SYNTAX_ERROR" `newline'\n");
-		else
-			ft_printf(2, RED":( "END SYNTAX_ERROR" `%s'\n", e_op);
-	}
-}
 
 int	check_delim(char c)
 {
@@ -70,4 +40,23 @@ t_bool	is_hd_valid(char *cmd, int j)
 	if (cmd[j] == '<' || (cmd[j] == '<' && cmd[j + 1] == '<'))
 		return (false);
 	return (true);
+}
+
+int	is_eof(char *str, int i)
+{
+	if (str[i] == '\0')
+		return (i);
+	while (ft_isspace(str[i]) == true)
+		i++;
+	if (check_delim(str[i]) == 1)
+	{
+		while (check_delim(str[i]) == 1 && str[i])
+		{
+			if (str[i] == '\'' || str[i] == '\"')
+				i = skip_quotes(str, i);
+			else
+				i++;
+		}
+	}
+	return (i);
 }
