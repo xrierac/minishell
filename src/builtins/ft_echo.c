@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 10:40:55 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/06 12:25:34 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/22 11:59:30 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,23 +52,43 @@ static void	ft_echo_variable(char *str, char **env)
 	}
 }
 
+static int	check_flag(char *str)
+{
+	int	i;
+	int	j;
+	
+	i = 0;
+	j = 0;
+	while (str && str[0] == '-' && str[++j])
+	{
+		if (str[j] == 'n')
+			i = 1;
+		if (str[j] != 'n')
+		{
+			i = 0;
+			break ;
+		}
+	}
+	return (i);
+}
+
 int	ft_echo(char **arr, char **env)
 {
 	int		i;
 	char	*str;
 	
-	i = 0;
-	if (arr[1] && ft_strncmp(arr[1], "-n", 3) == 0)
-		i++;
+	i = check_flag(arr[1]);
 	while (arr[++i])
 	{
 		if (ft_strchr(arr[i], '$') != 0)
 			ft_echo_variable(arr[i], env);
 		else
 			ft_putstr_fd(arr[i], 1);
+		if (arr[i + 1])
+			ft_putstr_fd(" ", 1);
 	}
-	if (arr[1] && !ft_strncmp(arr[1], "-n", 3) )
-		return 0;
+	if (check_flag(arr[1]) == 1)
+		return (0);
 	printf("\n");
 	return (0);
 }
