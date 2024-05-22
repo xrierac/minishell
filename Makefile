@@ -4,10 +4,10 @@ NAME	:= minishell
 
 CC		:= cc
 CFLAGS	:= -Wextra -Wall -Werror 
-LFLAGS	:= -lreadline
+LFLAGS	:= -l readline -L /Users/xriera-c/.brew/opt/readline/lib
 DFLAGS	:= -g -fsanitize=address,undefined
 
-INC_DIR  := ./inc
+INC_DIR  := ./inc -I /Users/xriera-c/.brew/opt/readline/include
 SRC_DIR  := ./src
 OBJ_DIR  := .
 

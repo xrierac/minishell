@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 14:22:06 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/22 15:06:49 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:00:37 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	parent_handler(int signal)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	return ;
 }
 
 static void	child_handler(int signal)
@@ -37,10 +36,9 @@ static void	child_handler(int signal)
 		g_error = 130;
 	else if (signal == SIGQUIT)
 	{
-		write(1, "Quit: 3\n", 10);
+		ft_putstr_fd("Quit: 3\n", 1);
 		g_error = 131;
 	}
-	return ;
 }
 
 void	receive_signal(int	val)
@@ -56,4 +54,3 @@ void	receive_signal(int	val)
 	sigaction(SIGQUIT, &sa, NULL);
 	sigaction(SIGTERM, &sa, NULL);
 }
-

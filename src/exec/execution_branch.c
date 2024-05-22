@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/20 15:43:42 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:31:10 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,8 @@ static int	start_proc(t_sh *sh, int in, int i)
 {
 	int		fd[2];
 	pid_t	cpid[900];
-	struct sigaction sa;
 
-
+	receive_signal(0);
 	while (++i < sh->processes)
 	{
 		if (pipe(fd) == -1)
@@ -88,8 +87,6 @@ static int	start_proc(t_sh *sh, int in, int i)
 			close(in);
 		in = fd[0];
 		close(fd[1]);
-		sa.sa_handler = &handle_sigtstp;
-		sigaction(SIGTSTP, &sa, NULL);
 	}
 	if (in > 0)
 		close(in);

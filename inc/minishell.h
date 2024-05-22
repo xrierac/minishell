@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/20 14:40:28 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:17:40 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # define SYNTAX_ERROR "syntax error near unexpected token"
 
 # define MAX_FD 256
+
+int	g_error;
 
 typedef enum e_token_type
 {
@@ -158,7 +160,6 @@ void	r_heredoc(char **cmd_arr);
 int		execution_branch(t_sh *sh);
 int 	pipe_management(t_sh *sh, int index, int in, int out);
 int 	close_pipes(int in, int fda, int fdb);
-void	handle_sigtstp(int sig);
 
 //BUILTINS
 int	builtin_check(char **cmd, t_env *env);
@@ -177,6 +178,9 @@ int		new_path_arr(t_env *env_s, char *str);
 char	*get_name(char *str);
 size_t	find_equal_sign(char *str);
 
+//SIGNALS
+int		rl_replace_line();
+void	receive_signal(int	val);
 
 //TESTING TO BE DELETED
 
