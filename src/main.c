@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
 /*   Updated: 2024/05/22 17:00:21 by tcampbel         ###   ########.fr       */
@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+#include <signal.h>
+#include <strings.h>
 
 void    print_arr(char **str)
 {
@@ -44,6 +46,7 @@ void	get_input(t_sh *msh)
 
 	while (1)
 	{
+		receive_signal(1);
 		temp = readline(GRN"TOTO"RED"ROJO"GRN":) "END);
 		if (!temp)
 			exit_error(msh, "readline", 127);
@@ -61,7 +64,7 @@ void	get_input(t_sh *msh)
 			{
 				printf("%s\n", input);
 				lexer(input, msh);
-				print_lex(msh, msh->lex_arr);
+			//	print_lex(msh, msh->lex_arr);	
 				execution_branch(msh);
 				free_lex(msh, msh->lex_arr);
 			}

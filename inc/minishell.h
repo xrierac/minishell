@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/22 17:19:14 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:17:40 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # define SYNTAX_ERROR "syntax error near unexpected token"
 
 # define MAX_FD 256
+
+int	g_error;
 
 typedef enum e_token_type
 {
@@ -162,15 +164,15 @@ char	*extract_var(t_sh *msh, char *start, int len);
 
 //ERROR HANDLING
 void 	error_exit(void);
-void 	error_cmd_not_found(char *str);
+int 	error_cmd_not_found(char *str);
 int		generic_error(char *str, char *cmd);
 
 
 //EXECUTION
 int		execute(t_lex *lex, t_env *env);
-void	r_input(char **cmd_arr);
-void	r_output(char **cmd_arr);
-void	r_append(char **cmd_arr);
+int		r_input(char **cmd_arr);
+int		r_output(char **cmd_arr);
+int		r_append(char **cmd_arr);
 void	r_heredoc(char **cmd_arr);
 int		execution_branch(t_sh *sh);
 int 	pipe_management(t_sh *sh, int index, int in, int out);
@@ -193,6 +195,9 @@ int		new_path_arr(t_env *env_s, char *str);
 char	*get_name(char *str);
 size_t	find_equal_sign(char *str);
 
+//SIGNALS
+int		rl_replace_line();
+void	receive_signal(int	val);
 
 //TESTING TO BE DELETED
 
