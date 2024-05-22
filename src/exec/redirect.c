@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:48:01 by xriera-c          #+#    #+#             */
 /*   Updated: 2024/05/20 12:06:16 by xriera-c         ###   ########.fr       */
@@ -60,29 +60,3 @@ int	r_append(char **cmd_arr)
 	return (0);
 }
 
-void	r_heredoc(char **cmd_arr)
-{
-	char	*input;
-	char	**arr;
-	int		tmpfd;
-
-	tmpfd = open(".tmpfile", O_WRONLY | O_CREAT | O_APPEND, 0666);
-	if (tmpfd == -1)
-		exit(0);
-	while (1)
-	{
-		input = readline("> ");
-		if (input == NULL)
-			exit(0);
-		if (!ft_strncmp(input, cmd_arr[0], ft_strlen(input)) && \
-		ft_strlen(input) == ft_strlen(cmd_arr[0]))
-			break ;
-		ft_putstr_fd(input, tmpfd);
-		ft_putstr_fd("\n", tmpfd);
-		free(input);
-	}
-	arr = ft_split(".tmpfile", ' ');
-	r_input(arr);
-	free(arr);
-	unlink(".tmpfile");
-}

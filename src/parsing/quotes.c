@@ -6,11 +6,11 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:00:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/16 18:53:21 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:07:19 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 int	find_quote(char *str, char q, int i)
 {
@@ -79,16 +79,14 @@ char	*remove_quotes(t_sh *msh, char *str)
 			if (str[i] == quote)
 				i++;
 			while (str[i] != quote && str[i])
-			{
-				result[j] = str[i];
-				j++;
-				i++;
-			}
+				result[j++] = str[i++];
 		}
-		i++;
+		else
+			result[j++] = str[i++];
 	}
 	result[j] = '\0';
 	free(str);
+	printf("tok = %i Result = %s\n", msh->tok_count, result);
 	return (result);
 }
 
@@ -104,12 +102,4 @@ int	quote_search(char *str)
 		i++;
 	}
 	return (0);
-}
-
-char	*find_quote_ptr(char *str, char q)
-{
-	str++;
-	while (*str != q && *str)
-		str++;
-	return (str + 1);
 }

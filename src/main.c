@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/22 17:06:50 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:00:21 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	print_lex(t_sh *msh, t_lex	***lex)
 	}
 }
 
-
 void	get_input(t_sh *msh)
 {
 	char	*input;
@@ -63,13 +62,13 @@ void	get_input(t_sh *msh)
 			input = syntax_check(msh, temp);
 			if (msh->error == 0)
 			{
+				printf("%s\n", input);
 				lexer(input, msh);
 			//	print_lex(msh, msh->lex_arr);	
 				execution_branch(msh);
 				free_lex(msh, msh->lex_arr);
 			}
-			if (msh->error == 1)
-				free(input);
+			free(input);
 			msh->error = 0;
 		}
 	}
