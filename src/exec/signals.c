@@ -6,25 +6,54 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 14:22:06 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/20 14:37:28 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:06:49 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 #include <signal.h>
 
-void	handle_sigtstp(int sig)
+static void	parent_handler(int signal)
 {
-	/*
-	int	j;
-
-	j = 0;
-	while (j < i)
+	if (signal == SIGINT)
 	{
-		kill(cpid[j], SIGINT);
-		j++;
+		rl_replace_line("", 0);
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_redisplay();
+		g_error = 1;
 	}
-	*/
-	ft_putstr_fd("Hello\n", 2);
+	else if (signal == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	return ;
+}
+
+static void	child_handler(int signal)
+{
+	if (signal == SIGINT)
+		g_error = 130;
+	else if (signal == SIGQUIT)
+	{
+		write(1, "Quit: 3\n", 10);
+		g_error = 131;
+	}
+	return ;
+}
+
+void	receive_signal(int	val)
+{
+	struct sigaction	sa;
+
+	if (val)
+		sa.sa_handler = &parent_handler;
+	else
+		sa.sa_handler = &child_handler;
+	sa.sa_flags = SA_RESTART;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
+	sigaction(SIGTERM, &sa, NULL);
 }
 
