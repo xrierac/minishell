@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 10:40:55 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/22 11:59:30 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/22 12:13:56 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,13 @@ static int	check_flag(char *str)
 int	ft_echo(char **arr, char **env)
 {
 	int		i;
+	int		j;
 	char	*str;
 	
-	i = check_flag(arr[1]);
+	i = 0;
+	j = 0;
+	while (ft_strncmp(arr[++j], "-n", 2) == 0 && check_flag(arr[j]))
+		i++;
 	while (arr[++i])
 	{
 		if (ft_strchr(arr[i], '$') != 0)
