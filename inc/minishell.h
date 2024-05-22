@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/22 15:47:30 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:19:14 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,9 +172,9 @@ void	r_input(char **cmd_arr);
 void	r_output(char **cmd_arr);
 void	r_append(char **cmd_arr);
 void	r_heredoc(char **cmd_arr);
-int		execution_branch(t_sh *sh_data);
-int 	pipe_management(t_sh *sh_data, int index, int pipefd[][2]);
-int 	close_pipes(int pipefd[][2], int index, t_sh *sh_data);
+int		execution_branch(t_sh *sh);
+int 	pipe_management(t_sh *sh, int index, int in, int out);
+int 	close_pipes(int in, int fda, int fdb);
 
 //BUILTINS
 int	builtin_check(char **cmd, t_env *env);

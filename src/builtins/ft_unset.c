@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 09:02:56 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:51:01 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/15 11:27:22 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	check_validity(char *str)
 		return (1);
 	while (str[i])
 	{
-		if (ft_isalpha(str[i]) == 0)
+		if (ft_isalnum(str[i]) == 0 && str[i] != '_')
 		{
 			printf("minishell: unset: '%s': not a valid identifier\n", str);
 			return (1);
