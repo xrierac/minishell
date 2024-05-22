@@ -6,11 +6,11 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:13:46 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/16 16:48:17 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/22 13:59:13 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 t_bool	is_op(char *str, int i)
 {
@@ -29,7 +29,6 @@ t_bool	ft_isspace(char c)
 		return (true);
 	return (false);
 }
-
 
 int	is_file(t_sh *msh, char *str, int i)
 {
@@ -66,3 +65,4 @@ int	find_op(char *str, int i)
 	}
 	return (i);
 }
+

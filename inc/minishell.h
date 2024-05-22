@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/18 18:17:20 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:19:14 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ typedef enum e_token_type
 {
 	R_INPUT,
 	R_OUTPUT,
-	HEREDOC,
+	VALID_HD,
+	SKIP_HD,
 	APPEND,
 	STATUS,
 	CMD,
@@ -77,11 +78,12 @@ typedef struct s_sh
 	char	*buffer;
 	char	*var;
 	int		buf_len;
+	int		hd_fd[16][2];
 }	t_sh;
 
 void	get_input(t_sh *msh);
 
-//initialise sturcts
+//INITIALISE
 
 t_sh	*init_msh(char **ev);
 t_lex	***init_lex(t_sh *msh);
@@ -89,13 +91,15 @@ t_lex	**init_token(t_sh *msh);
 void	init_env(t_env *env);
 char	**init_cmd_arr(t_sh *msh);
 
-//environment 
+//ENVIRONMENT 
+
 void	get_path(t_sh *msh, t_env *env, char **ev, int i);
 void	get_lvl(t_sh *msh, char **temp, int i);
 int		cur_lvl(char *ev);
 void	ft_envcpy(t_sh *msh, t_env *env, char **ev);
 
-//tokens
+//TOKENS
+
 void	lexer(char *input, t_sh *msh);
 void	assign_token(t_sh *msh, t_lex **lex_arr, char *cmd);
 char	*deref_env_var(t_sh *msh, char *input);
@@ -105,7 +109,7 @@ int		tokenise_cmd(t_sh *msh, t_lex *lex, char *cmd, int j);
 int		tokenise_op(t_sh *msh, t_lex *lex, char *cmd, int j);
 void	token_type(t_sh *msh, t_lex *lex, char *cmd, int j);
 
-//syntax
+//SYNTAX
 
 void	check_str(t_sh *msh, char *temp);
 void	check_pipes(t_sh *msh, char *input);
@@ -114,15 +118,27 @@ char	*syntax_check(t_sh *msh, char *temp);
 char	*check_op_syntax(t_sh *msh, char *str);
 int		current_op(char *str);
 
-//errors and free
+// HEREDOC
+
+void	heredoc(t_sh *msh, char *str);
+t_bool	check_heredoc(char *cmd, int j);
+int		check_delim(char c);
+t_bool	check_heredoc(char *cmd, int j);
+t_bool	is_hd_valid(char *cmd, int j);
+int		is_eof(char *str, int i);
+
+
+//ERROR/FREE/CLOSE
 
 void	exit_error(t_sh *msh, char *msg, int status);
 void	free_all(t_sh *msh);
 void	free_lex(t_sh *msh, t_lex ***lex);
 void	free_env(t_env *env);
 void	free_msh(t_sh *msh);
+void	close_hd_fd(int fd);
+void	close_all_hd_fd(t_sh *msh);
 
-//tools
+//TOOLS
 
 int		find_quote(char *str, char q, int i);
 t_bool	ft_isspace(char str);
@@ -135,8 +151,9 @@ int		find_op(char *str, int i);
 char	*remove_quotes(t_sh *msh, char *str);
 int		quote_search(char *str);
 char	*find_quote_ptr(char *str, char q);
+int		skip_quotes(char *str, int i);
 
-//environment variables
+//ENVIRONMENT VARIABLES
 
 char	*check_exit_code(t_sh *msh, char *str, int i);
 char	*expand_env(t_sh *msh, char *str);

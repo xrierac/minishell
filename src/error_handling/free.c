@@ -6,11 +6,11 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:28 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/16 16:17:17 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:59:13 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	free_all(t_sh *msh)
 {
