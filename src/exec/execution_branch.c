@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_branch.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/22 15:31:10 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:40:34 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ static int	check_token(t_lex *lex, t_env *env)
 		return (r_output(lex->cmd_arr));
 	if (lex->token == APPEND)
 		return (r_append(lex->cmd_arr));
-	if (lex->token == HEREDOC)
-		r_heredoc(lex->cmd_arr);
 	return (0);
 }
 
