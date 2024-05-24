@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:43:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/22 16:13:53 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:40:23 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char	*syntax_check(t_sh *msh, char *temp)
 		if (msh->error == 1)
 			return (res);
 		check_str(msh, res);
+		printf("After env_exp= %s\n", res);
 		return (res);
 	}
 	return (trim_str);
@@ -77,7 +78,7 @@ void	check_str(t_sh *msh, char *res)
 		if ((*temp == '\'' || *temp == '\"') && msh->error == 0)
 			temp = find_quote_ptr(temp, *temp);
 		else if (*temp == '|' && msh->error == 0)
-			check_pipes(msh, temp);
+			temp = check_pipes(msh, temp);
 		else if (current_op(temp) && msh->error == 0)
 			temp = check_op_syntax(msh, temp);
 		else
