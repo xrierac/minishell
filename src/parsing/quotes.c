@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:00:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/22 17:07:19 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:07:09 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	count_quotes(t_sh *msh, char *str)
 	}
 	if (msh->count % 2 != 0)
 	{
-		ft_printf(2, "Close your quotes puta!\n");
+		ft_printf(2, "I think you dropped this -> %c\n", q);
 		msh->error = 1;
 	}
 }
@@ -74,19 +74,17 @@ char	*remove_quotes(t_sh *msh, char *str)
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 		{
-			quote = str[i];
-			i++;
+			quote = str[i++];
 			if (str[i] == quote)
 				i++;
 			while (str[i] != quote && str[i])
 				result[j++] = str[i++];
+			i++;
 		}
 		else
 			result[j++] = str[i++];
 	}
-	result[j] = '\0';
 	free(str);
-	printf("tok = %i Result = %s\n", msh->tok_count, result);
 	return (result);
 }
 

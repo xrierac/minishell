@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/22 17:40:34 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:00:27 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	start_proc(t_sh *sh, int in, int i)
 	int		fd[2];
 	pid_t	cpid[900];
 
-	receive_signal(0);
+	//receive_signal(0);
 	while (++i < sh->processes)
 	{
 		if (pipe(fd) == -1)
@@ -96,7 +96,7 @@ int	execution_branch(t_sh *sh)
 	int	val;
 	int	in;
 	int	i;
-	
+
 	i = -1;
 	in = 0;
 	if (sh->processes > 899)

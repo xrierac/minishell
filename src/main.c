@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/22 17:00:21 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/24 15:45:26 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	get_input(t_sh *msh)
 
 	while (1)
 	{
-		receive_signal(1);
+		//receive_signal(1);
 		temp = readline(GRN"TOTO"RED"ROJO"GRN":) "END);
 		if (!temp)
 			exit_error(msh, "readline", 127);
@@ -62,9 +62,8 @@ void	get_input(t_sh *msh)
 			input = syntax_check(msh, temp);
 			if (msh->error == 0)
 			{
-				printf("%s\n", input);
 				lexer(input, msh);
-			//	print_lex(msh, msh->lex_arr);	
+				//print_lex(msh, msh->lex_arr);	
 				execution_branch(msh);
 				free_lex(msh, msh->lex_arr);
 			}
