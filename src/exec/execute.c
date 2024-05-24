@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:21:51 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/24 15:31:14 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:17:27 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	execute(t_lex *lex, t_env *env)
 	char	*cmd;
 	int		val;
 
+	if (lex->cmd_arr[0][0] == '\0')
+		return (error_cmd_not_found(lex->cmd_arr[0]));
 	if (builtin_check(lex->cmd_arr, env) != -1)
 		return (0);
 	val = check_access(lex->cmd_arr[0], lex, env);
