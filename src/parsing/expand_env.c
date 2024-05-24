@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/22 11:33:07 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:19:22 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,6 @@ char	*extract_var(t_sh *msh, char *start, int len)
 	return (var_name);
 }
 
-
-char	*handle_squote(t_sh *msh, char *ptr)
-{
-	msh->buffer[msh->buf_len++] = *ptr++;
-	while (*ptr && *ptr != '\'')
-	{
-		msh->buffer[msh->buf_len++] = *ptr++;
-	}
-	if (*ptr == '\'')
-		msh->buffer[msh->buf_len++] = *ptr++;
-	return (ptr);
-}
-
 char	*deref_var(t_sh *msh, char *ptr)
 {
 	int		var_len;
@@ -95,44 +82,28 @@ char	*deref_var(t_sh *msh, char *ptr)
 
 	var_len = 0;
 	start = ptr;
-	while (*ptr && ((ft_isalnum(*ptr) == 1) || *ptr == '_') && *ptr != '\"')
-		ptr++;
-	var_len = ptr - start;
+	if (*(ptr + 1) == '?')
+		start++;
+	else
+	{
+		while (*ptr && ((ft_isalnum(*ptr) == 1) || *ptr == '_'))
+			ptr++;
+		var_len = ptr - start;
+	}
 	msh->var = check_env_var(msh, msh->env, extract_var(msh, start, var_len));
 	exp_len = ft_strlen(msh->var);
 	if (msh->var[0] != '\0')
 	{
-		msh->buffer = ft_strjoin_free(msh->buffer, msh->var);
-		if (!msh->buffer)
-			exit_error(msh, "ft_strjoin_free", 127);
 		msh->buf_len += exp_len;
+		ft_strlcat(msh->buffer, msh->var, msh->buf_len + 1);
 		while (ft_isspace(*ptr))
-		{
 			msh->buffer[msh->buf_len++] = *ptr++;
-			msh->buffer[msh->buf_len] = '\0';
-		}
 	}
 	if (msh->var)
 		free (msh->var);
 	return (ptr);
 }
 
-char	*handle_dquote(t_sh *msh, char *ptr)
-{
-	if (*ptr == '\"')
-		msh->buffer[msh->buf_len++] = *ptr++;
-	while (*ptr && *ptr != '\"')
-	{
-		if (*ptr == '$' && *(ptr + 1) != ' ' && *(ptr + 1) \
-				&& *(ptr + 1) != '\"')
-			ptr = deref_var(msh, ptr + 1);
-		else
-			msh->buffer[msh->buf_len++] = *ptr++;
-	}
-	if (*ptr == '\"')
-		msh->buffer[msh->buf_len++] = *ptr++;
-	return (ptr);
-}
 
 char	*expand_env(t_sh *msh, char *cmd)
 {
@@ -140,7 +111,7 @@ char	*expand_env(t_sh *msh, char *cmd)
 
 	ptr = cmd;
 	msh->buf_len = 0;
-	msh->buffer = ft_calloc(ft_strlen(cmd), 1);
+	msh->buffer = ft_calloc(MAX_ARGS, 1);
 	if (!msh->buffer)
 		exit_error(msh, "calloc", 127);
 	while (*ptr)
@@ -163,7 +134,12 @@ char	*expand_env(t_sh *msh, char *cmd)
 	return (msh->buffer);
 }
 
-char	*check_exit_code(t_sh *msh, char *str, int i)
+char	*check_exit_code(t_sh *msh, char *ptr)
 {
-	return (ft_strdup("123"));
+	char	*exit_code;
+
+	exit_code = ft_itoa(msh->exit_code);
+	if (!exit_code)
+		exit_error(msh, "malloc", 1);
+	return (exit_code);
 }
