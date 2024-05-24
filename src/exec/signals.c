@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 14:22:06 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/22 16:00:37 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/24 15:33:07 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	child_handler(int signal)
 	}
 }
 
-void	receive_signal(int	val)
+void	receive_signal(int val)
 {
 	struct sigaction	sa;
 

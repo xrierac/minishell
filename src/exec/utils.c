@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 09:54:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/15 10:53:23 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/24 15:34:21 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*ft_getenv(const char *name, char **env)
 {
 	int		i;
 	size_t	len;
-	
+
 	len = ft_strlen(name);
 	i = 0;
 	while (env[i])

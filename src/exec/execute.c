@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:21:51 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/24 15:30:15 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/24 15:31:14 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_dir(char *str)
 {
-	DIR *ptr;
+	DIR	*ptr;
 
 	ptr = opendir(str);
 	if (!ptr)
