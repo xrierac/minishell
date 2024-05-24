@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   execution_branch.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:21 by xriera-c          #+#    #+#             */
 /*   Updated: 2024/05/22 18:00:27 by tcampbel         ###   ########.fr       */

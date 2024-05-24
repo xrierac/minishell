@@ -22,7 +22,8 @@ SRCS	:= 	$(SRC_DIR)/main.c $(SRC_DIR)/parsing/initialise.c $(SRC_DIR)/error_hand
 			$(SRC_DIR)/exec/redirect.c $(SRC_DIR)/exec/utils.c $(SRC_DIR)/parsing/pipes.c $(SRC_DIR)/exec/exit.c \
 			$(SRC_DIR)/builtins/ft_cd.c $(SRC_DIR)/builtins/ft_echo.c \
 			$(SRC_DIR)/builtins/ft_env.c $(SRC_DIR)/builtins/ft_pwd.c $(SRC_DIR)/builtins/builtin_check.c \
-			$(SRC_DIR)/builtins/ft_export.c $(SRC_DIR)/builtins/ft_unset.c $(SRC_DIR)/exec/signals.c
+			$(SRC_DIR)/builtins/ft_export.c $(SRC_DIR)/builtins/ft_unset.c $(SRC_DIR)/exec/signals.c \
+			$(SRC_DIR)/parsing/heredoc.c $(SRC_DIR)/parsing/heredoc_syntax.c $(SRC_DIR)/parsing/quotes_two.c
 OBJS	:= ${SRCS:.c=.o}
 
 HEADERS := -I ./inc
