@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 10:54:41 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/13 16:32:02 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:44:24 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	count_str(const char *s, char c, char q, t_tok *tok)
 	i = 0;
 	while (s[i])
 	{
-		q = find_delim(s, tok->delim, i);
 		while (s[i] == c && s[i])
 			i++;
 		if (s[i] != c && s[i])
@@ -47,6 +46,7 @@ void	count_str(const char *s, char c, char q, t_tok *tok)
 			tok->count++;
 			while (s[i] != c && s[i])
 			{
+				q = find_delim(s, tok->delim, i);
 				if (s[i] == q && s[i])
 				{
 					i++;
@@ -61,10 +61,12 @@ void	count_str(const char *s, char c, char q, t_tok *tok)
 
 void	skip_char(const char *s, char q, t_tok *tok)
 {
-	tok->end++;
+	if (s[tok->end] == q)
+		tok->end++;
 	while (s[tok->end] != q && s[tok->end])
 		tok->end++;
-	tok->end++;
+	if (s[tok->end] == q)
+		tok->end++;
 }
 
 char	**malloc_strings(char const *s, char c, char q, t_tok *tok)
@@ -78,15 +80,17 @@ char	**malloc_strings(char const *s, char c, char q, t_tok *tok)
 		tok->end = tok->start;
 		while (s[tok->end] && s[tok->end] != c)
 		{
+			q = find_delim(s, tok->delim, tok->end);
 			if (s[tok->end] == q)
 				skip_char(s, q, tok);
-			if (s[tok->end] != c)
+			else
 				tok->end++;
+			if (s[tok->end] == c)
+				break ;
 		}
 		tok->len = tok->end - tok->start;
 		tok->str[tok->i] = ft_substr(s, tok->start, tok->len);
 		tok->start = tok->end;
-		q = find_delim(s, tok->delim, tok->end);
 		if (tok->str[tok->i++] == NULL)
 			return (return_free_array(tok->str));
 	}
@@ -109,5 +113,6 @@ char	**ft_strtok(char const *s, char c, char *skip)
 	if (!tok.str || !s)
 		return (NULL);
 	tok.str = malloc_strings(s, c, q, &tok);
+	tok.str[tok.count] = NULL;
 	return (tok.str);
 }
