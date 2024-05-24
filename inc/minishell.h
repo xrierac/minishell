@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/22 15:17:40 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:42:29 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	token_type(t_sh *msh, t_lex *lex, char *cmd, int j);
 //SYNTAX
 
 void	check_str(t_sh *msh, char *temp);
-void	check_pipes(t_sh *msh, char *input);
+char	*check_pipes(t_sh *msh, char *input);
 char	*choose_op(char *c);
 char	*syntax_check(t_sh *msh, char *temp);
 char	*check_op_syntax(t_sh *msh, char *str);
