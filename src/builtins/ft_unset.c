@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 09:02:56 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/15 11:27:22 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/24 14:59:42 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,19 @@ static int	new_envarr(t_env *env_s, int index)
 	return (0);	
 }
 
-static int	check_validity(char *str)
+static int	check_validity(char *s)
 {
 	int	i;
 
 	i = 0;
-	if (!str[i])
+	if (!s[i])
 		return (1);
-	while (str[i])
+	while (s[i])
 	{
-		if (ft_isalnum(str[i]) == 0 && str[i] != '_')
+		if (ft_isdigit(s[0]) == 1 || (ft_isalnum(s[i]) == 0 && s[i] != '_'))
 		{
-			printf("minishell: unset: '%s': not a valid identifier\n", str);
+			ft_printf(2, "minishell: unset: '%s': ", s);
+			ft_printf(2, "not a valid identifier\n");
 			return (1);
 		}
 		i++;
