@@ -4,10 +4,10 @@ NAME	:= minishell
 
 CC		:= cc
 CFLAGS	:= -Wextra -Wall -Werror 
-LFLAGS	:= -l readline #-L /Users/xriera-c/.brew/opt/readline/lib
+LFLAGS	:= -l readline -L /Users/$(USER)/.brew/opt/readline/lib
 DFLAGS	:= -g -fsanitize=address,undefined
 
-INC_DIR  := ./inc -I #/Users/xriera-c/.brew/opt/readline/include
+INC_DIR  := ./inc -I /Users/$(USER)/.brew/opt/readline/include
 SRC_DIR  := ./src
 OBJ_DIR  := .
 
@@ -21,9 +21,9 @@ SRCS	:= 	$(SRC_DIR)/main.c $(SRC_DIR)/parsing/initialise.c $(SRC_DIR)/error_hand
 			$(SRC_DIR)/exec/execute.c $(SRC_DIR)/exec/execution_branch.c $(SRC_DIR)/exec/pipe_management.c\
 			$(SRC_DIR)/exec/redirect.c $(SRC_DIR)/exec/utils.c $(SRC_DIR)/parsing/pipes.c $(SRC_DIR)/exec/exit.c \
 			$(SRC_DIR)/builtins/ft_cd.c $(SRC_DIR)/builtins/ft_echo.c \
-			$(SRC_DIR)/builtins/ft_env.c $(SRC_DIR)/builtins/ft_pwd.c $(SRC_DIR)/builtins/builtin_check.c \
+			$(SRC_DIR)/builtins/ft_env.c $(SRC_DIR)/builtins/ft_pwd.c $(SRC_DIR)/builtins/builtin_check.c  $(SRC_DIR)/builtins/ft_exit.c\
 			$(SRC_DIR)/builtins/ft_export.c $(SRC_DIR)/builtins/ft_unset.c $(SRC_DIR)/exec/signals.c \
-			$(SRC_DIR)/parsing/heredoc.c $(SRC_DIR)/parsing/heredoc_syntax.c $(SRC_DIR)/parsing/quotes_two.c
+	
 OBJS	:= ${SRCS:.c=.o}
 
 HEADERS := -I ./inc

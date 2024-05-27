@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:14:34 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/24 14:54:02 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:18:00 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	create_tok_struct(t_sh *msh, char **pipe_arr)
 		assign_token(msh, msh->lex_arr[i], msh->pipe_arr[j]);
 	}
 	ft_free_array(pipe_arr);
+	msh->pipe_arr = NULL;
 }
 
 void	assign_token(t_sh *msh, t_lex **lex, char *cmd)

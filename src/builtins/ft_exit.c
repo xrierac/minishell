@@ -1,19 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/24 14:50:25 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/27 14:58:40 by tcampbel         ###   ########.fr       */
+/*   Created: 2024/05/27 14:32:22 by tcampbel          #+#    #+#             */
+/*   Updated: 2024/05/27 15:21:34 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isdigit(int c)
+#include "../../inc/minishell.h"
+
+void	ft_exit(t_sh *msh, char **cmd)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+		i++;
+	if (i > 1)
+	{
+		ft_printf(1, "exit\n");
+		ft_printf(2, "exit: too many arguments\n");
+		return ;
+	}
 	else
-		return (-1);
+	{
+		free_all(msh);
+		ft_printf(1, "exit\n");
+		exit(0);
+	}
 }

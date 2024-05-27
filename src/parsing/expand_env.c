@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/24 16:19:22 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:11:10 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*add_var(t_sh *msh, t_env *env, char *var)
 			temp = ft_substr(env->env_arr[i], ft_strlen(var), \
 					ft_strlen(env->env_arr[i]) - ft_strlen(var));
 			if (!temp)
-				exit_error(msh, "ft_substr", 127);
+				exit_error(msh, "ft_substr", 1);
 			return (temp);
 		}
 	}
@@ -41,15 +41,20 @@ char	*check_env_var(t_sh *msh, t_env *env, char *var)
 {
 	char	*temp;
 
+	if (msh->exit_code_flag)
+	{
+		msh->exit_code_flag = 0;
+		return (var);
+	}
 	var = ft_strjoin_free(var, "=");
 	if (!var)
-		exit_error(msh, "ft_strjoin", 127);
+		exit_error(msh, "ft_strjoin", 1);
 	temp = add_var(msh, env, var);
 	if (temp == NULL)
 	{
 		temp = ft_strdup("");
 		if (!temp)
-			exit_error(msh, "ft_strdup", 127);
+			exit_error(msh, "ft_strdup", 1);
 	}
 	free(var);
 	return (temp);
@@ -63,13 +68,15 @@ char	*extract_var(t_sh *msh, char *start, int len)
 	{
 		var_name = ft_strdup("");
 		if (!var_name)
-			exit_error(msh, "ft_strdup", 127);
+			exit_error(msh, "ft_strdup", 1);
 	}
+	else if (start[0] == '?')
+		var_name = fetch_exit_code(msh, start);
 	else
 	{
 		var_name = ft_substr(start, 0, len);
 		if (!var_name)
-			exit_error(msh, "ft_substr", 127);
+			exit_error(msh, "ft_substr", 1);
 	}
 	return (var_name);
 }
@@ -82,8 +89,11 @@ char	*deref_var(t_sh *msh, char *ptr)
 
 	var_len = 0;
 	start = ptr;
-	if (*(ptr + 1) == '?')
-		start++;
+	if (*ptr == '?')
+	{
+		ptr++;
+		var_len = 1;
+	}
 	else
 	{
 		while (*ptr && ((ft_isalnum(*ptr) == 1) || *ptr == '_'))
@@ -104,16 +114,15 @@ char	*deref_var(t_sh *msh, char *ptr)
 	return (ptr);
 }
 
-
 char	*expand_env(t_sh *msh, char *cmd)
 {
 	char	*ptr;
 
 	ptr = cmd;
 	msh->buf_len = 0;
-	msh->buffer = ft_calloc(MAX_ARGS, 1);
+	msh->buffer = ft_calloc(MAX_ARGS - env_memory(msh->env->env_arr) - ft_strlen(cmd), 1);
 	if (!msh->buffer)
-		exit_error(msh, "calloc", 127);
+		exit_error(msh, "calloc", 1);
 	while (*ptr)
 	{
 		if (*ptr == '\'')
@@ -134,10 +143,11 @@ char	*expand_env(t_sh *msh, char *cmd)
 	return (msh->buffer);
 }
 
-char	*check_exit_code(t_sh *msh, char *ptr)
+char	*fetch_exit_code(t_sh *msh, char *ptr)
 {
 	char	*exit_code;
 
+	msh->exit_code_flag = 1;
 	exit_code = ft_itoa(msh->exit_code);
 	if (!exit_code)
 		exit_error(msh, "malloc", 1);
