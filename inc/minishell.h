@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
 /*   Updated: 2024/05/24 16:20:56 by tcampbel         ###   ########.fr       */
@@ -21,6 +21,8 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <dirent.h>
+# include <string.h>
+# include <errno.h>
 
 # define GRN "\e[0;92m"
 # define BLK "\e[0;90m"

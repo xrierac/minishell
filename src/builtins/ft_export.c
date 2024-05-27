@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:54:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/15 11:10:59 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/24 14:57:17 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,19 @@ static int	existing_var(t_env *env_struct, char *str)
 	return (-1);
 }
 
-static int	check_validity(char *str)
+static int	check_validity(char *s)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (s[i])
 	{
-		if (str[i] == '=' && i != 0)
+		if (s[i] == '=' && i != 0)
 			break ;
-		if (ft_isalnum(str[i]) == 0 && str[i] != '_')
+		if (ft_isdigit(s[0]) == 1 || (ft_isalnum(s[i]) == 0 && s[i] != '_'))
 		{
-			printf("minishell: export: `%s': not a valid identifier\n", str);
+			ft_printf(2, "minishell: export: `%s': ", s);
+			ft_printf(2, "not a valid identifier\n");
 			return (1);
 		}
 		i++;

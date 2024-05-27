@@ -67,7 +67,7 @@ static int	start_proc(t_sh *sh, int in, int i)
 	int		fd[2];
 	pid_t	cpid[900];
 
-	//receive_signal(0);
+	receive_signal(0);
 	while (++i < sh->processes)
 	{
 		if (pipe(fd) == -1)

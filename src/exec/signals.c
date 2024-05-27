@@ -41,9 +41,9 @@
 // 	}
 // }
 
-// void	receive_signal(int	val)
-// {
-// 	struct sigaction	sa;
+void	receive_signal(int val)
+{
+	struct sigaction	sa;
 
 // 	if (val)
 // 		sa.sa_handler = &parent_handler;

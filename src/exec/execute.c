@@ -6,11 +6,23 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:21:51 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/21 14:29:23 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:17:27 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static int	is_dir(char *str)
+{
+	DIR	*ptr;
+
+	ptr = opendir(str);
+	if (!ptr)
+		return (1);
+	errno = EISDIR;
+	closedir(ptr);
+	return (0);
+}
 
 static char	*find_cmd(char *cmd, t_env *env)
 {
@@ -36,30 +48,36 @@ static char	*find_cmd(char *cmd, t_env *env)
 	return (path);
 }
 
+int	check_access(char *str, t_lex *lex, t_env *env)
+{
+	if (access(str, F_OK) == 0)
+	{
+		if (access(str, X_OK) == 0)
+		{
+			if (is_dir(str) == 0)
+				return (127 - generic_error("", str));
+			execve(str, lex->cmd_arr, env->env_arr);
+			return (generic_error("", str));
+		}
+		return (127 - generic_error("", str));
+	}
+	return (0);
+}
+
 int	execute(t_lex *lex, t_env *env)
 {
 	char	*cmd;
+	int		val;
 
+	if (lex->cmd_arr[0][0] == '\0')
+		return (error_cmd_not_found(lex->cmd_arr[0]));
 	if (builtin_check(lex->cmd_arr, env) != -1)
 		return (0);
-	if (access(lex->cmd_arr[0], F_OK) == 0)
-	{
-		if (access(lex->cmd_arr[0], X_OK) == 0)
-		{
-			execve(lex->cmd_arr[0], lex->cmd_arr, env->env_arr);
-			return (generic_error("", lex->cmd_arr[0]));
-		}
-		return (127 - generic_error("", lex->cmd_arr[0]));
-	}
-	cmd = find_cmd(lex->cmd_arr[0], env);
-	if (access(cmd, F_OK) == 0)
-	{
-		if (access(cmd, X_OK) == 0)
-		{
-			execve(cmd, lex->cmd_arr, env->env_arr);
-			return (generic_error("", cmd));
-		}
-		return (127 - generic_error("", cmd));
-	}
+	val = check_access(lex->cmd_arr[0], lex, env);
+	if (val != 0)
+		return (val);
+	val = check_access(find_cmd(lex->cmd_arr[0], env), lex, env);
+	if (val != 0)
+		return (val);
 	return (error_cmd_not_found(lex->cmd_arr[0]));
 }
