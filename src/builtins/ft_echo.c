@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 10:40:55 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/24 15:58:35 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/27 11:36:58 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static size_t	find_end(char *str)
 {
 	size_t	n;
-	int	i;
+	int		i;
 
 	n = 0;
 	i = -1;
@@ -30,8 +30,8 @@ static size_t	find_end(char *str)
 
 static void	ft_echo_variable(char *str, char **env)
 {
-	char	*var;
-	char 	*sub;
+	char			*var;
+	char			*sub;
 	unsigned int	i;
 
 	i = 0;
@@ -56,7 +56,7 @@ static int	check_flag(char *str)
 {
 	int	i;
 	int	j;
-	
+
 	i = 0;
 	j = 0;
 	while (str && str[0] == '-' && str[++j])
@@ -77,7 +77,7 @@ int	ft_echo(char **arr, char **env)
 	int		i;
 	int		j;
 	char	*str;
-	
+
 	i = 0;
 	j = 0;
 	while (arr[++j] && ft_strncmp(arr[j], "-n", 2) == 0 && check_flag(arr[j]))
