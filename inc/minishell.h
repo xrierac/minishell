@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/24 16:20:56 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:51:35 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ char	*get_name(char *str);
 size_t	find_equal_sign(char *str);
 
 //SIGNALS
-int		rl_replace_line(void);
+void	rl_replace_line (const char *text, int clear_undo);
 void	receive_signal(int val);
 
 //TESTING TO BE DELETED
