@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:44:06 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/22 17:13:27 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/24 14:53:05 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,17 @@ int	tokenise_cmd(t_sh *msh, t_lex *lex, char *cmd, int j)
 	i = -1;
 	temp = ft_substr(cmd, j, find_op(cmd, j) - j);
 	if (!temp)
-		exit_error(msh, "ft_substr", 127);
+		exit_error(msh, "ft_substr", 1);
 	j = find_op(cmd, j);
 	lex->cmd_arr = ft_strtok(temp, ' ', "'\'''\"'");
 	free(temp);
 	if (!lex->cmd_arr)
-		exit_error(msh, "ft_strtok", 127);
-	print_arr(lex->cmd_arr);
+		exit_error(msh, "ft_strtok", 1);
 	while (lex->cmd_arr[++i])
 	{
 		lex->cmd_arr[i] = ft_strtrim(lex->cmd_arr[i], " ");
 		if (!lex->cmd_arr[i])
-			exit_error(msh, "ft_strtrim", 127);
+			exit_error(msh, "ft_strtrim", 1);
 		if (quote_search(lex->cmd_arr[i]) == 1)
 			lex->cmd_arr[i] = remove_quotes(msh, lex->cmd_arr[i]);
 	}

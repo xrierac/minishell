@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/24 15:28:37 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:20:56 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define SYNTAX_ERROR "syntax error near unexpected token"
 
 # define MAX_FD 256
+# define MAX_ARGS 2097152
 
 int	g_error;
 
@@ -77,12 +78,12 @@ typedef struct s_sh
 	int		pipes;
 	int		processes;
 	int		count;
-	int		quotes;
 	t_bool	error;
 	char	*buffer;
 	char	*var;
 	int		buf_len;
 	int		hd_fd[16][2];
+	int		exit_code;
 }	t_sh;
 
 void	get_input(t_sh *msh);
@@ -159,14 +160,17 @@ int		skip_quotes(char *str, int i);
 
 //ENVIRONMENT VARIABLES
 
-char	*check_exit_code(t_sh *msh, char *str, int i);
+char	*check_exit_code(t_sh *msh, char *ptr);
 char	*expand_env(t_sh *msh, char *str);
 char	*check_env_var(t_sh *msh, t_env *env, char *var);
 char	*extract_var(t_sh *msh, char *start, int len);
+char	*handle_dquote(t_sh *msh, char *ptr);
+char	*handle_squote(t_sh *msh, char *ptr);
+char	*deref_var(t_sh *msh, char *ptr);
 
 //ERROR HANDLING
-void 	error_exit(void);
-int 	error_cmd_not_found(char *str);
+void	error_exit(void);
+int		error_cmd_not_found(char *str);
 int		generic_error(char *str, char *cmd);
 
 
@@ -177,18 +181,18 @@ int		r_output(char **cmd_arr);
 int		r_append(char **cmd_arr);
 void	r_heredoc(char **cmd_arr);
 int		execution_branch(t_sh *sh);
-int 	pipe_management(t_sh *sh, int index, int in, int out);
-int 	close_pipes(int in, int fda, int fdb);
+int		pipe_management(t_sh *sh, int index, int in, int out);
+int		close_pipes(int in, int fda, int fdb);
 
 //BUILTINS
-int	builtin_check(char **cmd, t_env *env);
-int	run_builtin(t_sh *sh_data, char **cmd);
-int	ft_echo(char **arr, char **env);
-int	ft_cd(char *str, t_env *env_s);
-int	ft_pwd(void);
-int	ft_env(char **env);
-int	ft_export(t_env *env_s, char **cmd, int arg);
-int	ft_unset(t_env *env_s, char **cmd, int arg);
+int		builtin_check(char **cmd, t_env *env);
+int		run_builtin(t_sh *sh_data, char **cmd);
+int		ft_echo(char **arr, char **env);
+int		ft_cd(char *str, t_env *env_s);
+int		ft_pwd(void);
+int		ft_env(char **env);
+int		ft_export(t_env *env_s, char **cmd, int arg);
+int		ft_unset(t_env *env_s, char **cmd, int arg);
 
 //EXECUTION UTILS
 char	*ft_getenv(const char *name, char **env);
@@ -198,8 +202,8 @@ char	*get_name(char *str);
 size_t	find_equal_sign(char *str);
 
 //SIGNALS
-int		rl_replace_line();
-void	receive_signal(int	val);
+int		rl_replace_line(void);
+void	receive_signal(int val);
 
 //TESTING TO BE DELETED
 
