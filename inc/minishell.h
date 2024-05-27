@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/27 10:51:35 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:08:18 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	get_input(t_sh *msh);
 //INITIALISE
 
 t_sh	*init_msh(char **ev);
-t_lex	***init_lex(t_sh *msh);
+void	init_lex(t_sh *msh);
 t_lex	**init_token(t_sh *msh);
 void	init_env(t_env *env);
 char	**init_cmd_arr(t_sh *msh);
