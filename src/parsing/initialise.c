@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/24 15:59:03 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:53:40 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_lex	***init_lex(t_sh *msh)
 	msh->lex_arr = (t_lex ***)malloc((msh->processes + 1) * sizeof(t_lex **));
 	if (!msh->lex_arr)
 		exit_error(msh, "malloc", 127);
-	while (++i <= msh->processes)
+	while (++i < msh->processes)
 	{
 		msh->lex_arr[i] = (t_lex **)malloc(sizeof(t_lex *));
 		if (!msh->lex_arr[i])
@@ -75,7 +75,7 @@ t_lex	**init_token(t_sh *msh)
 	arr = malloc(sizeof(t_lex *) * (msh->tok_count + 1));
 	if (!arr)
 		exit_error(msh, "malloc", 127);
-	while (++i <= msh->tok_count)
+	while (++i < msh->tok_count)
 	{
 		arr[i] = malloc(sizeof(t_lex));
 		if (!arr[i])

@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:44:04 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/22 16:21:53 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:00:53 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	open_heredoc(t_sh *msh, char *delim, int *fd)
 		if (!ft_strncmp(input, delim, ft_strlen(input)) && \
 		ft_strlen(input) == ft_strlen(delim))
 			break ;
-		// if (ft_strchr(input, '$'))
-		// 	input = expand_env(msh, input);
+		if (ft_strchr(input, '$'))
+			input = expand_env(msh, input);
 		ft_printf(fd[1], "%s\n", input);
 		free(input);
 	}

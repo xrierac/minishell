@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/24 16:20:56 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:44:11 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,13 @@
 # include <string.h>
 # include <errno.h>
 
-# define GRN "\e[0;92m"
-# define BLK "\e[0;90m"
 # define RED "\e[0;91m"
 # define END "\e[0m"
 
 # define SYNTAX_ERROR "syntax error near unexpected token"
 
 # define MAX_FD 256
-# define MAX_ARGS 2097152
+# define MAX_ARGS 262144
 
 int	g_error;
 
@@ -84,6 +82,7 @@ typedef struct s_sh
 	int		buf_len;
 	int		hd_fd[16][2];
 	int		exit_code;
+	int		exit_code_flag;
 }	t_sh;
 
 void	get_input(t_sh *msh);
@@ -102,6 +101,7 @@ void	get_path(t_sh *msh, t_env *env, char **ev, int i);
 void	get_lvl(t_sh *msh, char **temp, int i);
 int		cur_lvl(char *ev);
 void	ft_envcpy(t_sh *msh, t_env *env, char **ev);
+int		env_memory(char	**env);
 
 //TOKENS
 
@@ -160,7 +160,7 @@ int		skip_quotes(char *str, int i);
 
 //ENVIRONMENT VARIABLES
 
-char	*check_exit_code(t_sh *msh, char *ptr);
+char	*fetch_exit_code(t_sh *msh, char *ptr);
 char	*expand_env(t_sh *msh, char *str);
 char	*check_env_var(t_sh *msh, t_env *env, char *var);
 char	*extract_var(t_sh *msh, char *start, int len);
@@ -193,6 +193,7 @@ int		ft_pwd(void);
 int		ft_env(char **env);
 int		ft_export(t_env *env_s, char **cmd, int arg);
 int		ft_unset(t_env *env_s, char **cmd, int arg);
+void	ft_exit(t_sh *msh, char **cmd);
 
 //EXECUTION UTILS
 char	*ft_getenv(const char *name, char **env);
@@ -202,7 +203,7 @@ char	*get_name(char *str);
 size_t	find_equal_sign(char *str);
 
 //SIGNALS
-int		rl_replace_line(void);
+void rl_replace_line (const char *text, int clear_undo);
 void	receive_signal(int val);
 
 //TESTING TO BE DELETED

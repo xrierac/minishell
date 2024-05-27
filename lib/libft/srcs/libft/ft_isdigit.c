@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:50:25 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/01/02 11:50:30 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:58:40 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@ int	ft_isdigit(int c)
 	if (c >= '0' && c <= '9')
 		return (1);
 	else
-		return (0);
+		return (-1);
 }
