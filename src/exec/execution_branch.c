@@ -69,7 +69,6 @@ static int	start_proc(t_sh *sh, int in, int i)
 	int		fd[2];
 	pid_t	cpid[900];
 
-	receive_signal(0);
 	while (++i < sh->processes)
 	{
 		if (pipe(fd) == -1)
@@ -101,6 +100,7 @@ int	execution_branch(t_sh *sh)
 
 	i = -1;
 	in = 0;
+	receive_signal(0);
 	if (sh->processes > 899)
 	{
 		ft_putstr_fd("Too many pipes. This is not Super Mario Bros\n", 2);

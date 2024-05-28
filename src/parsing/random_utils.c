@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   random_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:13:46 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/22 13:59:13 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:33:24 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,3 @@ int	find_op(char *str, int i)
 	}
 	return (i);
 }
-

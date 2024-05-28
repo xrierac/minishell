@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   initialise.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:50 by tcampbel          #+#    #+#             */
 /*   Updated: 2024/05/28 15:52:41 by tcampbel         ###   ########.fr       */
@@ -48,7 +48,7 @@ void	init_env(t_env *env)
 	env->var_len = 0;
 }
 
-t_lex	***init_lex(t_sh *msh)
+void	init_lex(t_sh *msh)
 {
 	int	i;
 
@@ -58,7 +58,6 @@ t_lex	***init_lex(t_sh *msh)
 	if (!msh->lex_arr)
 		exit_error(msh, "malloc", 127);
 	msh->lex_arr[msh->processes] = NULL;
-	return (msh->lex_arr);
 }
 
 t_lex	**init_token(t_sh *msh)

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:14:34 by tcampbel          #+#    #+#             */
 /*   Updated: 2024/05/28 17:17:44 by tcampbel         ###   ########.fr       */
@@ -87,7 +87,7 @@ void	assign_token(t_sh *msh, t_lex **lex, char *cmd, int proc)
 
 void	lexer(char *input, t_sh *msh)
 {
-	msh->lex_arr = init_lex(msh);
+	init_lex(msh);
 	msh->pipe_arr = ft_strtok(input, '|', "'\'''\"'");
 	if (!msh->pipe_arr)
 		exit_error(msh, "ft_strtok\n", 127);
