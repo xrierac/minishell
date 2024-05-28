@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/27 15:44:11 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:33:21 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef enum e_bool
 typedef struct s_lex
 {
 	t_token_type	token;
+	int				fd;
 	char			**cmd_arr;
 }	t_lex;
 
@@ -83,6 +84,7 @@ typedef struct s_sh
 	int		hd_fd[16][2];
 	int		exit_code;
 	int		exit_code_flag;
+	int		valid_hd;
 }	t_sh;
 
 void	get_input(t_sh *msh);
@@ -106,7 +108,7 @@ int		env_memory(char	**env);
 //TOKENS
 
 void	lexer(char *input, t_sh *msh);
-void	assign_token(t_sh *msh, t_lex **lex_arr, char *cmd);
+void	assign_token(t_sh *msh, t_lex **lex_arr, char *cmd, int proc);
 char	*deref_env_var(t_sh *msh, char *input);
 void	is_token(t_sh *msh, char *str);
 void	count_pipes(t_sh *msh, char *input);
@@ -131,7 +133,6 @@ int		check_delim(char c);
 t_bool	check_heredoc(char *cmd, int j);
 t_bool	is_hd_valid(char *cmd, int j);
 int		is_eof(char *str, int i);
-
 
 //ERROR/FREE/CLOSE
 
@@ -173,13 +174,12 @@ void	error_exit(void);
 int		error_cmd_not_found(char *str);
 int		generic_error(char *str, char *cmd);
 
-
 //EXECUTION
 int		execute(t_lex *lex, t_env *env);
 int		r_input(char **cmd_arr);
 int		r_output(char **cmd_arr);
 int		r_append(char **cmd_arr);
-void	r_heredoc(char **cmd_arr);
+int		r_heredoc(t_lex *lex);
 int		execution_branch(t_sh *sh);
 int		pipe_management(t_sh *sh, int index, int in, int out);
 int		close_pipes(int in, int fda, int fdb);
@@ -203,7 +203,7 @@ char	*get_name(char *str);
 size_t	find_equal_sign(char *str);
 
 //SIGNALS
-void rl_replace_line (const char *text, int clear_undo);
+void 	rl_replace_line (const char *text, int clear_undo);
 void	receive_signal(int val);
 
 //TESTING TO BE DELETED
