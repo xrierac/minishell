@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/27 16:08:18 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:14:01 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define MAX_FD 256
 # define MAX_ARGS 2097152
 
-extern int	g_error;
+int	g_error;
 
 typedef enum e_token_type
 {
