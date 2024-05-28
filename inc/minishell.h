@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/28 14:14:01 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:24:16 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@
 
 # define MAX_FD 256
 # define MAX_ARGS 262144
-
-int	g_error;
 
 typedef enum e_token_type
 {
@@ -132,7 +130,6 @@ t_bool	check_heredoc(char *cmd, int j);
 t_bool	is_hd_valid(char *cmd, int j);
 int		is_eof(char *str, int i);
 
-
 //ERROR/FREE/CLOSE
 
 void	exit_error(t_sh *msh, char *msg, int status);
@@ -173,7 +170,6 @@ void	error_exit(void);
 int		error_cmd_not_found(char *str);
 int		generic_error(char *str, char *cmd);
 
-
 //EXECUTION
 int		execute(t_lex *lex, t_env *env);
 int		r_input(char **cmd_arr);
@@ -193,7 +189,7 @@ int		ft_pwd(void);
 int		ft_env(char **env);
 int		ft_export(t_env *env_s, char **cmd, int arg);
 int		ft_unset(t_env *env_s, char **cmd, int arg);
-void	ft_exit(t_sh *msh, char **cmd);
+int		ft_exit(t_sh *msh, char **cmd);
 
 //EXECUTION UTILS
 char	*ft_getenv(const char *name, char **env);
@@ -203,12 +199,10 @@ char	*get_name(char *str);
 size_t	find_equal_sign(char *str);
 
 //SIGNALS
-void	rl_replace_line (const char *text, int clear_undo);
-
+void	rl_replace_line(const char *text, int clear_undo);
 void	receive_signal(int val);
 
 //TESTING TO BE DELETED
-
-void    print_arr(char **str);
+void	print_arr(char **str);
 
 #endif
