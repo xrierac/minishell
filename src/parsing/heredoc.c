@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:44:04 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/27 16:00:53 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:37:04 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,17 @@ void	count_hd(t_sh *msh, char *str)
 
 void	open_pipe_and_hd(t_sh *msh, char *delim, char *str, int i)
 {
-	int	valid_hd;
-
-	valid_hd = 0;
-	if (pipe(msh->hd_fd[valid_hd]) == -1)
+	if (pipe(msh->hd_fd[msh->valid_hd]) == -1)
 		exit_error(msh, "pipe", 1);
 	if (check_heredoc(str, i) == true)
 	{
-		open_heredoc(msh, delim, msh->hd_fd[valid_hd]);
-		valid_hd++;
+		open_heredoc(msh, delim, msh->hd_fd[msh->valid_hd]);
+		msh->valid_hd++;
 	}
 	else
 	{
-		open_heredoc(msh, delim, msh->hd_fd[valid_hd]);
-		close_hd_fd(msh->hd_fd[valid_hd][0]);
+		open_heredoc(msh, delim, msh->hd_fd[msh->valid_hd]);
+		close_hd_fd(msh->hd_fd[msh->valid_hd][0]);
 	}
 }
 
@@ -100,6 +97,7 @@ void	heredoc(t_sh *msh, char *str)
 	char	*delim;
 
 	i = 0;
+	msh->valid_hd = 0;
 	count_hd(msh, str);
 	while (str[i])
 	{
