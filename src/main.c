@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/28 12:57:41 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:18:39 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ void	get_input(t_sh *msh)
 		receive_signal(1);
 		temp = readline("MiNiH3LL> ");
 		if (!temp)
-			exit_error(msh, "readline", 127);
+		{
+			ft_exit(msh, NULL);
+			free(temp);
+		}
 		if (temp)
 			add_history(temp);
 		if (temp[0] != '\0')
@@ -62,6 +65,7 @@ void	get_input(t_sh *msh)
 				msh->exit_code = execution_branch(msh);
 				printf("%d\n", msh->exit_code);
 				free_lex(msh->lex_arr);
+				msh->lex_arr = NULL;
 			}
 			free(input);
 			msh->error = 0;
@@ -82,6 +86,7 @@ int	main(int ac, char **av, char **ev)
 		exit(1);
 	}
 	msh = init_msh(ev);
+	msh->lex_arr = NULL;
 	get_input(msh);
 	return (0);
 }
