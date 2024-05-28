@@ -52,11 +52,6 @@ void	get_input(t_sh *msh)
 			exit_error(msh, "readline", 127);
 		if (temp)
 			add_history(temp);
-		if (ft_strncmp(temp, "exit", 5) == 0 && ft_strlen(temp) == 4)
-		{
-			//free_all(msh);
-			exit(0);
-		}
 		if (temp[0] != '\0')
 		{
 			input = syntax_check(msh, temp);

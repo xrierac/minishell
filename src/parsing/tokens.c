@@ -59,6 +59,7 @@ void	create_tok_struct(t_sh *msh, char **pipe_arr)
 		assign_token(msh, msh->lex_arr[i], msh->pipe_arr[j]);
 	}
 	ft_free_array(pipe_arr);
+	msh->pipe_arr = NULL;
 }
 
 void	assign_token(t_sh *msh, t_lex **lex, char *cmd)

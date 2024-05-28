@@ -53,11 +53,15 @@ void	free_env(t_env *env)
 	if (env->path_arr != NULL)
 		ft_free_array(env->path_arr);
 	free(env);
+	env = NULL;
 }
 
 void	free_msh(t_sh *msh)
 {
-	if (msh->pipe_arr)
+	if (msh->pipe_arr != NULL)
+	{
 		ft_free_array(msh->pipe_arr);
+	}
 	free(msh);
+	msh = NULL;
 }

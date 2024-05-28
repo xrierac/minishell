@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:36:36 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/20 15:56:42 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:43:57 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,22 @@ void	ft_envcpy(t_sh *msh, t_env *env, char **ev)
 		i++;
 	}
 	env->env_arr = temp;
+}
+
+int	env_memory(char	**env)
+{
+	int	i;
+	int	j;
+	int	bytes;
+
+	i = -1;
+	j = -1;	
+	while (env[++i])
+	{
+		bytes += 8;
+		while (env[i][++j])
+			bytes++;
+		i++;
+	}
+	return (bytes);
 }
