@@ -56,12 +56,6 @@ void	init_lex(t_sh *msh)
 	msh->lex_arr = (t_lex ***)malloc((msh->processes + 1) * sizeof(t_lex **));
 	if (!msh->lex_arr)
 		exit_error(msh, "malloc", 127);
-	while (++i < msh->processes)
-	{
-		msh->lex_arr[i] = (t_lex **)malloc(sizeof(t_lex *));
-		if (!msh->lex_arr[i])
-			exit_error(msh, "malloc", 127);
-	}
 	msh->lex_arr[msh->processes] = NULL;
 }
 
