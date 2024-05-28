@@ -34,7 +34,7 @@
 # define MAX_FD 256
 # define MAX_ARGS 2097152
 
-int	g_error;
+extern int	g_error;
 
 typedef enum e_token_type
 {
@@ -137,7 +137,7 @@ int		is_eof(char *str, int i);
 
 void	exit_error(t_sh *msh, char *msg, int status);
 void	free_all(t_sh *msh);
-void	free_lex(t_sh *msh, t_lex ***lex);
+void	free_lex(t_lex ***lex);
 void	free_env(t_env *env);
 void	free_msh(t_sh *msh);
 void	close_hd_fd(int fd);

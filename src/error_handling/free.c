@@ -16,7 +16,7 @@ void	free_all(t_sh *msh)
 {
 	if (msh->lex_arr != NULL)
 	{
-		free_lex(msh, msh->lex_arr);
+		free_lex(msh->lex_arr);
 		msh->lex_arr = NULL;
 	}
 	if (msh->env != NULL)
@@ -25,29 +25,23 @@ void	free_all(t_sh *msh)
 		free_msh(msh);
 }
 
-void	free_lex(t_sh *msh, t_lex ***lex_arr)
+void	free_lex(t_lex ***lex_arr)
 {
 	int	i;
 	int	j;
 
 	i = -1;
-	while (lex_arr[++i] != NULL)
+	while (lex_arr[++i])
 	{
 		j = -1;
-		while (lex_arr[i][++j] != NULL)
+		while (lex_arr[i][++j])
 		{
-			if (lex_arr[i][j]->cmd_arr != NULL)
-				ft_free_array(lex_arr[i][j]->cmd_arr);
-			if (lex_arr[i][j] != NULL)
-				free(lex_arr[i][j]);
-			lex_arr[i][j] = NULL;
+			ft_free_array(lex_arr[i][j]->cmd_arr);
+			free(lex_arr[i][j]);
 		}
-		if (lex_arr[i] != NULL)
-			free(lex_arr[i]);
-		lex_arr[i] = NULL;
+		free(lex_arr[i]);
 	}
 	free(lex_arr);
-	lex_arr = NULL;
 }
 
 void	free_env(t_env *env)
