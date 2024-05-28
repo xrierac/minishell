@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/27 15:53:40 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:52:41 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_sh	*init_msh(char **ev)
 	msh->var = NULL;
 	msh->buf_len = 0;
 	msh->exit_code = 0;
+	msh->lex_arr = NULL;
 	ft_envcpy(msh, msh->env, ev);
 	return (msh);
 }
@@ -53,15 +54,9 @@ t_lex	***init_lex(t_sh *msh)
 
 	i = -1;
 	msh->processes = msh->pipes + 1;
-	msh->lex_arr = (t_lex ***)malloc((msh->processes + 1) * sizeof(t_lex **));
+	msh->lex_arr = (t_lex ***)malloc((msh->processes) * sizeof(t_lex **));
 	if (!msh->lex_arr)
 		exit_error(msh, "malloc", 127);
-	while (++i < msh->processes)
-	{
-		msh->lex_arr[i] = (t_lex **)malloc(sizeof(t_lex *));
-		if (!msh->lex_arr[i])
-			exit_error(msh, "malloc", 127);
-	}
 	msh->lex_arr[msh->processes] = NULL;
 	return (msh->lex_arr);
 }
