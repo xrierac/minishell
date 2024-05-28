@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/27 15:32:26 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:57:41 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	get_input(t_sh *msh)
 	while (1)
 	{
 		receive_signal(1);
-		temp = readline("minishell$ ");
+		temp = readline("MiNiH3LL> ");
 		if (!temp)
 			exit_error(msh, "readline", 127);
 		if (temp)
@@ -58,11 +58,16 @@ void	get_input(t_sh *msh)
 			if (msh->error == 0)
 			{
 				lexer(input, msh);
-				execution_branch(msh);
-				free_lex(msh, msh->lex_arr);
+				//print_lex(msh, msh->lex_arr);	
+				msh->exit_code = execution_branch(msh);
+				printf("%d\n", msh->exit_code);
+				free_lex(msh->lex_arr);
 			}
 			free(input);
 			msh->error = 0;
+			//rl_replace_line("", 100);
+			//rl_on_new_line();
+			//rl_redisplay();
 		}
 	}
 }

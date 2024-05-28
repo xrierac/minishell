@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:48:20 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/27 15:23:51 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/27 11:35:59 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ int	run_builtin(t_sh *sh_data, char **cmd)
 }
 
 int	builtin_check(char **cmd, t_env *env)
-{	
+{
 	if (!ft_strncmp(cmd[0], "echo", 4) && ft_strlen(cmd[0]) == 4)
 		return (ft_echo(cmd, env->env_arr));
 	if (!ft_strncmp(cmd[0], "pwd", 3) && ft_strlen(cmd[0]) == 3)
 		return (ft_pwd());
-	if (!ft_strncmp(cmd[0],"env", 3) && ft_strlen(cmd[0]) == 3)
+	if (!ft_strncmp(cmd[0], "env", 3) && ft_strlen(cmd[0]) == 3)
 		return (ft_env(env->env_arr));
 	if (!ft_strncmp(cmd[0], "export", 6) && ft_strlen(cmd[0]) == 6)
 		return (ft_export(env, cmd, 0));
-	if (!ft_strncmp(cmd[0],"cd", 2) && ft_strlen(cmd[0]) == 2)
+	if (!ft_strncmp(cmd[0], "cd", 2) && ft_strlen(cmd[0]) == 2)
 		return (ft_cd(cmd[1], env));
 	if (!ft_strncmp(cmd[0], "unset", 5) && ft_strlen(cmd[0]) == 5)
 		return (0);

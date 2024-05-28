@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/27 15:44:11 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:14:01 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	get_input(t_sh *msh);
 //INITIALISE
 
 t_sh	*init_msh(char **ev);
-t_lex	***init_lex(t_sh *msh);
+void	init_lex(t_sh *msh);
 t_lex	**init_token(t_sh *msh);
 void	init_env(t_env *env);
 char	**init_cmd_arr(t_sh *msh);
@@ -137,7 +137,7 @@ int		is_eof(char *str, int i);
 
 void	exit_error(t_sh *msh, char *msg, int status);
 void	free_all(t_sh *msh);
-void	free_lex(t_sh *msh, t_lex ***lex);
+void	free_lex(t_lex ***lex);
 void	free_env(t_env *env);
 void	free_msh(t_sh *msh);
 void	close_hd_fd(int fd);
@@ -203,7 +203,8 @@ char	*get_name(char *str);
 size_t	find_equal_sign(char *str);
 
 //SIGNALS
-void rl_replace_line (const char *text, int clear_undo);
+void	rl_replace_line (const char *text, int clear_undo);
+
 void	receive_signal(int val);
 
 //TESTING TO BE DELETED
