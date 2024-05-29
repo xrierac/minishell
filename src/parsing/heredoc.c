@@ -43,7 +43,10 @@ void	open_heredoc(t_sh *msh, char *delim, int *fd)
 	{
 		input = readline("> ");
 		if (!input)
-			exit_error(msh, "readline", 127);
+		{
+			ft_printf(2, "minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", delim);
+			break ;
+		}
 		if (!ft_strncmp(input, delim, ft_strlen(input)) && \
 		ft_strlen(input) == ft_strlen(delim))
 			break ;
@@ -54,7 +57,8 @@ void	open_heredoc(t_sh *msh, char *delim, int *fd)
 	}
 	close(fd[1]);
 	free(delim);
-	free(input);
+	if (input)
+		free(input);
 }
 
 void	count_hd(t_sh *msh, char *str)
@@ -77,6 +81,8 @@ void	count_hd(t_sh *msh, char *str)
 
 void	open_pipe_and_hd(t_sh *msh, char *delim, char *str, int i)
 {
+	
+	receive_signal(1);
 	if (pipe(msh->hd_fd[msh->valid_hd]) == -1)
 		exit_error(msh, "pipe", 1);
 	if (check_heredoc(str, i) == true)
