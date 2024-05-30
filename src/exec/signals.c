@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 14:22:06 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/30 18:30:57 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:38:28 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	heredoc_handler(int signal)
 }
 
 static void	parent_handler(int signal)
-{	
+{
 	if (signal == SIGINT)
 	{
 		rl_replace_line("", 0);

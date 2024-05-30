@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:28 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/28 17:12:03 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/30 17:31:28 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,12 @@ void	free_lex(t_lex ***lex_arr)
 			ft_free_array(lex_arr[i][j]->cmd_arr);
 			free(lex_arr[i][j]);
 		}
-		free(lex_arr[i]);
+		if (lex_arr[i] != NULL)
+			free(lex_arr[i]);
+		lex_arr[i] = NULL;
 	}
 	free(lex_arr);
+	lex_arr = NULL;
 }
 
 void	free_env(t_env *env)
@@ -63,6 +66,21 @@ void	free_msh(t_sh *msh)
 	if (msh->pipe_arr != NULL)
 	{
 		ft_free_array(msh->pipe_arr);
+	}
+	if (msh->buffer != NULL)
+	{
+		free(msh->buffer);
+		msh->buffer = NULL;
+	}
+	if (msh->var != NULL)
+	{
+		free(msh->var);
+		msh->var = NULL;
+	}
+	if (msh->cmd != NULL)
+	{
+		free(msh->cmd);
+		msh->cmd = NULL;
 	}
 	free(msh);
 	msh = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:44:04 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/30 15:55:41 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:04:51 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ static char	*find_delimeter(t_sh *msh, char *str, int i)
 	}
 	delim = ft_substr(str, start, i - start);
 	if (!delim)
-		exit_error(msh, "ft_substr", 127);
+		exit_error(msh, "malloc", 2);
 	if (quote_search(delim))
-		delim = remove_quotes(msh, delim);
+		delim = remove_quotes(msh, delim, 0);
 	return (delim);
 }
 
@@ -83,7 +83,6 @@ void	count_hd(t_sh *msh, char *str)
 
 void	open_pipe_and_hd(t_sh *msh, char *delim, char *str, int i)
 {
-	
 	receive_signal(1);
 	if (pipe(msh->hd_fd[msh->valid_hd]) == -1)
 		exit_error(msh, "pipe", 1);
