@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/30 16:38:39 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:05:54 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <signal.h>
 #include <strings.h>
 
-int	g_error;
+int	g_num;
 
 void    print_arr(char **str)
 {
@@ -46,12 +46,11 @@ void	get_input(t_sh *msh)
 	char	*input;
 	char	*temp;
 
+	
+	receive_signal(0);
 	while (1)
 	{
-		tcsetattr(STDIN_FILENO, 0, &msh->new);
-		receive_signal(1);
-		temp = readline("MiNiH3LL> ");
-		tcsetattr(STDIN_FILENO, 0, &msh->old);
+		temp = tcsetreadline(msh, 0);
 		if (!temp)
 		{
 			ft_exit(msh, NULL);
@@ -62,7 +61,7 @@ void	get_input(t_sh *msh)
 		if (temp[0] != '\0')
 		{
 			input = syntax_check(msh, temp);
-			if (msh->error == 0)
+			if (msh->error == false)
 			{
 				lexer(input, msh);
 				msh->exit_code = execution_branch(msh);
@@ -72,7 +71,7 @@ void	get_input(t_sh *msh)
 			}
 			close_all_hd_fd(msh);
 			free(input);
-			msh->error = 0;
+			msh->error = false;
 			//rl_replace_line("", 100);
 			//rl_on_new_line();
 			//rl_redisplay();
