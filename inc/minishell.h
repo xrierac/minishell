@@ -3,10 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
 /*   Updated: 2024/05/29 15:13:39 by xriera-c         ###   ########.fr       */
+
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +34,8 @@
 # define MAX_FD 256
 # define MAX_ARGS 262144
 
+extern int g_error;
+
 typedef enum e_token_type
 {
 	R_INPUT,
@@ -54,6 +57,7 @@ typedef enum e_bool
 typedef struct s_lex
 {
 	t_token_type	token;
+	int				fd;
 	char			**cmd_arr;
 }	t_lex;
 
@@ -84,6 +88,7 @@ typedef struct s_sh
 	int		exit_code_flag;
 	struct termios old;
 	struct termios new;
+	int		valid_hd;
 }	t_sh;
 
 void	get_input(t_sh *msh);
@@ -107,7 +112,7 @@ int		env_memory(char	**env);
 //TOKENS
 
 void	lexer(char *input, t_sh *msh);
-void	assign_token(t_sh *msh, t_lex **lex_arr, char *cmd);
+void	assign_token(t_sh *msh, t_lex **lex_arr, char *cmd, int proc);
 char	*deref_env_var(t_sh *msh, char *input);
 void	is_token(t_sh *msh, char *str);
 void	count_pipes(t_sh *msh, char *input);
@@ -179,7 +184,7 @@ int		execute(t_lex *lex, t_env *env);
 int		r_input(char **cmd_arr);
 int		r_output(char **cmd_arr);
 int		r_append(char **cmd_arr);
-void	r_heredoc(char **cmd_arr);
+int		r_heredoc(t_lex *lex);
 int		execution_branch(t_sh *sh);
 int		pipe_management(t_sh *sh, int index, int in, int out);
 int		close_pipes(int in, int fda, int fdb);
@@ -203,6 +208,7 @@ char	*get_name(char *str);
 size_t	find_equal_sign(char *str);
 
 //SIGNALS
+
 void	rl_replace_line(const char *text, int clear_undo);
 void	receive_signal(int val);
 

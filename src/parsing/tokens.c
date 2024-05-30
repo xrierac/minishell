@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:14:34 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/27 17:13:20 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:17:44 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ void	create_tok_struct(t_sh *msh, char **pipe_arr)
 			exit_error(msh, "ft_strtrim", 127);
 		is_token(msh, pipe_arr[j]);
 		msh->lex_arr[i] = init_token(msh);
-		assign_token(msh, msh->lex_arr[i], msh->pipe_arr[j]);
+		assign_token(msh, msh->lex_arr[i], msh->pipe_arr[j], i);
 	}
 	ft_free_array(pipe_arr);
 	msh->pipe_arr = NULL;
 }
 
-void	assign_token(t_sh *msh, t_lex **lex, char *cmd)
+void	assign_token(t_sh *msh, t_lex **lex, char *cmd, int proc)
 {
 	int		i;
 	int		j;
@@ -75,6 +75,13 @@ void	assign_token(t_sh *msh, t_lex **lex, char *cmd)
 			j = tokenise_op(msh, lex[i], cmd, j);
 		else
 			j = tokenise_cmd(msh, lex[i], cmd, j);
+		if (lex[i]->token == VALID_HD)
+		{
+			lex[i]->fd = dup(msh->hd_fd[proc][0]);
+			if (lex[i]->fd == -1)
+				exit_error(msh, "dup", 1);
+			close(msh->hd_fd[proc][0]);
+		}
 	}
 }
 

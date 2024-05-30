@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:28 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/28 16:22:25 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:12:03 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	free_lex(t_lex ***lex_arr)
 		j = -1;
 		while (lex_arr[i][++j])
 		{
+			if (lex_arr[i][j]->fd > 0)
+				close(lex_arr[i][j]->fd);
 			ft_free_array(lex_arr[i][j]->cmd_arr);
 			free(lex_arr[i][j]);
 		}

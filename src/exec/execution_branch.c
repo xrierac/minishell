@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/27 14:23:41 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:13:09 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static int	check_token(t_lex *lex, t_env *env)
 		return (r_output(lex->cmd_arr));
 	if (lex->token == APPEND)
 		return (r_append(lex->cmd_arr));
+	if (lex->token == VALID_HD)
+		return (r_heredoc(lex));
 	return (0);
 }
 

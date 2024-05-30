@@ -14,6 +14,8 @@
 #include <signal.h>
 #include <strings.h>
 
+int	g_error;
+
 void    print_arr(char **str)
 {
     int i = -1;
@@ -62,8 +64,7 @@ void	get_input(t_sh *msh)
 			input = syntax_check(msh, temp);
 			if (msh->error == 0)
 			{
-				lexer(input, msh);
-				//print_lex(msh, msh->lex_arr);	
+				lexer(input, msh);	
 				msh->exit_code = execution_branch(msh);
 				printf("%d\n", msh->exit_code);
 				free_lex(msh->lex_arr);
