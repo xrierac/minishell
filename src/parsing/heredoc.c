@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:44:04 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/28 16:37:04 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:55:41 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,32 @@ static char	*find_delimeter(t_sh *msh, char *str, int i)
 	return (delim);
 }
 
-void	open_heredoc(t_sh *msh, char *delim, int *fd)
+static int	open_heredoc(t_sh *msh, char *delim, int *fd)
 {
 	char	*input;
+	int		stdin_cpy;
 
+	stdin_cpy = dup(STDIN_FILENO);
+	if (stdin_cpy == -1)
+		return (-1);	
 	while (1)
 	{
-		input = readline("> ");
-		if (!input)
+		input = tcsetreadline(msh, 1);
+		if (g_num == SIGINT)
 		{
-			ft_printf(2, "minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", delim);
+			when_sigint(msh, fd, stdin_cpy);
 			break ;
 		}
-		if (!ft_strncmp(input, delim, ft_strlen(input)) && \
-		ft_strlen(input) == ft_strlen(delim))
+		if ((!ft_strncmp(input, delim, ft_strlen(input)) && \
+		ft_strlen(input) == ft_strlen(delim)) || !input)
 			break ;
 		if (ft_strchr(input, '$'))
 			input = expand_env(msh, input);
 		ft_printf(fd[1], "%s\n", input);
 		free(input);
+		input = NULL;
 	}
-	close(fd[1]);
-	free(delim);
-	if (input)
-		free(input);
+	return (heredoc_cleaning(fd, stdin_cpy, delim, input));
 }
 
 void	count_hd(t_sh *msh, char *str)
@@ -87,7 +89,8 @@ void	open_pipe_and_hd(t_sh *msh, char *delim, char *str, int i)
 		exit_error(msh, "pipe", 1);
 	if (check_heredoc(str, i) == true)
 	{
-		open_heredoc(msh, delim, msh->hd_fd[msh->valid_hd]);
+		if (open_heredoc(msh, delim, msh->hd_fd[msh->valid_hd]) == -1)
+			exit_error(msh, "dup", 1);
 		msh->valid_hd++;
 	}
 	else

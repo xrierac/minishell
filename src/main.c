@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/29 15:16:57 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:50:25 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <signal.h>
 #include <strings.h>
 
-int	g_error;
+int	g_num;
 
 void    print_arr(char **str)
 {
@@ -46,12 +46,10 @@ void	get_input(t_sh *msh)
 	char	*input;
 	char	*temp;
 	
+	receive_signal(0);
 	while (1)
 	{
-		tcsetattr(STDIN_FILENO, 0, &msh->new);
-		receive_signal(1);
-		temp = readline("MiNiH3LL> ");
-		tcsetattr(STDIN_FILENO, 0, &msh->old);
+		temp = tcsetreadline(msh, 0);
 		if (!temp)
 		{
 			ft_exit(msh, NULL);
@@ -62,7 +60,7 @@ void	get_input(t_sh *msh)
 		if (temp[0] != '\0')
 		{
 			input = syntax_check(msh, temp);
-			if (msh->error == 0)
+			if (msh->error == false)
 			{
 				lexer(input, msh);	
 				msh->exit_code = execution_branch(msh);
@@ -71,7 +69,7 @@ void	get_input(t_sh *msh)
 				msh->lex_arr = NULL;
 			}
 			free(input);
-			msh->error = 0;
+			msh->error = false;
 			//rl_replace_line("", 100);
 			//rl_on_new_line();
 			//rl_redisplay();

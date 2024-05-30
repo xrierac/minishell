@@ -34,7 +34,7 @@
 # define MAX_FD 256
 # define MAX_ARGS 262144
 
-extern int g_error;
+int	g_num;
 
 typedef enum e_token_type
 {
@@ -137,6 +137,7 @@ int		check_delim(char c);
 t_bool	check_heredoc(char *cmd, int j);
 t_bool	is_hd_valid(char *cmd, int j);
 int		is_eof(char *str, int i);
+int		heredoc_cleaning(int *fd, int stdin_cpy, char *delim, char *input);
 
 //ERROR/FREE/CLOSE
 
@@ -173,14 +174,15 @@ char	*handle_dquote(t_sh *msh, char *ptr);
 char	*handle_squote(t_sh *msh, char *ptr);
 char	*deref_var(t_sh *msh, char *ptr);
 void	load_termios(t_sh *msh);
+char	*tcsetreadline(t_sh *msh, int n);
 
 //ERROR HANDLING
 void	error_exit(void);
-int		error_cmd_not_found(char *str);
+int		error_cmd_not_found(char *str, t_env *env);
 int		generic_error(char *str, char *cmd);
 
 //EXECUTION
-int		execute(t_lex *lex, t_env *env);
+int		execute(t_lex *lex);
 int		r_input(char **cmd_arr);
 int		r_output(char **cmd_arr);
 int		r_append(char **cmd_arr);
@@ -211,8 +213,10 @@ size_t	find_equal_sign(char *str);
 
 void	rl_replace_line(const char *text, int clear_undo);
 void	receive_signal(int val);
+void	when_sigint(t_sh *msh, int *fd, int stdin_cpy);
 
 //TESTING TO BE DELETED
 void	print_arr(char **str);
+//int		cow_exit(char *str, t_env *env);
 
 #endif
