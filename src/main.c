@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/30 16:50:25 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:29:47 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,17 @@ void	get_input(t_sh *msh)
 	char	*input;
 	char	*temp;
 	
-	receive_signal(0);
 	while (1)
 	{
+		receive_signal(0);
 		temp = tcsetreadline(msh, 0);
+		if (g_num == SIGINT)
+		{
+			msh->exit_code = 1;
+			g_num = 0;
+		}
+		printf("Previous Exit Code: %d\n", msh->exit_code);
+		msh->exit_code = 0;
 		if (!temp)
 		{
 			ft_exit(msh, NULL);
@@ -64,7 +71,6 @@ void	get_input(t_sh *msh)
 			{
 				lexer(input, msh);	
 				msh->exit_code = execution_branch(msh);
-				printf("%d\n", msh->exit_code);
 				free_lex(msh->lex_arr);
 				msh->lex_arr = NULL;
 			}
