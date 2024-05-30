@@ -178,11 +178,11 @@ char	*tcsetreadline(t_sh *msh, int n);
 
 //ERROR HANDLING
 void	error_exit(void);
-int		error_cmd_not_found(char *str, t_env *env);
+int		error_cmd_not_found(char *str);
 int		generic_error(char *str, char *cmd);
 
 //EXECUTION
-int		execute(t_lex *lex);
+int		execute(t_lex *lex, t_env *env);
 int		r_input(char **cmd_arr);
 int		r_output(char **cmd_arr);
 int		r_append(char **cmd_arr);
