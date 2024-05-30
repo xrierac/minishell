@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:44:04 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/28 16:37:04 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:46:27 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ static char	*find_delimeter(t_sh *msh, char *str, int i)
 	}
 	delim = ft_substr(str, start, i - start);
 	if (!delim)
-		exit_error(msh, "ft_substr", 127);
+		exit_error(msh, "malloc", 2);
 	if (quote_search(delim))
-		delim = remove_quotes(msh, delim);
+		delim = remove_quotes(msh, delim, 0);
 	return (delim);
 }
 
@@ -42,13 +42,8 @@ void	open_heredoc(t_sh *msh, char *delim, int *fd)
 	while (1)
 	{
 		input = readline("> ");
-		if (!input)
-		{
-			ft_printf(2, "minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", delim);
-			break ;
-		}
-		if (!ft_strncmp(input, delim, ft_strlen(input)) && \
-		ft_strlen(input) == ft_strlen(delim))
+		if ((!ft_strncmp(input, delim, ft_strlen(input)) && \
+		ft_strlen(input) == ft_strlen(delim)) || !input)
 			break ;
 		if (ft_strchr(input, '$'))
 			input = expand_env(msh, input);
@@ -81,7 +76,6 @@ void	count_hd(t_sh *msh, char *str)
 
 void	open_pipe_and_hd(t_sh *msh, char *delim, char *str, int i)
 {
-	
 	receive_signal(1);
 	if (pipe(msh->hd_fd[msh->valid_hd]) == -1)
 		exit_error(msh, "pipe", 1);
