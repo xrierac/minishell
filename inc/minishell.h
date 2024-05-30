@@ -6,7 +6,8 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/28 17:38:58 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:13:39 by xriera-c         ###   ########.fr       */
+
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +24,7 @@
 # include <dirent.h>
 # include <string.h>
 # include <errno.h>
-# include <sys/wait.h>
+# include <termios.h>
 
 # define RED "\e[0;91m"
 # define END "\e[0m"
@@ -85,6 +86,8 @@ typedef struct s_sh
 	int		hd_fd[16][2];
 	int		exit_code;
 	int		exit_code_flag;
+	struct termios old;
+	struct termios new;
 	int		valid_hd;
 }	t_sh;
 
@@ -169,6 +172,7 @@ char	*extract_var(t_sh *msh, char *start, int len);
 char	*handle_dquote(t_sh *msh, char *ptr);
 char	*handle_squote(t_sh *msh, char *ptr);
 char	*deref_var(t_sh *msh, char *ptr);
+void	load_termios(t_sh *msh);
 
 //ERROR HANDLING
 void	error_exit(void);

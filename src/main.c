@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/28 15:12:51 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:16:57 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,13 @@ void	get_input(t_sh *msh)
 {
 	char	*input;
 	char	*temp;
-
+	
 	while (1)
 	{
+		tcsetattr(STDIN_FILENO, 0, &msh->new);
 		receive_signal(1);
 		temp = readline("MiNiH3LL> ");
+		tcsetattr(STDIN_FILENO, 0, &msh->old);
 		if (!temp)
 		{
 			ft_exit(msh, NULL);
@@ -88,6 +90,7 @@ int	main(int ac, char **av, char **ev)
 	}
 	msh = init_msh(ev);
 	msh->lex_arr = NULL;
+	load_termios(msh);
 	get_input(msh);
 	return (0);
 }
