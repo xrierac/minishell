@@ -98,7 +98,7 @@ char	*deref_var(t_sh *msh, char *ptr)
 
 	var_len = 0;
 	start = ptr;
-	if (*ptr == '?' || ft_isdigit(*ptr))
+	if (*ptr == '?' || ft_isdigit(*ptr) == 1)
 		ptr++;
 	else
 		while (*ptr && ((ft_isalnum(*ptr) == 1) || *ptr == '_'))
