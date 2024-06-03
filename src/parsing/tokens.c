@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:14:34 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/30 16:18:33 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:07:14 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	assign_token(t_sh *msh, t_lex **lex, char *cmd, int proc)
 	j = 0;
 	while (++i < msh->tok_count)
 	{
+		lex[i]->fd = 0;
 		if (is_op(cmd, j) == true)
 			j = tokenise_op(msh, lex[i], cmd, j);
 		else

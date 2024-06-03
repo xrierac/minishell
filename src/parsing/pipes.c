@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:29:23 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/23 14:42:37 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:51:38 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,18 @@ void	count_pipes(t_sh *msh, char *input)
 	msh->pipes = 0;
 	while (input[i])
 	{
-		if (input[i] == '\'' || input[i] == '\"')
-		{
-			i = find_quote(input, input[i], i + 1);
-		}
-		if ((input[i] == '|' && input[i + 1] == '|') \
-			|| (input[i] == '|' && input[i + 1] == '\0'))
-		{
+		if (msh->error == 1)
 			ft_printf(2, RED":( "END SYNTAX_ERROR" `|'\n");
-			msh->error = true;
-			return ;
-		}
+		if (input[i] == '\'' || input[i] == '\"')
+			i = find_quote(input, input[i], i + 1);
+		if (input[i] == '|' && input[i + 1] == '|')
+			msh->error = 1;
+		else if (input[i] == '|' && input[i + 1] == '\0')
+			msh->error = 1;
 		else if (input[i] == '|')
 			msh->pipes++;
-		i++;
+		if (input[i])
+			i++;
 	}
 }
 

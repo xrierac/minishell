@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:43:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/30 17:30:47 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/03 17:49:08 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,19 @@ char	*syntax_check(t_sh *msh, char *temp)
 	char	*res;
 
 	msh->cmd = ft_strtrim(temp, " ");
-	pre_check(msh, msh->cmd);
 	if (msh->error == 0)
 	{
 		count_quotes(msh, msh->cmd);
 		count_pipes(msh, msh->cmd);
-		if (msh->error == 1)
-			return (msh->cmd);
-		heredoc(msh, msh->cmd);
+		if (find_hd(msh->cmd) && msh->error == 0)
+			heredoc(msh, msh->cmd);
 		if (msh->error == 1)
 			return (msh->cmd);
 		res = env_variable(msh, msh->cmd);
 		if (msh->error == 1)
 			return (res);
 		check_str(msh, res);
+		check_null_str(msh, res);
 		return (res);
 	}
 	return (msh->cmd);

@@ -131,6 +131,7 @@ char	*choose_op(char *c);
 char	*syntax_check(t_sh *msh, char *temp);
 char	*check_op_syntax(t_sh *msh, char *str);
 int		current_op(char *str);
+void	check_null_str(t_sh *msh, char *str);
 
 // HEREDOC
 
@@ -141,6 +142,7 @@ t_bool	check_heredoc(char *cmd, int j);
 t_bool	is_hd_valid(char *cmd, int j);
 int		is_eof(char *str, int i);
 int		heredoc_cleaning(int *fd, int stdin_cpy, char *delim, char *input);
+int		find_hd(char *str);
 
 //ERROR/FREE/CLOSE
 

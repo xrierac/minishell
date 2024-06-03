@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/03 14:16:49 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:04:59 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	get_input(t_sh *msh)
 		if (temp[0] != '\0')
 		{
 			input = syntax_check(msh, temp);
+			printf("%s\n", input);
 			if (msh->error == false)
 			{
 				lexer(input, msh);
