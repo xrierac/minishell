@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/30 17:47:08 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:35:40 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,15 @@ char	*check_env_var(t_sh *msh, t_env *env, char *var)
 	temp = add_var(msh, env, var);
 	if (temp == NULL)
 	{
-		temp = ft_strdup("");
+		free(var);
+		return (temp);
+	}
+		/* temp = ft_strdup("");
 		if (!temp)
 		{
 			free(var);
 			exit_error(msh, "malloc", 2);
-		}
-	}
+		} */
 	free(var);
 	return (temp);
 }
@@ -106,7 +108,7 @@ char	*deref_var(t_sh *msh, char *ptr)
 	var_len = ptr - start;
 	msh->var = check_env_var(msh, msh->env, extract_var(msh, start, var_len));
 	exp_len = ft_strlen(msh->var);
-	if (msh->var[0] != '\0')
+	if (msh->var)
 	{
 		msh->buf_len += exp_len;
 		ft_strlcat(msh->buffer, msh->var, msh->buf_len + 1);
@@ -133,9 +135,10 @@ char	*expand_env(t_sh *msh, char *cmd)
 			ptr = handle_squote(msh, ptr);
 		else if (*ptr == '\"')
 			ptr = handle_dquote(msh, ptr);
-		else if (*ptr == '$' && (*(ptr + 1) != ' ' && *(ptr + 1)) != '\0')
+		else if (*ptr == '$' && ((*(ptr + 1) != ' ' || *(ptr + 1)) != '\0'))
 		{
 			ptr = deref_var(msh, ptr + 1);
+			if (msh->var == NULL && *ptr == '\0')
 			if (msh->var[0] == '\0' && *ptr == '\0')
 				break ;
 		}

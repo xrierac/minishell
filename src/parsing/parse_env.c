@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:36:36 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/30 14:12:45 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:05:16 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	cur_lvl(char *ev)
 		temp++;
 		j++;
 	}
-	return (atoi(temp));
+	return (ft_atoi(temp));
 }
 
 void	get_lvl(t_sh *msh, char **temp, int i)
@@ -79,17 +79,18 @@ void	ft_envcpy(t_sh *msh, t_env *env, char **ev)
 		len++;
 	temp = ft_calloc(len + 1, sizeof(char *));
 	if (!temp)
-		exit_error(msh, "malloc: ", 127);
-	while (ev[i] || i < len)
+		exit_error(msh, "malloc", 2);
+	while (ev[i])
 	{
 		temp[i] = ft_strdup(ev[i]);
 		if (!temp[i])
-			exit_error(msh, "ft_strdup: ", 127);
+			exit_error(msh, "malloc", 2);
 		get_path(msh, env, ev, i);
 		if (ft_strncmp(ev[i], "SHLVL=", 6) == 0)
 			get_lvl(msh, temp, i);
 		i++;
 	}
+	temp[i] = NULL;
 	env->env_arr = temp;
 }
 
@@ -100,15 +101,15 @@ int	env_memory(t_sh *msh)
 	int		bytes;
 	char	**env;
 
+	bytes = 0;
 	i = -1;
-	j = -1;
 	env = msh->env->env_arr;
 	while (env[++i])
 	{
+		j = -1;
 		bytes += 8;
 		while (env[i][++j])
 			bytes++;
-		i++;
 	}
 	return (bytes);
 }

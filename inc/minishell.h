@@ -25,6 +25,8 @@
 # include <string.h>
 # include <errno.h>
 # include <termios.h>
+# include <signal.h>
+# include <sys/wait.h>
 
 # define RED "\e[0;91m"
 # define END "\e[0m"
@@ -34,7 +36,7 @@
 # define MAX_FD 256
 # define MAX_ARGS 262144
 
-int	g_num;
+extern int	g_num;
 
 typedef enum e_token_type
 {

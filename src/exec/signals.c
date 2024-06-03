@@ -6,12 +6,11 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 14:22:06 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/30 18:38:28 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:59:52 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <signal.h>
 
 static void	heredoc_handler(int signal)
 {
@@ -54,6 +53,7 @@ void	receive_signal(int val)
 {
 	struct sigaction	sa;
 	
+	ft_memset(&sa, 0, sizeof(sa));
 	if (val == 0)
 		sa.sa_handler = &parent_handler;
 	else if (val == 1)

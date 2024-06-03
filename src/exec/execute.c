@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:21:51 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/27 11:27:10 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/03 12:20:50 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*find_cmd(char *cmd, t_env *env)
 
 	prog = ft_strjoin("/", cmd);
 	if (!prog)
-		exit(0);
+		return (cmd);
 	i = 0;
 	while (env->path_arr[i])
 	{
@@ -43,7 +43,7 @@ static char	*find_cmd(char *cmd, t_env *env)
 		i++;
 	}
 	if (env->path_arr[i] == 0)
-		path = 0;
+		path = cmd;
 	free(prog);
 	return (path);
 }
