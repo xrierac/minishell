@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_two.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:44:06 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/27 17:07:12 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:19:25 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,19 @@ int	tokenise_cmd(t_sh *msh, t_lex *lex, char *cmd, int j)
 	i = -1;
 	temp = ft_substr(cmd, j, find_op(cmd, j) - j);
 	if (!temp)
-		exit_error(msh, "ft_substr", 1);
+		exit_error(msh, "malloc", 2);
 	j = find_op(cmd, j);
 	lex->cmd_arr = ft_strtok(temp, ' ', "'\'''\"'");
 	free(temp);
 	if (!lex->cmd_arr)
-		exit_error(msh, "ft_strtok", 1);
+		exit_error(msh, "malloc", 2);
 	while (lex->cmd_arr[++i])
 	{
 		lex->cmd_arr[i] = ft_strtrim(lex->cmd_arr[i], " ");
 		if (!lex->cmd_arr[i])
-			exit_error(msh, "ft_strtrim", 1);
+			exit_error(msh, "malloc", 2);
 		if (quote_search(lex->cmd_arr[i]) == 1)
-			lex->cmd_arr[i] = remove_quotes(msh, lex->cmd_arr[i]);
+			lex->cmd_arr[i] = remove_quotes(msh, lex->cmd_arr[i], 0);
 	}
 	lex->token = CMD;
 	return (j);
@@ -80,14 +80,14 @@ int	tokenise_op(t_sh *msh, t_lex *lex, char *cmd, int j)
 		j += 2;
 	temp = ft_substr(cmd, j, find_space(cmd, j) - j);
 	if (!temp)
-		exit_error(msh, "ft_substr", 127);
+		exit_error(msh, "malloc", 2);
 	j = find_space(cmd, j);
 	while (ft_isspace(cmd[j]) == true && cmd[j])
 		j++;
 	lex->cmd_arr[0] = ft_strtrim(temp, " ");
 	if (!lex->cmd_arr[0])
-		exit_error(msh, "ft_strtrim", 127);
+		exit_error(msh, "malloc", 2);
 	if (quote_search(lex->cmd_arr[0]) == 1)
-		lex->cmd_arr[0] = remove_quotes(msh, lex->cmd_arr[0]);
+		lex->cmd_arr[0] = remove_quotes(msh, lex->cmd_arr[0], 0);
 	return (j);
 }

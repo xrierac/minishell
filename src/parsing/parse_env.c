@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:36:36 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/28 16:32:51 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:12:45 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	get_path(t_sh *msh, t_env *env, char **ev, int i)
 		env->env_path = NULL;
 	}
 }
-//Updates the shell level, super important
 
 int	cur_lvl(char *ev)
 {
@@ -67,7 +66,6 @@ void	get_lvl(t_sh *msh, char **temp, int i)
 	}
 	free(lvl);
 }
-// gets the environment and stores its in a 2d array
 
 void	ft_envcpy(t_sh *msh, t_env *env, char **ev)
 {
@@ -95,14 +93,16 @@ void	ft_envcpy(t_sh *msh, t_env *env, char **ev)
 	env->env_arr = temp;
 }
 
-int	env_memory(char	**env)
+int	env_memory(t_sh *msh)
 {
-	int	i;
-	int	j;
-	int	bytes;
+	int		i;
+	int		j;
+	int		bytes;
+	char	**env;
 
 	i = -1;
 	j = -1;
+	env = msh->env->env_arr;
 	while (env[++i])
 	{
 		bytes += 8;

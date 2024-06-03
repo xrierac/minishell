@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:00:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/24 16:07:09 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:45:50 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,16 @@ void	count_quotes(t_sh *msh, char *str)
 	}
 }
 
-char	*remove_quotes(t_sh *msh, char *str)
+char	*remove_quotes(t_sh *msh, char *str, int i)
 {
-	int		i;
 	int		j;
 	char	*result;
 	char	quote;
 
-	i = 0;
 	j = 0;
 	result = ft_calloc(ft_strlen(str), 1);
 	if (!result)
-		exit_error(msh, "ft_calloc", 127);
+		exit_error(msh, "malloc", 2);
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')

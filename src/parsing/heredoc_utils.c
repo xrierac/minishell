@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   load_termios.c                                     :+:      :+:    :+:   */
+/*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/29 15:05:14 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/30 15:42:08 by xriera-c         ###   ########.fr       */
+/*   Created: 2024/05/30 14:49:18 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/05/30 15:49:30 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*tcsetreadline(t_sh *msh, int n)
+int	heredoc_cleaning(int *fd, int stdin_cpy, char *delim, char *input)
 {
-	char *input;
-
-	tcsetattr(STDIN_FILENO, 0, &msh->new);
-	if (n == 0)
-		input = readline("MiNiH3LL> ");
-	else
-		input = readline("> ");
-	tcsetattr(STDIN_FILENO, 0, &msh->old);
-	return (input);
+	close(stdin_cpy);
+	close(fd[1]);
+	free(delim);
+	if (input)
+		free(input);
+	return (0);
 }
 
-void	load_termios(t_sh *msh)
+void	when_sigint(t_sh *msh, int *fd, int stdin_cpy)
 {
-	tcgetattr(STDIN_FILENO, &msh->old);
-	msh->new = msh->old;
-	msh->new.c_lflag &= ~ECHOCTL;
+	g_num = 0;
+	msh->error = 1;
+	if (dup2(stdin_cpy, 0) == -1)
+		generic_error("", "dup2");
+	close(fd[0]);
 }

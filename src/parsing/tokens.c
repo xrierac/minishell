@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:14:34 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/28 17:17:44 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:18:33 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	create_tok_struct(t_sh *msh, char **pipe_arr)
 	{
 		msh->tok_count = 0;
 		pipe_arr[j] = ft_strtrim(msh->pipe_arr[j], " ");
-		if (pipe_arr[j] == 0)
-			exit_error(msh, "ft_strtrim", 127);
+		if (!pipe_arr[j])
+			exit_error(msh, "malloc", 2);
 		is_token(msh, pipe_arr[j]);
 		msh->lex_arr[i] = init_token(msh);
 		assign_token(msh, msh->lex_arr[i], msh->pipe_arr[j], i);
@@ -90,6 +90,10 @@ void	lexer(char *input, t_sh *msh)
 	init_lex(msh);
 	msh->pipe_arr = ft_strtok(input, '|', "'\'''\"'");
 	if (!msh->pipe_arr)
-		exit_error(msh, "ft_strtok\n", 127);
+	{
+		free(msh->lex_arr);
+		msh->lex_arr = NULL;
+		exit_error(msh, "malloc", 2);
+	}
 	create_tok_struct(msh, msh->pipe_arr);
 }

@@ -6,22 +6,32 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 14:22:06 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/29 15:09:26 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:38:28 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 #include <signal.h>
 
+static void	heredoc_handler(int signal)
+{
+	if (signal == SIGINT)
+	{
+		g_num = SIGINT;
+		close(0);
+		write(1, "> \n", 3);
+	}
+}
+
 static void	parent_handler(int signal)
-{	
+{
 	if (signal == SIGINT)
 	{
 		rl_replace_line("", 0);
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_redisplay();
-		//g_error = 1;
+		g_num = SIGINT;
 	}
 	else if (signal == SIGQUIT)
 	{
@@ -32,13 +42,11 @@ static void	parent_handler(int signal)
 
 static void	child_handler(int signal)
 {
-	if (signal == SIGINT)
-	;
-		//g_error = 130;
+	if (signal == SIGINT)	
+		g_num = SIGINT;
 	else if (signal == SIGQUIT)
 	{
-		ft_putstr_fd("Quit: 3\n", 1);
-		//g_error = 131;
+		ft_putstr_fd("Quit: 3\n", 2);
 	}
 }
 
@@ -46,8 +54,10 @@ void	receive_signal(int val)
 {
 	struct sigaction	sa;
 	
-	if (val)
+	if (val == 0)
 		sa.sa_handler = &parent_handler;
+	else if (val == 1)
+		sa.sa_handler = &heredoc_handler;
 	else
 		sa.sa_handler = &child_handler;
 	sa.sa_flags = SA_RESTART;

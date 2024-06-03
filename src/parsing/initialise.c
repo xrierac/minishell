@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialise.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/28 15:52:41 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/30 17:24:50 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ t_sh	*init_msh(char **ev)
 
 	msh = ft_calloc(1, sizeof(t_sh));
 	if (!msh)
-		exit_error(msh, "calloc", 127);
+		exit_error(msh, "malloc", 2);
 	msh->env = ft_calloc(1, sizeof(t_env));
 	if (!msh->env)
 	{
 		free_all(msh);
-		exit_error(msh, "calloc", 127);
+		exit_error(msh, "malloc", 2);
 	}
 	init_env(msh->env);
 	msh->pipes = 0;
@@ -36,6 +36,7 @@ t_sh	*init_msh(char **ev)
 	msh->buf_len = 0;
 	msh->exit_code = 0;
 	msh->lex_arr = NULL;
+	msh->cmd = NULL;
 	ft_envcpy(msh, msh->env, ev);
 	return (msh);
 }
@@ -54,9 +55,9 @@ void	init_lex(t_sh *msh)
 
 	i = -1;
 	msh->processes = msh->pipes + 1;
-	msh->lex_arr = (t_lex ***)malloc((msh->processes) * sizeof(t_lex **));
+	msh->lex_arr = (t_lex ***)malloc((msh->processes + 1) * sizeof(t_lex **));
 	if (!msh->lex_arr)
-		exit_error(msh, "malloc", 127);
+		exit_error(msh, "malloc", 2);
 	msh->lex_arr[msh->processes] = NULL;
 }
 
@@ -68,12 +69,12 @@ t_lex	**init_token(t_sh *msh)
 	i = -1;
 	arr = malloc(sizeof(t_lex *) * (msh->tok_count + 1));
 	if (!arr)
-		exit_error(msh, "malloc", 127);
+		exit_error(msh, "malloc", 2);
 	while (++i < msh->tok_count)
 	{
 		arr[i] = malloc(sizeof(t_lex));
 		if (!arr[i])
-			exit_error(msh, "malloc", 127);
+			exit_error(msh, "malloc", 2);
 	}
 	arr[msh->tok_count] = NULL;
 	return (arr);
@@ -85,10 +86,7 @@ char	**init_cmd_arr(t_sh *msh)
 
 	temp = ft_calloc(sizeof(char *), 2);
 	if (!temp)
-	{
-		free_all(msh);
-		exit_error(msh, "ft_calloc", 127);
-	}
+		exit_error(msh, "malloc", 2);
 	temp[1] = NULL;
 	return (temp);
 }

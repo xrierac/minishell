@@ -34,7 +34,7 @@
 # define MAX_FD 256
 # define MAX_ARGS 262144
 
-extern int g_error;
+int	g_num;
 
 typedef enum e_token_type
 {
@@ -72,23 +72,24 @@ typedef struct s_env
 
 typedef struct s_sh
 {
-	t_env	*env;
-	t_lex	***lex_arr;
-	char	**pipe_arr;
-	int		tok_count;
-	int		pipes;
-	int		processes;
-	int		count;
-	t_bool	error;
-	char	*buffer;
-	char	*var;
-	int		buf_len;
-	int		hd_fd[16][2];
-	int		exit_code;
-	int		exit_code_flag;
-	struct termios old;
-	struct termios new;
-	int		valid_hd;
+	t_env			*env;
+	t_lex			***lex_arr;
+	char			**pipe_arr;
+	int				tok_count;
+	int				pipes;
+	int				processes;
+	int				count;
+	t_bool			error;
+	char			*buffer;
+	char			*var;
+	int				buf_len;
+	int				hd_fd[16][2];
+	int				exit_code;
+	int				exit_code_flag;
+	char			*cmd;
+	struct termios	old;
+	struct termios	new;
+	int				valid_hd;
 }	t_sh;
 
 void	get_input(t_sh *msh);
@@ -107,7 +108,7 @@ void	get_path(t_sh *msh, t_env *env, char **ev, int i);
 void	get_lvl(t_sh *msh, char **temp, int i);
 int		cur_lvl(char *ev);
 void	ft_envcpy(t_sh *msh, t_env *env, char **ev);
-int		env_memory(char	**env);
+int		env_memory(t_sh *msh);
 
 //TOKENS
 
@@ -137,6 +138,7 @@ int		check_delim(char c);
 t_bool	check_heredoc(char *cmd, int j);
 t_bool	is_hd_valid(char *cmd, int j);
 int		is_eof(char *str, int i);
+int		heredoc_cleaning(int *fd, int stdin_cpy, char *delim, char *input);
 
 //ERROR/FREE/CLOSE
 
@@ -158,7 +160,7 @@ char	set_quote(char	*str, int i);
 int		is_file(t_sh *msh, char *str, int i);
 int		find_space(char *str, int i);
 int		find_op(char *str, int i);
-char	*remove_quotes(t_sh *msh, char *str);
+char	*remove_quotes(t_sh *msh, char *str, int i);
 int		quote_search(char *str);
 char	*find_quote_ptr(char *str, char q);
 int		skip_quotes(char *str, int i);
@@ -173,6 +175,7 @@ char	*handle_dquote(t_sh *msh, char *ptr);
 char	*handle_squote(t_sh *msh, char *ptr);
 char	*deref_var(t_sh *msh, char *ptr);
 void	load_termios(t_sh *msh);
+char	*tcsetreadline(t_sh *msh, int n);
 
 //ERROR HANDLING
 void	error_exit(void);
@@ -211,8 +214,10 @@ size_t	find_equal_sign(char *str);
 
 void	rl_replace_line(const char *text, int clear_undo);
 void	receive_signal(int val);
+void	when_sigint(t_sh *msh, int *fd, int stdin_cpy);
 
 //TESTING TO BE DELETED
 void	print_arr(char **str);
+//int		cow_exit(char *str, t_env *env);
 
 #endif

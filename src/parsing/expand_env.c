@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/27 16:11:10 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/05/30 17:47:08 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ char	*add_var(t_sh *msh, t_env *env, char *var)
 			temp = ft_substr(env->env_arr[i], ft_strlen(var), \
 					ft_strlen(env->env_arr[i]) - ft_strlen(var));
 			if (!temp)
-				exit_error(msh, "ft_substr", 1);
+			{
+				free(var);
+				exit_error(msh, "malloc,", 2);
+			}
 			return (temp);
 		}
 	}
@@ -48,13 +51,19 @@ char	*check_env_var(t_sh *msh, t_env *env, char *var)
 	}
 	var = ft_strjoin_free(var, "=");
 	if (!var)
-		exit_error(msh, "ft_strjoin", 1);
+	{
+		free(var);
+		exit_error(msh, "malloc", 2);
+	}
 	temp = add_var(msh, env, var);
 	if (temp == NULL)
 	{
 		temp = ft_strdup("");
 		if (!temp)
-			exit_error(msh, "ft_strdup", 1);
+		{
+			free(var);
+			exit_error(msh, "malloc", 2);
+		}
 	}
 	free(var);
 	return (temp);
@@ -68,7 +77,7 @@ char	*extract_var(t_sh *msh, char *start, int len)
 	{
 		var_name = ft_strdup("");
 		if (!var_name)
-			exit_error(msh, "ft_strdup", 1);
+			exit_error(msh, "malloc", 1);
 	}
 	else if (start[0] == '?')
 		var_name = fetch_exit_code(msh, start);
@@ -76,7 +85,7 @@ char	*extract_var(t_sh *msh, char *start, int len)
 	{
 		var_name = ft_substr(start, 0, len);
 		if (!var_name)
-			exit_error(msh, "ft_substr", 1);
+			exit_error(msh, "malloc", 1);
 	}
 	return (var_name);
 }
@@ -89,17 +98,12 @@ char	*deref_var(t_sh *msh, char *ptr)
 
 	var_len = 0;
 	start = ptr;
-	if (*ptr == '?')
-	{
+	if (*ptr == '?' || ft_isdigit(*ptr) == 1)
 		ptr++;
-		var_len = 1;
-	}
 	else
-	{
 		while (*ptr && ((ft_isalnum(*ptr) == 1) || *ptr == '_'))
 			ptr++;
-		var_len = ptr - start;
-	}
+	var_len = ptr - start;
 	msh->var = check_env_var(msh, msh->env, extract_var(msh, start, var_len));
 	exp_len = ft_strlen(msh->var);
 	if (msh->var[0] != '\0')
@@ -120,9 +124,9 @@ char	*expand_env(t_sh *msh, char *cmd)
 
 	ptr = cmd;
 	msh->buf_len = 0;
-	msh->buffer = ft_calloc(MAX_ARGS - env_memory(msh->env->env_arr) - ft_strlen(cmd), 1);
+	msh->buffer = ft_calloc(MAX_ARGS - env_memory(msh) - ft_strlen(cmd), 1);
 	if (!msh->buffer)
-		exit_error(msh, "calloc", 1);
+		exit_error(msh, "malloc", 2);
 	while (*ptr)
 	{
 		if (*ptr == '\'')
@@ -141,15 +145,4 @@ char	*expand_env(t_sh *msh, char *cmd)
 	msh->buffer[msh->buf_len] = '\0';
 	free (cmd);
 	return (msh->buffer);
-}
-
-char	*fetch_exit_code(t_sh *msh, char *ptr)
-{
-	char	*exit_code;
-
-	msh->exit_code_flag = 1;
-	exit_code = ft_itoa(msh->exit_code);
-	if (!exit_code)
-		exit_error(msh, "malloc", 1);
-	return (exit_code);
 }
