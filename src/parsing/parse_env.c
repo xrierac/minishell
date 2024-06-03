@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:36:36 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/03 12:18:12 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:05:16 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	cur_lvl(char *ev)
 		temp++;
 		j++;
 	}
-	return (atoi(temp));
+	return (ft_atoi(temp));
 }
 
 void	get_lvl(t_sh *msh, char **temp, int i)
@@ -80,7 +80,7 @@ void	ft_envcpy(t_sh *msh, t_env *env, char **ev)
 	temp = ft_calloc(len + 1, sizeof(char *));
 	if (!temp)
 		exit_error(msh, "malloc", 2);
-	while (ev[i] || i < len)
+	while (ev[i])
 	{
 		temp[i] = ft_strdup(ev[i]);
 		if (!temp[i])
@@ -101,11 +101,12 @@ int	env_memory(t_sh *msh)
 	int		bytes;
 	char	**env;
 
+	bytes = 0;
 	i = -1;
-	j = -1;
 	env = msh->env->env_arr;
 	while (env[++i])
 	{
+		j = -1;
 		bytes += 8;
 		while (env[i][++j])
 			bytes++;
