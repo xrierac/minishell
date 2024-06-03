@@ -6,12 +6,11 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/30 18:35:19 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/03 08:30:54 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <signal.h>
 
 static int	wait_processes(pid_t cpid[], int nproc)
 {
@@ -110,5 +109,9 @@ int	execution_branch(t_sh *sh)
 	if (val >= 0)
 		return (val);
 	val = start_proc(sh, in, i);
+	if (g_num == SIGINT)
+		return (130);
+	if (g_num == SIGQUIT)
+		return (131);
 	return (val);
 }
