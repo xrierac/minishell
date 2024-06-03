@@ -25,6 +25,7 @@
 # include <string.h>
 # include <errno.h>
 # include <termios.h>
+# include <signal.h>
 
 # define RED "\e[0;91m"
 # define END "\e[0m"
