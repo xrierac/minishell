@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:43:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/04 11:56:59 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:30:38 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	env_variable(t_sh *msh)
 	if (ft_strchr(msh->cmd, '$'))
 	{
 		msh->cmd = expand_env(msh, msh->cmd);
+		msh->buffer = NULL;
 		if (!msh->cmd[0])
 			msh->error = 1;
 	}

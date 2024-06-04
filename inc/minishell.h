@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/04 13:57:24 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:39:39 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void	free_env(t_env *env);
 void	free_msh(t_sh *msh);
 void	close_hd_fd(int fd);
 void	close_all_hd_fd(t_sh *msh);
-void	free_and_null(char *str);
+void	free_var(t_sh *msh);
 
 //TOOLS
 

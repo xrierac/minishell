@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/04 13:55:34 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:40:27 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,14 @@ char	*deref_var(t_sh *msh, char *ptr)
 		msh->buf_len += exp_len;
 		if (msh->buf_len > msh->max_len)
 		{
-			free_and_null(msh->var);
+			free_var(msh);
 			exit_error(msh, "max_arg limit exceeded", 2);
 		}
 		ft_strlcat(msh->buffer, msh->var, msh->buf_len + 1);
 		while (ft_isspace(*ptr))
 			msh->buffer[msh->buf_len++] = *ptr++;
 	}
-	if (msh->var)
-		free_and_null(msh->var);
+	free_var(msh);
 	return (ptr);
 }
 
@@ -123,6 +122,7 @@ char	*expand_env(t_sh *msh, char *cmd)
 	if (!msh->buffer)
 		exit_error(msh, "malloc", 2);
 	handle_expansion(msh, cmd);
-	free_and_null(cmd);
+	free(cmd);
+	cmd = NULL;
 	return (msh->buffer);
 }
