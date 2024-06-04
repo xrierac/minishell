@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:28 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/04 13:59:07 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:39:18 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,12 @@ void	free_msh(t_sh *msh)
 	msh = NULL;
 }
 
-void	free_and_null(char *str)
+
+void	free_var(t_sh *msh)
 {
-	if (str != NULL)
+	if (msh->var)
 	{
-		free(str);
-		str = NULL;
+		free(msh->var);
+		msh->var = NULL;
 	}
 }
