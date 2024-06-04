@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 10:40:55 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/27 11:36:58 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:13:54 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static void	ft_echo_variable(char *str, char **env)
 	{
 		if (*str != '$')
 			write(1, str, 1);
+		else if (*str == '$' && ((*(str + 1) == ' ') || (*(str + 1) == '\0')))
+			write(1, "$", 1);
 		else
 		{
 			sub = ft_substr(str + 1, 0, find_end(str));
