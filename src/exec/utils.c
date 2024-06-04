@@ -54,9 +54,14 @@ int	new_path_arr(t_env *env_s, char *str)
 	if (ft_strncmp(str, "PATH=", 5) == 0)
 	{
 		ft_free_array(env_s->path_arr);
-		env_s->path_arr = ft_split(ft_getenv("PATH=", env_s->env_arr), ':');
+		env_s->path_arr = ft_split(str + 5, ':');
 		if (!env_s->path_arr)
 			return (generic_error("", "Error updating path array"));
+	}
+	if (ft_strncmp(str, "PATH", 4) == 0 && str[4] == '\0')
+	{
+		ft_free_array(env_s->path_arr);
+		env_s->path_arr = ft_split("", ' ');
 	}
 	return (0);
 }
