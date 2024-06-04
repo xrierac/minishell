@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/04 13:36:37 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:45:21 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,25 @@ void	print_lex(t_sh *msh, t_lex	***lex)
 	}
 }
 
-void	get_input(t_sh *msh)
+static void	checks_and_execution(t_sh *msh, char *temp)
 {
 	char	*input;
+
+	input = syntax_check(msh, temp);
+	if (msh->error == false)
+	{
+		lexer(input, msh);
+		msh->exit_code = execution_branch(msh);
+		free_lex(msh->lex_arr);
+		msh->lex_arr = NULL;
+	}
+	close_all_hd_fd(msh);
+	free(input);
+	msh->error = false;
+}
+
+void	get_input(t_sh *msh)
+{
 	char	*temp;
 
 	while (1)
@@ -62,19 +78,7 @@ void	get_input(t_sh *msh)
 		if (temp)
 			add_history(temp);
 		if (temp[0] != '\0')
-		{
-			input = syntax_check(msh, temp);
-			if (msh->error == false)
-			{
-				lexer(input, msh);
-				msh->exit_code = execution_branch(msh);
-				free_lex(msh->lex_arr);
-				msh->lex_arr = NULL;
-			}
-			close_all_hd_fd(msh);
-			free(input);
-			msh->error = false;
-		}
+			checks_and_execution(msh, temp);
 	}
 }
 
