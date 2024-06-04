@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:54:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/24 14:57:17 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:26:11 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ static int	check_validity(char *s)
 	int	i;
 
 	i = 0;
+	if (!s[i])
+	{
+		ft_printf(2, "minishell: export: `%s': not a valid identifier\n", s);
+		return (1);
+	}
 	while (s[i])
 	{
 		if (s[i] == '=' && i != 0)

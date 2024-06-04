@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:22:28 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/03 09:40:30 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:28:24 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ int	ft_env(char **env)
 
 	i = -1;
 	while (env[++i])
-		printf("%s\n", env[i]);
+	{
+		if (ft_strchr(env[i], '='))
+			printf("%s\n", env[i]);
+	}
 	return (0);
 }
