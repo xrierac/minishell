@@ -6,39 +6,13 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/04 14:45:21 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:39:15 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-#include <strings.h>
 
 int	g_num;
-
-void    print_arr(char **str)
-{
-    int i = -1;
-
-    while (str[++i])
-        printf("%s\n", str[i]); 
-}
-
-void	print_lex(t_sh *msh, t_lex	***lex)
-{
-	int	i = 0;
-	int	j = 0;
-
-	while (i < msh->processes)
-	{
-		j = 0;
-		while (msh->tok_count > j)
-		{
-			print_arr(lex[i][j]->cmd_arr);
-			j++;
-		}
-		i++;
-	}
-}
 
 static void	checks_and_execution(t_sh *msh, char *temp)
 {
