@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/04 13:21:12 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:55:34 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ char	*deref_var(t_sh *msh, char *ptr)
 	}
 	if (msh->var)
 		free (msh->var);
+	msh->var = NULL;
 	return (ptr);
 }
 
