@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_branch.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/04 11:00:59 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 11:28:14 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,12 @@ static void	child_start(t_sh *sh, int index, int in, int fd[])
 		}
 		i++;
 	}
-	if (cmd_id == -1)
-		exit(0);
-	exit(execute(sh->lex_arr[index][cmd_id], sh->env));
+	if (cmd_id != -1)
+		i = execute(sh->lex_arr[index][cmd_id], sh->env);
+	else
+		i = 0;
+	free_all(sh);
+	exit(i);
 }
 
 static int	start_proc(t_sh *sh, int in, int i)
