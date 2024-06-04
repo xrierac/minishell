@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/04 14:39:39 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:36:02 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ typedef enum e_token_type
 	VALID_HD,
 	SKIP_HD,
 	APPEND,
-	STATUS,
 	CMD,
-	NOT_DEF,
 }	t_token_type;
 
 typedef enum e_bool
@@ -92,6 +90,7 @@ typedef struct s_sh
 	struct termios	old;
 	struct termios	new;
 	int				valid_hd;
+	int				flag;
 }	t_sh;
 
 void	get_input(t_sh *msh);
