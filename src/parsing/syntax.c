@@ -6,17 +6,15 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:43:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/04 11:05:11 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 11:56:59 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	pre_check(t_sh *msh, char *str)
+static void	pre_check(t_sh *msh, char *str)
 {
-	if (!str)
-		exit_error(msh, "malloc", 2);
-	if (str[0] == '|' && msh->error == 0)
+	if (str[0] == '|')
 	{
 		ft_printf(2, RED":( "END SYNTAX_ERROR" `|'\n");
 		msh->error = 1;
@@ -25,26 +23,25 @@ void	pre_check(t_sh *msh, char *str)
 		msh->error = 1;
 }
 
-char	*env_variable(t_sh *msh, char *str)
+static void	env_variable(t_sh *msh)
 {
-	char	*result;
-
-	if (ft_strchr(str, '$'))
+	if (ft_strchr(msh->cmd, '$'))
 	{
-		result = expand_env(msh, str);
-		if (!result[0])
+		msh->cmd = expand_env(msh, msh->cmd);
+		if (!msh->cmd[0])
 			msh->error = 1;
 	}
-	else
-		result = str;
-	return (result);
 }
 
 char	*syntax_check(t_sh *msh, char *temp)
 {
-	char	*res;
-
 	msh->cmd = ft_strtrim(temp, " ");
+	if (!msh->cmd)
+	{
+		free(temp);
+		exit_error(msh, "malloc", 2);
+	}
+	pre_check(msh, msh->cmd);
 	if (msh->error == 0)
 	{
 		count_quotes(msh, msh->cmd);
@@ -53,11 +50,9 @@ char	*syntax_check(t_sh *msh, char *temp)
 			heredoc(msh, msh->cmd);
 		if (msh->error == 1)
 			return (msh->cmd);
-		res = env_variable(msh, msh->cmd);
-		if (msh->error == 1)
-			return (res);
-		check_str(msh, res);
-		return (res);
+		env_variable(msh);
+		check_str(msh, msh->cmd);
+		return (msh->cmd);
 	}
 	return (msh->cmd);
 }
