@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:49:18 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/03 17:20:30 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 09:33:56 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	find_hd(char *str)
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
-				i = skip_quotes(str, i);
+			i = skip_quotes(str, i);
 		if (str[i] == '<' && str[i + 1] == '<')
 			return (1);
 		if (str[i])

@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:30:53 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/03 18:02:40 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 11:05:57 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,26 +65,4 @@ char	*check_op_syntax(t_sh *msh, char *str)
 		msh->error = 1;
 	}
 	return (str);
-}
-
-void	check_null_str(t_sh *msh, char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '|')
-		{
-			i++;
-			while (ft_isspace(str[i]) && str[i])
-				i++;
-			if (str[i] == '\0')
-			{
-				msh->error = 1;
-				break ;
-			}
-		}
-		i++;
-	}
 }

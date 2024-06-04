@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/03 18:04:59 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 09:43:10 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	get_input(t_sh *msh)
 	char	*temp;
 
 	while (1)
-	{	g_num = 0;
+	{
+		g_num = 0;
 		receive_signal(0);
 		temp = tcsetreadline(msh, 0);
 		if (g_num == SIGINT)
@@ -64,11 +65,9 @@ void	get_input(t_sh *msh)
 		if (temp[0] != '\0')
 		{
 			input = syntax_check(msh, temp);
-			printf("%s\n", input);
 			if (msh->error == false)
 			{
 				lexer(input, msh);
-				print_lex(msh, msh->lex_arr);
 				msh->exit_code = execution_branch(msh);
 				printf("Exit code: %d\n", msh->exit_code);
 				free_lex(msh->lex_arr);

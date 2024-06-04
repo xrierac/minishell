@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:43:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/03 17:49:08 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 11:05:11 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ char	*syntax_check(t_sh *msh, char *temp)
 		if (msh->error == 1)
 			return (res);
 		check_str(msh, res);
-		check_null_str(msh, res);
 		return (res);
 	}
 	return (msh->cmd);
@@ -74,8 +73,6 @@ void	check_str(t_sh *msh, char *res)
 	{
 		if ((*temp == '\'' || *temp == '\"') && msh->error == 0)
 			temp = find_quote_ptr(temp, *temp);
-		else if (*temp == '|' && msh->error == 0)
-			temp = check_pipes(msh, temp);
 		else if (current_op(temp) && msh->error == 0)
 			temp = check_op_syntax(msh, temp);
 		else
