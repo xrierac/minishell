@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 14:22:06 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/03 13:59:52 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:47:51 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	parent_handler(int signal)
 
 static void	child_handler(int signal)
 {
-	if (signal == SIGINT)	
+	if (signal == SIGINT)
 		g_num = SIGINT;
 	else if (signal == SIGQUIT)
 	{
@@ -52,7 +52,7 @@ static void	child_handler(int signal)
 void	receive_signal(int val)
 {
 	struct sigaction	sa;
-	
+
 	ft_memset(&sa, 0, sizeof(sa));
 	if (val == 0)
 		sa.sa_handler = &parent_handler;

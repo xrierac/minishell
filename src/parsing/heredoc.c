@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:44:04 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/30 18:04:51 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:02:40 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	open_heredoc(t_sh *msh, char *delim, int *fd)
 
 	stdin_cpy = dup(STDIN_FILENO);
 	if (stdin_cpy == -1)
-		return (-1);	
+		return (-1);
 	while (1)
 	{
 		input = tcsetreadline(msh, 1);
