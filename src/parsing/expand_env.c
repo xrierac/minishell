@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/03 15:35:40 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/04 10:42:29 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ char	*check_env_var(t_sh *msh, t_env *env, char *var)
 		free(var);
 		return (temp);
 	}
-		/* temp = ft_strdup("");
-		if (!temp)
-		{
-			free(var);
-			exit_error(msh, "malloc", 2);
-		} */
+		// temp = ft_strdup("");
+		// if (!temp)
+		// {
+		// 	free(var);
+		// 	exit_error(msh, "malloc", 2);
+		// }
 	free(var);
 	return (temp);
 }
@@ -139,7 +139,6 @@ char	*expand_env(t_sh *msh, char *cmd)
 		{
 			ptr = deref_var(msh, ptr + 1);
 			if (msh->var == NULL && *ptr == '\0')
-			if (msh->var[0] == '\0' && *ptr == '\0')
 				break ;
 		}
 		else

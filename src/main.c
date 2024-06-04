@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/03 14:16:49 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/04 09:43:10 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	get_input(t_sh *msh)
 	char	*temp;
 
 	while (1)
-	{	g_num = 0;
+	{
+		g_num = 0;
 		receive_signal(0);
 		temp = tcsetreadline(msh, 0);
 		if (g_num == SIGINT)
@@ -67,7 +68,6 @@ void	get_input(t_sh *msh)
 			if (msh->error == false)
 			{
 				lexer(input, msh);
-				print_lex(msh, msh->lex_arr);
 				msh->exit_code = execution_branch(msh);
 				printf("Exit code: %d\n", msh->exit_code);
 				free_lex(msh->lex_arr);

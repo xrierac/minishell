@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_branch.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/03 08:30:54 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/04 11:00:59 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static void	child_start(t_sh *sh, int index, int in, int fd[])
 	int	cmd_id;
 
 	i = 0;
+	cmd_id = -1;
 	if (sh->processes == 1)
 		close_pipes(in, fd[0], fd[1]);
 	pipe_management(sh, index, in, fd[1]);
@@ -60,6 +61,8 @@ static void	child_start(t_sh *sh, int index, int in, int fd[])
 		}
 		i++;
 	}
+	if (cmd_id == -1)
+		exit(0);
 	exit(execute(sh->lex_arr[index][cmd_id], sh->env));
 }
 
@@ -99,13 +102,15 @@ int	execution_branch(t_sh *sh)
 
 	i = -1;
 	in = 0;
+	val = -1;
 	receive_signal(2);
 	if (sh->processes > 899)
 	{
 		ft_putstr_fd("Too many pipes. This is not Super Mario Bros\n", 2);
 		return (1);
 	}
-	val = run_builtin(sh, sh->lex_arr[0][0]->cmd_arr);
+	if (sh->lex_arr[0][0])
+		val = run_builtin(sh, sh->lex_arr[0][0]->cmd_arr);
 	if (val >= 0)
 		return (val);
 	val = start_proc(sh, in, i);

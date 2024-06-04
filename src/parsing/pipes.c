@@ -6,11 +6,23 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:29:23 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/23 14:42:37 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 10:19:25 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	check_between_pipes(t_sh *msh, char *input, int i)
+{
+	while (ft_isspace(input[i]))
+		i++;
+	if (input[i] == '|' || input[i] == '\0')
+	{
+		msh->error = 1;
+		return (1);
+	}
+	return (0);
+}
 
 void	count_pipes(t_sh *msh, char *input)
 {
@@ -18,34 +30,18 @@ void	count_pipes(t_sh *msh, char *input)
 
 	i = 0;
 	msh->pipes = 0;
-	while (input[i])
+	while (input[i] && msh->error == 0)
 	{
 		if (input[i] == '\'' || input[i] == '\"')
-		{
 			i = find_quote(input, input[i], i + 1);
-		}
-		if ((input[i] == '|' && input[i + 1] == '|') \
-			|| (input[i] == '|' && input[i + 1] == '\0'))
+		if (input[i] == '|')
 		{
-			ft_printf(2, RED":( "END SYNTAX_ERROR" `|'\n");
-			msh->error = true;
-			return ;
+			if (check_between_pipes(msh, input, i + 1))
+				ft_printf(2, RED":( "END SYNTAX_ERROR" `|'\n");
+			else
+				msh->pipes++;
 		}
-		else if (input[i] == '|')
-			msh->pipes++;
-		i++;
+		if (input[i])
+			i++;
 	}
-}
-
-char	*check_pipes(t_sh *msh, char *input)
-{
-	if ((*input == '|' && *(input + 1) == '|') \
-		|| (*input == '|' && *(input + 1) == '\0'))
-	{
-		ft_printf(2, RED":( "END SYNTAX_ERROR" `|'\n");
-		msh->error = true;
-		return (0);
-	}
-	input++;
-	return (input);
 }

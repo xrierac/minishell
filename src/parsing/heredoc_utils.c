@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:49:18 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/30 15:49:30 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/04 09:33:56 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,21 @@ void	when_sigint(t_sh *msh, int *fd, int stdin_cpy)
 	if (dup2(stdin_cpy, 0) == -1)
 		generic_error("", "dup2");
 	close(fd[0]);
+}
+
+int	find_hd(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			i = skip_quotes(str, i);
+		if (str[i] == '<' && str[i + 1] == '<')
+			return (1);
+		if (str[i])
+			i++;
+	}
+	return (0);
 }
