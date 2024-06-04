@@ -61,12 +61,6 @@ char	*check_env_var(t_sh *msh, t_env *env, char *var)
 		free(var);
 		return (temp);
 	}
-		// temp = ft_strdup("");
-		// if (!temp)
-		// {
-		// 	free(var);
-		// 	exit_error(msh, "malloc", 2);
-		// }
 	free(var);
 	return (temp);
 }
@@ -100,53 +94,35 @@ char	*deref_var(t_sh *msh, char *ptr)
 
 	var_len = 0;
 	start = ptr;
-	if (*ptr == '?' || ft_isdigit(*ptr) == 1)
-		ptr++;
-	else
-		while (*ptr && ((ft_isalnum(*ptr) == 1) || *ptr == '_'))
-			ptr++;
+	ptr = env_var_type_check(ptr);
 	var_len = ptr - start;
 	msh->var = check_env_var(msh, msh->env, extract_var(msh, start, var_len));
 	exp_len = ft_strlen(msh->var);
 	if (msh->var)
 	{
 		msh->buf_len += exp_len;
+		if (msh->buf_len > msh->max_len)
+		{
+			free_and_null(msh->var);
+			exit_error(msh, "max_arg limit exceeded", 2);
+		}
 		ft_strlcat(msh->buffer, msh->var, msh->buf_len + 1);
 		while (ft_isspace(*ptr))
 			msh->buffer[msh->buf_len++] = *ptr++;
 	}
 	if (msh->var)
-		free (msh->var);
-	msh->var = NULL;
+		free_and_null(msh->var);
 	return (ptr);
 }
 
 char	*expand_env(t_sh *msh, char *cmd)
 {
-	char	*ptr;
-
-	ptr = cmd;
 	msh->buf_len = 0;
-	msh->buffer = ft_calloc(MAX_ARGS - env_memory(msh) - ft_strlen(cmd), 1);
+	msh->max_len = MAX_ARGS - env_memory(msh) - ft_strlen(cmd);
+	msh->buffer = ft_calloc(msh->max_len, 1);
 	if (!msh->buffer)
 		exit_error(msh, "malloc", 2);
-	while (*ptr)
-	{
-		if (*ptr == '\'')
-			ptr = handle_squote(msh, ptr);
-		else if (*ptr == '\"')
-			ptr = handle_dquote(msh, ptr);
-		else if (*ptr == '$' && ((*(ptr + 1) != ' ' || *(ptr + 1)) != '\0'))
-		{
-			ptr = deref_var(msh, ptr + 1);
-			if (msh->var == NULL && *ptr == '\0')
-				break ;
-		}
-		else
-			msh->buffer[msh->buf_len++] = *ptr++;
-	}
-	msh->buffer[msh->buf_len] = '\0';
-	free (cmd);
-	msh->cmd = NULL;
+	handle_expansion(msh, cmd);
+	free_and_null(cmd);
 	return (msh->buffer);
 }

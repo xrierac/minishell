@@ -6,8 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/29 15:13:39 by xriera-c         ###   ########.fr       */
-
+/*   Updated: 2024/06/04 13:57:24 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +84,7 @@ typedef struct s_sh
 	char			*buffer;
 	char			*var;
 	int				buf_len;
+	int				max_len;
 	int				hd_fd[16][2];
 	int				exit_code;
 	int				exit_code_flag;
@@ -111,6 +111,8 @@ void	get_lvl(t_sh *msh, char **temp, int i);
 int		cur_lvl(char *ev);
 void	ft_envcpy(t_sh *msh, t_env *env, char **ev);
 int		env_memory(t_sh *msh);
+void	load_termios(t_sh *msh);
+char	*tcsetreadline(t_sh *msh, int n);
 
 //TOKENS
 
@@ -130,7 +132,6 @@ char	*choose_op(char *c);
 char	*syntax_check(t_sh *msh, char *temp);
 char	*check_op_syntax(t_sh *msh, char *str);
 int		current_op(char *str);
-void	check_null_str(t_sh *msh, char *str);
 
 // HEREDOC
 
@@ -152,6 +153,7 @@ void	free_env(t_env *env);
 void	free_msh(t_sh *msh);
 void	close_hd_fd(int fd);
 void	close_all_hd_fd(t_sh *msh);
+void	free_and_null(char *str);
 
 //TOOLS
 
@@ -177,8 +179,8 @@ char	*extract_var(t_sh *msh, char *start, int len);
 char	*handle_dquote(t_sh *msh, char *ptr);
 char	*handle_squote(t_sh *msh, char *ptr);
 char	*deref_var(t_sh *msh, char *ptr);
-void	load_termios(t_sh *msh);
-char	*tcsetreadline(t_sh *msh, int n);
+char	*env_var_type_check(char *ptr);
+void	handle_expansion(t_sh *msh, char *cmd);
 
 //ERROR HANDLING
 void	error_exit(void);

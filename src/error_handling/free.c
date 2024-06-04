@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:28 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/30 17:31:28 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:59:07 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	free_msh(t_sh *msh)
 	if (msh->pipe_arr != NULL)
 	{
 		ft_free_array(msh->pipe_arr);
+		msh->pipe_arr = NULL;
 	}
 	if (msh->buffer != NULL)
 	{
@@ -84,4 +85,13 @@ void	free_msh(t_sh *msh)
 	}
 	free(msh);
 	msh = NULL;
+}
+
+void	free_and_null(char *str)
+{
+	if (str != NULL)
+	{
+		free(str);
+		str = NULL;
+	}
 }

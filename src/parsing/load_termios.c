@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_termios.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:05:14 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/30 15:42:08 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:02:55 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*tcsetreadline(t_sh *msh, int n)
 {
-	char *input;
+	char	*input;
 
 	tcsetattr(STDIN_FILENO, 0, &msh->new);
 	if (n == 0)
