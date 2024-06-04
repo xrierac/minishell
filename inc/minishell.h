@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/04 14:39:39 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:41:18 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,5 @@ void	when_sigint(t_sh *msh, int *fd, int stdin_cpy);
 
 //TESTING TO BE DELETED
 void	print_arr(char **str);
-//int		cow_exit(char *str, t_env *env);
 
 #endif
