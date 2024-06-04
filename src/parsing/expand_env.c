@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/04 10:42:29 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:21:12 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,5 +146,6 @@ char	*expand_env(t_sh *msh, char *cmd)
 	}
 	msh->buffer[msh->buf_len] = '\0';
 	free (cmd);
+	msh->cmd = NULL;
 	return (msh->buffer);
 }
