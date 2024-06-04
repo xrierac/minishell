@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/04 17:39:15 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:49:59 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	get_input(t_sh *msh)
 
 	while (1)
 	{
+		g_num = 0;
 		receive_signal(0);
 		temp = tcsetreadline(msh, 0);
 		if (g_num == SIGINT)
