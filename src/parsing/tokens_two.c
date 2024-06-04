@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:44:06 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/30 16:19:25 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 10:48:25 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,6 @@ int	tokenise_cmd(t_sh *msh, t_lex *lex, char *cmd, int j)
 	}
 	lex->token = CMD;
 	return (j);
-}
-
-int	iter_str(char *str, int i)
-{
-	while (ft_isspace(str[i]) == false && str[i])
-	{
-		printf("%c\n", str[i]);
-		i++;
-	}
-	return (i);
 }
 
 int	tokenise_op(t_sh *msh, t_lex *lex, char *cmd, int j)

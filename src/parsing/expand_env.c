@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/03 17:43:11 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 10:42:29 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ char	*check_env_var(t_sh *msh, t_env *env, char *var)
 		free(var);
 		return (temp);
 	}
-		/* temp = ft_strdup("");
-		if (!temp)
-		{
-			free(var);
-			exit_error(msh, "malloc", 2);
-		} */
+		// temp = ft_strdup("");
+		// if (!temp)
+		// {
+		// 	free(var);
+		// 	exit_error(msh, "malloc", 2);
+		// }
 	free(var);
 	return (temp);
 }
