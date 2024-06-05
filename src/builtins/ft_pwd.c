@@ -6,16 +6,16 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:52:19 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/05 18:18:32 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:42:08 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char *return_ptr_cwd(t_env *env_s)
+char	*return_ptr_cwd(t_env *env_s)
 {
-	char *buf;
-	char *ptr;
+	char	*buf;
+	char	*ptr;
 
 	buf = (char *)malloc(MAX_ARGS);
 	if (!buf)
@@ -32,7 +32,7 @@ char *return_ptr_cwd(t_env *env_s)
 			buf = ft_strdup(buf);
 		else
 		{
-			generic_error("Unable to get working directory", "");
+			generic_error("Unable to get working directory", "getcwd");
 			return (NULL);
 		}
 	}

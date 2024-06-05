@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/05 18:20:40 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:46:23 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ size_t	array_size(char **arr);
 int		new_path_arr(t_env *env_s, char *str);
 char	*get_name(char *str);
 int		find_equal_sign(char *str);
-char 	*return_ptr_cwd(t_env *env_s);
+char	*return_ptr_cwd(t_env *env_s);
 
 //SIGNALS
 
