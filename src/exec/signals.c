@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 14:22:06 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/04 18:52:22 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:44:14 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	child_handler(int signal)
 	if (signal == SIGINT)
 	{
 		g_num = SIGINT;
-		write(1,"\n", 1);
+		write(1, "\n", 1);
 	}
 	else if (signal == SIGQUIT)
 	{
