@@ -44,9 +44,7 @@ typedef enum e_token_type
 	VALID_HD,
 	SKIP_HD,
 	APPEND,
-	STATUS,
 	CMD,
-	NOT_DEF,
 }	t_token_type;
 
 typedef enum e_bool
@@ -92,6 +90,7 @@ typedef struct s_sh
 	struct termios	old;
 	struct termios	new;
 	int				valid_hd;
+	int				flag;
 }	t_sh;
 
 void	get_input(t_sh *msh);

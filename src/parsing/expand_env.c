@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/04 14:40:27 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:35:49 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char	*check_env_var(t_sh *msh, t_env *env, char *var)
 	temp = add_var(msh, env, var);
 	if (temp == NULL)
 	{
+		msh->flag = 1;
 		free(var);
 		return (temp);
 	}
