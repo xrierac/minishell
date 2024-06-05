@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/05 15:38:41 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:20:40 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ int		builtin_check(char **cmd, t_env *env);
 int		run_builtin(t_sh *sh_data, char **cmd);
 int		ft_echo(char **arr, char **env);
 int		ft_cd(char *str, t_env *env_s);
-int		ft_pwd(void);
+int		ft_pwd(t_env *env);
 int		ft_env(char **env);
 int		ft_export(t_env *env_s, char **cmd, int arg);
 int		ft_unset(t_env *env_s, char **cmd, int arg);
@@ -208,6 +208,7 @@ size_t	array_size(char **arr);
 int		new_path_arr(t_env *env_s, char *str);
 char	*get_name(char *str);
 int		find_equal_sign(char *str);
+char 	*return_ptr_cwd(t_env *env_s);
 
 //SIGNALS
 
