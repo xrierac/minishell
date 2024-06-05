@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:21:51 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/04 11:07:58 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:24:24 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ static char	*find_cmd(char *cmd, t_env *env)
 	while (env->path_arr[i])
 	{
 		path = ft_strjoin(env->path_arr[i], prog);
+		if (!path)
+		{
+			generic_error("", "malloc");
+			break ;
+		}
 		if (access(path, F_OK) == 0)
 			break ;
 		free(path);
@@ -55,11 +60,15 @@ int	check_access(char *str, t_lex *lex, t_env *env)
 		if (access(str, X_OK) == 0)
 		{
 			if (is_dir(str) == 0)
-				return (127 - generic_error("", str));
+			{
+				generic_error("", str);
+				return (126);
+			}
 			execve(str, lex->cmd_arr, env->env_arr);
 			return (generic_error("", str));
 		}
-		return (127 - generic_error("", str));
+		generic_error("", str);
+		return (126);
 	}
 	return (0);
 }
@@ -78,7 +87,8 @@ int	execute(t_lex *lex, t_env *env)
 		val = check_access(lex->cmd_arr[0], lex, env);
 		if (val != 0)
 			return (val);
-		return (126 + generic_error("", lex->cmd_arr[0]));
+		generic_error("", lex->cmd_arr[0]);
+		return (127);
 	}
 	else
 	{

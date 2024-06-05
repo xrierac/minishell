@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:52:42 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/05 14:42:25 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:10:31 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,16 @@ int	ft_cd(char *str, t_env *env_s)
 		return (non_perror("HOME not set", "cd"));
 	if (check_dir(str) == 1)
 		return (1);
-	buf = (char *)malloc(2097152);
+	buf = (char *)malloc(MAX_ARGS);
 	if (!buf)
 		return (generic_error("", "cd"));
-	ptr = getcwd(buf, 2097152);
+	ptr = getcwd(buf, MAX_ARGS);
 	if (!ptr)
 		return (generic_error("", "cd"));
 	if (change_oldpwd(env_s, ptr) == 1)
 		return (1);
 	chdir(str);
-	ptr = getcwd(buf, 2097152);
+	ptr = getcwd(buf, MAX_ARGS);
 	if (!ptr)
 		return (generic_error("", "cd"));
 	if (change_pwd(env_s, ptr) == 1)

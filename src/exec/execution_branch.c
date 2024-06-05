@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_branch.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/05 13:22:22 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:34:35 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	child_start(t_sh *sh, int index, int in, int fd[])
 		else
 		{
 			if (check_token(sh->lex_arr[index][i], sh->env) == 1)
-				exit(1);
+				exit_child(sh);
 		}
 		i++;
 	}

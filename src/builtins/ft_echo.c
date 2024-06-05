@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 10:40:55 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/04 14:13:54 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:07:00 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ static void	ft_echo_variable(char *str, char **env)
 {
 	char			*var;
 	char			*sub;
-	unsigned int	i;
 
-	i = 0;
 	while (*str)
 	{
 		if (*str != '$')
@@ -44,6 +42,11 @@ static void	ft_echo_variable(char *str, char **env)
 		else
 		{
 			sub = ft_substr(str + 1, 0, find_end(str));
+			if (!sub)
+			{
+				perror("minishell:");
+				break ;
+			}
 			var = ft_getenv(sub, env);
 			if (var)
 				printf("%s", var);

@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/05 14:44:01 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:38:41 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ void	free_var(t_sh *msh);
 int		error_cmd_not_found(char *str);
 int		generic_error(char *str, char *cmd);
 int		non_perror(char *str, char *cmd);
+void	exit_child(t_sh *msh);
 
 //TOOLS
 int		find_quote(char *str, char q, int i);
@@ -213,6 +214,5 @@ int		find_equal_sign(char *str);
 void	rl_replace_line(const char *text, int clear_undo);
 void	receive_signal(int val);
 void	when_sigint(t_sh *msh, int *fd, int stdin_cpy);
-
 
 #endif
