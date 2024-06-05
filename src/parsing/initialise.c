@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/30 17:24:50 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:48:14 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ t_sh	*init_msh(char **ev)
 		exit_error(msh, "malloc", 2);
 	msh->env = ft_calloc(1, sizeof(t_env));
 	if (!msh->env)
-	{
-		free_all(msh);
 		exit_error(msh, "malloc", 2);
-	}
 	init_env(msh->env);
 	msh->pipes = 0;
 	msh->processes = 0;

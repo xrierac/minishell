@@ -6,20 +6,37 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:44:06 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/04 10:48:25 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:19:06 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+static void	check_amb_rd(t_lex *lex, char *cmd, int j)
+{
+	while (ft_isspace(cmd[j]) && cmd[j])
+		j++;
+	if (cmd[j] == '$' && cmd[j + 1] != '\0')
+		lex->token = AMB_RD;
+}
+
 void	token_type(t_sh *msh, t_lex *lex, char *cmd, int j)
 {
 	if (cmd[j] == '<' && cmd[j + 1] != '<')
+	{
 		lex->token = R_INPUT;
+		check_amb_rd(lex, cmd, j + 1);
+	}
 	else if (cmd[j] == '>' && cmd[j + 1] != '>')
+	{
 		lex->token = R_OUTPUT;
+		check_amb_rd(lex, cmd, j + 1);
+	}
 	else if (cmd[j] == '>' && cmd[j + 1] == '>')
+	{
 		lex->token = APPEND;
+		check_amb_rd(lex, cmd, j + 2);
+	}
 	else if (cmd[j] == '<' && cmd[j + 1] == '<')
 	{
 		if (check_heredoc(cmd, j + 2) == true)

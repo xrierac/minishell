@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/05 10:50:22 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:44:01 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef enum e_token_type
 	VALID_HD,
 	SKIP_HD,
 	APPEND,
+	AMB_RD,
 	CMD,
 }	t_token_type;
 
@@ -96,7 +97,6 @@ typedef struct s_sh
 void	get_input(t_sh *msh);
 
 //INITIALISE
-
 t_sh	*init_msh(char **ev);
 void	init_lex(t_sh *msh);
 t_lex	**init_token(t_sh *msh);
@@ -104,7 +104,6 @@ void	init_env(t_env *env);
 char	**init_cmd_arr(t_sh *msh);
 
 //ENVIRONMENT 
-
 void	get_path(t_sh *msh, t_env *env, char **ev, int i);
 void	get_lvl(t_sh *msh, char **temp, int i);
 int		cur_lvl(char *ev);
@@ -114,7 +113,6 @@ void	load_termios(t_sh *msh);
 char	*tcsetreadline(t_sh *msh, int n);
 
 //TOKENS
-
 void	lexer(char *input, t_sh *msh);
 void	assign_token(t_sh *msh, t_lex **lex_arr, char *cmd, int proc);
 char	*deref_env_var(t_sh *msh, char *input);
@@ -125,7 +123,6 @@ int		tokenise_op(t_sh *msh, t_lex *lex, char *cmd, int j);
 void	token_type(t_sh *msh, t_lex *lex, char *cmd, int j);
 
 //SYNTAX
-
 void	check_str(t_sh *msh, char *temp);
 char	*choose_op(char *c);
 char	*syntax_check(t_sh *msh, char *temp);
@@ -133,7 +130,6 @@ char	*check_op_syntax(t_sh *msh, char *str);
 int		current_op(char *str);
 
 // HEREDOC
-
 void	heredoc(t_sh *msh, char *str);
 t_bool	check_heredoc(char *cmd, int j);
 int		check_delim(char c);
@@ -144,7 +140,6 @@ int		heredoc_cleaning(int *fd, int stdin_cpy, char *delim, char *input);
 int		find_hd(char *str);
 
 //ERROR/FREE/CLOSE
-
 void	exit_error(t_sh *msh, char *msg, int status);
 void	free_all(t_sh *msh);
 void	free_lex(t_lex ***lex);
@@ -153,9 +148,11 @@ void	free_msh(t_sh *msh);
 void	close_hd_fd(int fd);
 void	close_all_hd_fd(t_sh *msh);
 void	free_var(t_sh *msh);
+int		error_cmd_not_found(char *str);
+int		generic_error(char *str, char *cmd);
+int		non_perror(char *str, char *cmd);
 
 //TOOLS
-
 int		find_quote(char *str, char q, int i);
 t_bool	ft_isspace(char str);
 t_bool	is_op(char *str, int i);
@@ -170,7 +167,6 @@ char	*find_quote_ptr(char *str, char q);
 int		skip_quotes(char *str, int i);
 
 //ENVIRONMENT VARIABLES
-
 char	*fetch_exit_code(t_sh *msh, char *ptr);
 char	*expand_env(t_sh *msh, char *str);
 char	*check_env_var(t_sh *msh, t_env *env, char *var);
@@ -180,11 +176,9 @@ char	*handle_squote(t_sh *msh, char *ptr);
 char	*deref_var(t_sh *msh, char *ptr);
 char	*env_var_type_check(char *ptr);
 void	handle_expansion(t_sh *msh, char *cmd);
-
-//ERROR HANDLING
-void	error_exit(void);
-int		error_cmd_not_found(char *str);
-int		generic_error(char *str, char *cmd);
+int		redirect_check(char *ptr);
+char	*cpy_og_var(t_sh *msh, char *ptr, int hd_flag);
+char	*amb_redirect_check(t_sh *msh, char *ptr);
 
 //EXECUTION
 int		execute(t_lex *lex, t_env *env);
@@ -220,7 +214,5 @@ void	rl_replace_line(const char *text, int clear_undo);
 void	receive_signal(int val);
 void	when_sigint(t_sh *msh, int *fd, int stdin_cpy);
 
-//TESTING TO BE DELETED
-void	print_arr(char **str);
 
 #endif
