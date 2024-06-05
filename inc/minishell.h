@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/04 18:36:02 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:31:12 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef enum e_token_type
 	VALID_HD,
 	SKIP_HD,
 	APPEND,
+	AMB_RD,
 	CMD,
 }	t_token_type;
 
@@ -180,6 +181,9 @@ char	*handle_squote(t_sh *msh, char *ptr);
 char	*deref_var(t_sh *msh, char *ptr);
 char	*env_var_type_check(char *ptr);
 void	handle_expansion(t_sh *msh, char *cmd);
+int		redirect_check(char *ptr);
+char	*cpy_og_var(t_sh *msh, char *ptr, int hd_flag);
+char	*amb_redirect_check(t_sh *msh, char *ptr);
 
 //ERROR HANDLING
 void	error_exit(void);

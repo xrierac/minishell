@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_branch.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/04 11:28:14 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:22:22 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static int	check_token(t_lex *lex, t_env *env)
 		return (r_append(lex->cmd_arr));
 	if (lex->token == VALID_HD)
 		return (r_heredoc(lex));
+	if (lex->token == AMB_RD)
+		return (1);
 	return (0);
 }
 
