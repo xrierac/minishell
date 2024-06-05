@@ -6,13 +6,11 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:01:05 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/05 11:29:00 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:41:50 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-
 
 void	handle_expansion(t_sh *msh, char *cmd)
 {
@@ -39,6 +37,7 @@ void	handle_expansion(t_sh *msh, char *cmd)
 	}
 	msh->buffer[msh->buf_len] = '\0';
 }
+
 char	*env_var_type_check(char *ptr)
 {
 	if (*ptr == '?' || ft_isdigit(*ptr) == 1)
@@ -62,4 +61,3 @@ char	*fetch_exit_code(t_sh *msh, char *ptr)
 	}
 	return (exit_code);
 }
-

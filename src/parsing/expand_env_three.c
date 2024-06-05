@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:28:32 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/05 11:29:03 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:41:16 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	redirect_check(char *ptr)
 		return (1);
 	return (0);
 }
-
 
 char	*cpy_og_var(t_sh *msh, char *ptr, int hd_flag)
 {
