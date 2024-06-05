@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/04 18:49:59 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:53:28 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	main(int ac, char **av, char **ev)
 		exit(1);
 	}
 	msh = init_msh(ev);
-	msh->lex_arr = NULL;
 	load_termios(msh);
 	get_input(msh);
 	return (0);
