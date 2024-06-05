@@ -6,15 +6,15 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 09:54:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/04 19:39:37 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:51:24 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-size_t	find_equal_sign(char *str)
+int	find_equal_sign(char *str)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -79,7 +79,7 @@ size_t	array_size(char **arr)
 char	*ft_getenv(const char *name, char **env)
 {
 	int		i;
-	size_t	len;
+	int		len;
 
 	len = ft_strlen(name);
 	i = 0;

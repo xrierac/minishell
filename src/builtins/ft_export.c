@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:54:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/04 18:26:11 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:32:56 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,31 @@ static int	new_envarr(t_env *env_s, char *str)
 	new_env[++i] = NULL;
 	free(env_s->env_arr);
 	env_s->env_arr = new_env;
+	new_path_arr(env_s, str);
 	return (0);
 }
 
-static int	existing_var(t_env *env_struct, char *str)
+static int	existing_var(t_env *env_s, char *str)
 {
 	int		i;
-	size_t	old;
-	size_t	new;
+	int		old;
+	int		new;
 
 	i = 0;
 	new = find_equal_sign(str);
-	if (new == -1)
-		new = ft_strlen(str);
-	while (env_struct->env_arr[i])
+	while (env_s->env_arr[i])
 	{
-		old = find_equal_sign(env_struct->env_arr[i]);
+		old = find_equal_sign(env_s->env_arr[i]);
 		if (old == -1)
-			old = ft_strlen(env_struct->env_arr[i]);
-		if (ft_strncmp(env_struct->env_arr[i], str, old) == 0 && new == old)
+			old = ft_strlen(env_s->env_arr[i]);
+		if (ft_strncmp(env_s->env_arr[i], str, old) == 0 && new == -1)
+			return (0);
+		if (ft_strncmp(env_s->env_arr[i], str, old) == 0 && new == old)
 		{
-			free(env_struct->env_arr[i]);
-			env_struct->env_arr[i] = ft_strdup(str);
-			if (!env_struct->env_arr[i])
+			new_path_arr(env_s, str);
+			free(env_s->env_arr[i]);
+			env_s->env_arr[i] = ft_strdup(str);
+			if (!env_s->env_arr[i])
 				return (generic_error("", "export"));
 			return (0);
 		}
@@ -127,7 +129,6 @@ int	ft_export(t_env *env_s, char **cmd, int arg)
 		status = existing_var(env_s, cmd[arg]);
 		if (status == -1)
 			exit += new_envarr(env_s, cmd[arg]);
-		new_path_arr(env_s, cmd[arg]);
 		if (status == 1)
 			exit++;
 	}
