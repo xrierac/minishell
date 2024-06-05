@@ -96,5 +96,6 @@ int	ft_unset(t_env *env_s, char **cmd, int arg)
 		return (0);
 	if (new_envarr(env_s, index) == 1)
 		exit++;
+	new_path_arr(env_s, cmd[arg]);
 	return (exit);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/04 18:36:02 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:50:22 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ char	*ft_getenv(const char *name, char **env);
 size_t	array_size(char **arr);
 int		new_path_arr(t_env *env_s, char *str);
 char	*get_name(char *str);
-size_t	find_equal_sign(char *str);
+int		find_equal_sign(char *str);
 
 //SIGNALS
 
@@ -222,6 +222,5 @@ void	when_sigint(t_sh *msh, int *fd, int stdin_cpy);
 
 //TESTING TO BE DELETED
 void	print_arr(char **str);
-//int		cow_exit(char *str, t_env *env);
 
 #endif

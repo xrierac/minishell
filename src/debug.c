@@ -1,26 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 16:22:28 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/04 18:28:24 by xriera-c         ###   ########.fr       */
+/*   Created: 2024/06/04 17:37:50 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/06/04 17:55:16 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../inc/minishell.h"
 
-int	ft_env(char **env)
+void	print_arr(char **str)
 {
-	int		i;
+	int	i;
 
 	i = -1;
-	while (env[++i])
+	while (str[++i])
+		printf("%s\n", str[i]);
+}
+
+void	print_lex(t_sh *msh, t_lex	***lex)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < msh->processes)
 	{
-		if (ft_strchr(env[i], '='))
-			printf("%s\n", env[i]);
+		j = 0;
+		while (msh->tok_count > j)
+		{
+			print_arr(lex[i][j]->cmd_arr);
+			j++;
+		}
+		i++;
 	}
-	return (0);
 }

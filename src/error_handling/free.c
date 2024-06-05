@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:28 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/04 14:39:18 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:55:40 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	free_msh(t_sh *msh)
 	free(msh);
 	msh = NULL;
 }
-
 
 void	free_var(t_sh *msh)
 {
