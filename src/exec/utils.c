@@ -6,15 +6,15 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 09:54:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/24 15:34:21 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:51:24 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-size_t	find_equal_sign(char *str)
+int	find_equal_sign(char *str)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -51,12 +51,17 @@ char	*get_name(char *str)
 
 int	new_path_arr(t_env *env_s, char *str)
 {
-	if (ft_strncmp(str, "PATH", 4) == 0 && ft_strlen(str) == 4)
+	if (ft_strncmp(str, "PATH=", 5) == 0)
 	{
 		ft_free_array(env_s->path_arr);
-		env_s->path_arr = ft_split(ft_getenv("PATH=", env_s->env_arr), ':');
+		env_s->path_arr = ft_split(str + 5, ':');
 		if (!env_s->path_arr)
 			return (generic_error("", "Error updating path array"));
+	}
+	if (ft_strncmp(str, "PATH", 4) == 0 && str[4] == '\0')
+	{
+		ft_free_array(env_s->path_arr);
+		env_s->path_arr = ft_split("", ' ');
 	}
 	return (0);
 }
@@ -74,7 +79,7 @@ size_t	array_size(char **arr)
 char	*ft_getenv(const char *name, char **env)
 {
 	int		i;
-	size_t	len;
+	int		len;
 
 	len = ft_strlen(name);
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/05 14:47:17 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:53:28 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	get_input(t_sh *msh)
 
 	while (1)
 	{
+		g_num = 0;
 		receive_signal(0);
 		temp = tcsetreadline(msh, 0);
 		if (g_num == SIGINT)
