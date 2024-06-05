@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:33:02 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/05/24 11:36:56 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:42:14 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@ int	error_cmd_not_found(char *str)
 {
 	ft_printf(2, "minishell: %s: command not found\n", str);
 	return (127);
+}
+
+int	non_perror(char *str, char *cmd)
+{
+	ft_printf(2, "minishell: %s: %s\n", cmd, str);
+	return (1);
 }
 
 int	generic_error(char *str, char *cmd)

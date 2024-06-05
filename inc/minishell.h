@@ -150,6 +150,7 @@ void	close_all_hd_fd(t_sh *msh);
 void	free_var(t_sh *msh);
 int		error_cmd_not_found(char *str);
 int		generic_error(char *str, char *cmd);
+int		non_perror(char *str, char *cmd);
 
 //TOOLS
 int		find_quote(char *str, char q, int i);
