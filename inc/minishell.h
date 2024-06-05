@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/05 11:31:12 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:50:43 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ char	*amb_redirect_check(t_sh *msh, char *ptr);
 void	error_exit(void);
 int		error_cmd_not_found(char *str);
 int		generic_error(char *str, char *cmd);
+int		non_perror(char *str, char *cmd);
 
 //EXECUTION
 int		execute(t_lex *lex, t_env *env);
