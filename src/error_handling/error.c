@@ -12,6 +12,12 @@
 
 #include "../../inc/minishell.h"
 
+void	exit_child(t_sh *msh)
+{
+	free_all(msh);
+	exit(1);
+}
+
 void	exit_error(t_sh *msh, char *msg, int status)
 {
 	if (msh)
