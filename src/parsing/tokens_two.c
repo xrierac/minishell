@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:44:06 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/05 13:19:06 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:34:55 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ int	tokenise_op(t_sh *msh, t_lex *lex, char *cmd, int j)
 		exit_error(msh, "malloc", 2);
 	if (quote_search(lex->cmd_arr[0]) == 1)
 		lex->cmd_arr[0] = remove_quotes(msh, lex->cmd_arr[0], 0);
+	printf("tok_count= %i inside op = %s\n", msh->tok_count, lex->cmd_arr[0]);
 	return (j);
 }
