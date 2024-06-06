@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 11:03:47 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 15:37:26 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:44:41 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 void	new_pwd(t_sh *msh, t_env *env_s)
 {
-	char 	*str;
+	char	*str;
 	char	**arr;
+	char	*buf;
 
-	str = ft_strjoin("export PWD=", return_ptr_cwd(env_s));
+	buf = return_ptr_cwd(env_s);
+	if (!buf)
+		exit_error(msh, "malloc", 2);
+	str = ft_strjoin("export PWD=", buf);
+	free(buf);
 	if (!str)
 		exit_error(msh, "malloc", 2);
 	arr = ft_split(str, ' ');
