@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:00:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 11:02:20 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:11:18 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int	find_quote(char *str, char q, int i)
 {
 	while (str[i] != q && str[i])
 		i++;
-	return (i + 1);
+	if (str[i])
+		i++;
+	return (i);
 }
 
 char	set_quote(char	*str, int i)
@@ -25,8 +27,7 @@ char	set_quote(char	*str, int i)
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 			return (str[i]);
-		if (str[i])
-			i++;
+		i++;
 	}
 	return (0);
 }
