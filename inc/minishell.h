@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/06 11:39:18 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:37:38 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ void	ft_envcpy(t_sh *msh, t_env *env, char **ev);
 int		env_memory(t_sh *msh);
 void	load_termios(t_sh *msh);
 char	*tcsetreadline(t_sh *msh, int n);
-void	get_pwd(t_sh *msh, char **temp, int i);
 void	get_home(t_sh *msh, char **env);
+void	new_pwd(t_sh *msh, t_env *env_s);
 
 //TOKENS
 void	lexer(char *input, t_sh *msh);

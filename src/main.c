@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/05 14:53:28 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:13:51 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ void	get_input(t_sh *msh)
 		}
 		if (temp)
 			add_history(temp);
-		if (temp[0] != '\0')
+		if (temp[0] == '\0')
+			free(temp);
+		else
 			checks_and_execution(msh, temp);
 	}
 }

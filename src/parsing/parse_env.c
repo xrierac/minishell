@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:36:36 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 11:04:10 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:35:59 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,11 @@ void	ft_envcpy(t_sh *msh, t_env *env, char **ev)
 		get_path(msh, env, ev, i);
 		if (ft_strncmp(ev[i], "SHLVL=", 6) == 0)
 			get_lvl(msh, temp, i);
-		if (ft_strncmp(ev[i], "PWD=", 4) == 0)
-			get_pwd(msh, temp, i);
 		i++;
 	}
 	temp[i] = NULL;
 	env->env_arr = temp;
+	new_pwd(msh, env);
 }
 
 int	env_memory(t_sh *msh)
