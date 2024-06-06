@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/05 14:48:14 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 11:13:46 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_sh	*init_msh(char **ev)
 	msh->lex_arr = NULL;
 	msh->cmd = NULL;
 	ft_envcpy(msh, msh->env, ev);
+	get_home(msh, msh->env->env_arr);
 	return (msh);
 }
 
@@ -44,6 +45,7 @@ void	init_env(t_env *env)
 	env->env_path = NULL;
 	env->path_arr = NULL;
 	env->var_len = 0;
+	env->home = NULL;
 }
 
 void	init_lex(t_sh *msh)

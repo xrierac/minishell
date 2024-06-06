@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:28:32 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/05 14:41:16 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 11:50:23 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,44 @@ char	*amb_redirect_check(t_sh *msh, char *ptr)
 			ptr = cpy_og_var(msh, str, hd_flag);
 	}
 	return (ptr);
+}
+
+char	*deref_home(t_sh *msh, char *ptr)
+{
+	char	*home;
+	int		i;
+	int		j;
+
+	i = -1;
+	while (msh->env->env_arr[++i])
+	{
+		j = 0;
+		if (ft_strncmp(msh->env->env_arr[i], "HOME=", 5) == 0)
+		{
+			j += 5;
+			printf("Check\n");
+			while (msh->env->env_arr[i][j])
+				msh->buffer[msh->buf_len++] = msh->env->env_arr[i][j++];
+			break ;
+		}
+	}
+	if (msh->env->env_arr[i] == NULL)
+	{
+		i = 0;
+		while (msh->env->home[i])
+			msh->buffer[msh->buf_len++] = msh->env->home[i++];
+	}
+	return (ptr);
+}
+
+int	valid_home_deref(char *ptr)
+{
+	if (*ptr == '~' && *(ptr + 1) == '\0')
+		return (1);
+	else if (*ptr == '~' && ft_isspace(*(ptr + 1)))
+		return (1);
+	else if (*ptr == '~' && *(ptr + 1) == '/')
+		return (1);
+	else
+		return (0);
 }
