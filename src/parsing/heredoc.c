@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:44:04 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/04 13:02:40 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:08:04 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	heredoc(t_sh *msh, char *str)
 		{
 			i += 2;
 			delim = find_delimeter(msh, str, i);
-			if (!delim[0])
+			if (!delim)
 			{
 				close_all_hd_fd(msh);
 				free(delim);
