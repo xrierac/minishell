@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:44:06 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/05 17:34:55 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 09:16:13 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	token_type(t_sh *msh, t_lex *lex, char *cmd, int j)
 	}
 	else if (cmd[j] == '>' && cmd[j + 1] != '>')
 	{
+		printf("check\n");
 		lex->token = R_OUTPUT;
 		check_amb_rd(lex, cmd, j + 1);
 	}
@@ -96,6 +97,5 @@ int	tokenise_op(t_sh *msh, t_lex *lex, char *cmd, int j)
 		exit_error(msh, "malloc", 2);
 	if (quote_search(lex->cmd_arr[0]) == 1)
 		lex->cmd_arr[0] = remove_quotes(msh, lex->cmd_arr[0], 0);
-	printf("tok_count= %i inside op = %s\n", msh->tok_count, lex->cmd_arr[0]);
 	return (j);
 }
