@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:00:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/03 17:22:37 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 11:02:20 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ char	set_quote(char	*str, int i)
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 			return (str[i]);
-		i++;
+		if (str[i])
+			i++;
 	}
 	return (0);
 }
@@ -49,7 +50,8 @@ void	count_quotes(t_sh *msh, char *str)
 			if (str[i] == q)
 				msh->count++;
 		}
-		i++;
+		if (str[i])
+			i++;
 	}
 	if (msh->count % 2 != 0)
 	{
