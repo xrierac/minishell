@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:00:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 13:11:18 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:22:16 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ char	set_quote(char	*str, int i)
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 			return (str[i]);
-		i++;
+		if (str[i])
+			i++;
 	}
 	return (0);
 }
