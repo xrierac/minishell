@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:42 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 15:13:51 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:08:58 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	main(int ac, char **av, char **ev)
 {
 	t_sh	*msh;
 
-	if (ac != 1)
+	if (ac != 1 && av[0])
 	{
 		ft_printf(2, "Invalid arg amount\n");
 		exit(1);

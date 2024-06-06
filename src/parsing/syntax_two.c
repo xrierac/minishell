@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:30:53 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/04 11:05:57 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:17:44 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ char	*choose_op(char *c)
 char	*check_op_syntax(t_sh *msh, char *str)
 {
 	int		op;
-	int		i;
 	char	*e_op;
 
 	op = current_op(str);

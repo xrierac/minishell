@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:54:17 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/05 11:32:56 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:20:22 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static int	check_validity(char *s)
 	return (0);
 }
 
-static int	check_export(t_env *env_s, char *str)
+static int	check_export(t_env *env_s)
 {
 	int		i;
 	char	*name;
@@ -119,7 +119,7 @@ int	ft_export(t_env *env_s, char **cmd, int arg)
 	if (cmd[arg + 1])
 		exit += ft_export(env_s, cmd, arg + 1);
 	if (arg == 0 && cmd[1] == NULL)
-		return (check_export(env_s, cmd[1]));
+		return (check_export(env_s));
 	if (arg > 0)
 	{
 		if (cmd[arg][0] == '_' && (cmd[arg][1] == '\0' || cmd[arg][1] == '='))
