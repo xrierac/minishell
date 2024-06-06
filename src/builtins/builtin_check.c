@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:48:20 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/04 10:01:46 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:32:45 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	builtin_check(char **cmd, t_env *env)
 	if (!ft_strncmp(cmd[0], "echo", 4) && ft_strlen(cmd[0]) == 4)
 		return (ft_echo(cmd, env->env_arr));
 	if (!ft_strncmp(cmd[0], "pwd", 3) && ft_strlen(cmd[0]) == 3)
-		return (ft_pwd());
+		return (ft_pwd(env));
 	if (!ft_strncmp(cmd[0], "env", 3) && ft_strlen(cmd[0]) == 3)
 		return (ft_env(env->env_arr));
 	if (!ft_strncmp(cmd[0], "export", 6) && ft_strlen(cmd[0]) == 6)
