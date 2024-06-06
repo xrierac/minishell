@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 14:22:06 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/05 14:44:14 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:29:15 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ static void	heredoc_handler(int signal)
 		g_num = SIGINT;
 		close(0);
 		write(1, "> \n", 3);
+	}
+	else if (signal == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
 	}
 }
 
