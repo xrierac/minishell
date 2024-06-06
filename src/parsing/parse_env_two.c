@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 11:03:47 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 11:16:44 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:14:40 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,13 @@ void	get_pwd(t_sh *msh, char **temp, int i)
 	free(temp[i]);
 	temp[i] = ft_strjoin("PWD=", pwd);
 	if (!temp[i])
+	{
+		free(pwd);
+		pwd = NULL;
 		exit_error(msh, "malloc", 2);
+	}
+	free(pwd);
+	pwd = NULL;
 }
 
 void	get_home(t_sh *msh, char **env)
@@ -34,7 +40,6 @@ void	get_home(t_sh *msh, char **env)
 	{
 		if (ft_strncmp(env[i], "HOME=", 5) == 0)
 		{
-			printf("%s\n", env[i]);
 			msh->env->home = ft_substr(env[i], 5, ft_strlen(env[i]) - 5);
 			if (!msh->env->home)
 				exit_error(msh, "malloc", 2);
