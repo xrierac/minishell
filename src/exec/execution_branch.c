@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_branch.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/05 15:34:35 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:19:44 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	wait_processes(pid_t cpid[], int nproc)
 	return (WEXITSTATUS(status));
 }
 
-static int	check_token(t_lex *lex, t_env *env)
+static int	check_token(t_lex *lex)
 {
 	if (lex->token == R_INPUT)
 		return (r_input(lex->cmd_arr));
@@ -58,7 +58,7 @@ static void	child_start(t_sh *sh, int index, int in, int fd[])
 			cmd_id = i;
 		else
 		{
-			if (check_token(sh->lex_arr[index][i], sh->env) == 1)
+			if (check_token(sh->lex_arr[index][i]) == 1)
 				exit_child(sh);
 		}
 		i++;

@@ -45,7 +45,7 @@ LIBS	:= -lm $(LIBFT)
 all: $(LIBFT) $(NAME)
 
 %.o: %.c
-	@$(CC) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)\n"
+	@$(CC) -o $@ -c $< $(CFLAGS) $(HEADERS) && printf "Compiling: $(notdir $<)\n"
 	
 		
 $(NAME): $(OBJS)

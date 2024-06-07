@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:28:32 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 12:47:23 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:32:33 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ char	*amb_redirect_check(t_sh *msh, char *ptr)
 
 char	*deref_home(t_sh *msh, char *ptr)
 {
-	char	*home;
 	int		i;
 	int		j;
 
@@ -77,7 +76,6 @@ char	*deref_home(t_sh *msh, char *ptr)
 		if (ft_strncmp(msh->env->env_arr[i], "HOME=", 5) == 0)
 		{
 			j += 5;
-			printf("Check\n");
 			while (msh->env->env_arr[i][j])
 				msh->buffer[msh->buf_len++] = msh->env->env_arr[i][j++];
 			break ;

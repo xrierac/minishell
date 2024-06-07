@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:21:51 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/05 15:24:24 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:18:29 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int	check_access(char *str, t_lex *lex, t_env *env)
 
 int	execute(t_lex *lex, t_env *env)
 {
-	char	*cmd;
 	int		val;
 
 	if (lex->cmd_arr[0][0] == '\0')

@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/06 15:37:38 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:16:50 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	is_token(t_sh *msh, char *str);
 void	count_pipes(t_sh *msh, char *input);
 int		tokenise_cmd(t_sh *msh, t_lex *lex, char *cmd, int j);
 int		tokenise_op(t_sh *msh, t_lex *lex, char *cmd, int j);
-void	token_type(t_sh *msh, t_lex *lex, char *cmd, int j);
+void	token_type(t_lex *lex, char *cmd, int j);
 
 //SYNTAX
 void	check_str(t_sh *msh, char *temp);
