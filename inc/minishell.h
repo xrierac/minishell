@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/06 18:16:50 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/07 10:30:58 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ int		r_output(char **cmd_arr);
 int		r_append(char **cmd_arr);
 int		r_heredoc(t_lex *lex);
 int		execution_branch(t_sh *sh);
-int		pipe_management(t_sh *sh, int index, int in, int out);
+int		pipe_management(t_sh *sh, int index, int in, int fd[]);
 int		close_pipes(int in, int fda, int fdb);
 
 //BUILTINS

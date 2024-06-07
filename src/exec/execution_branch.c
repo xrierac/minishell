@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_branch.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/06 18:19:44 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/07 10:54:32 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,7 @@ static void	child_start(t_sh *sh, int index, int in, int fd[])
 
 	i = 0;
 	cmd_id = -1;
-	if (sh->processes == 1)
-		close_pipes(in, fd[0], fd[1]);
-	pipe_management(sh, index, in, fd[1]);
+	pipe_management(sh, index, in, fd);
 	while (sh->lex_arr[index][i])
 	{
 		if (sh->lex_arr[index][i]->token == CMD)
