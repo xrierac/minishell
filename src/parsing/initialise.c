@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialise.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:50 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 11:13:46 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/07 09:25:08 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,6 @@ void	init_env(t_env *env)
 
 void	init_lex(t_sh *msh)
 {
-	int	i;
-
-	i = -1;
 	msh->processes = msh->pipes + 1;
 	msh->lex_arr = (t_lex ***)malloc((msh->processes + 1) * sizeof(t_lex **));
 	if (!msh->lex_arr)
