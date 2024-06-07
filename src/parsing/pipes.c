@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:29:23 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/04 10:19:25 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:05:26 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	count_pipes(t_sh *msh, char *input)
 			else
 				msh->pipes++;
 		}
-		if (input[i])
+		if (input[i] != '\0')
 			i++;
 	}
 }

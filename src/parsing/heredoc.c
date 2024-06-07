@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:44:04 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/04 13:02:40 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:33:12 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void	count_hd(t_sh *msh, char *str)
 		i = skip_quotes(str, i);
 		if (str[i] == '<' && str[i + 1] == '<')
 			hd_count++;
-		i++;
+		if (str[i])
+			i++;
 	}
 	if (hd_count > 16)
 		exit_error(msh, "maximum here-document count exceeded", 2);
@@ -114,7 +115,7 @@ void	heredoc(t_sh *msh, char *str)
 		{
 			i += 2;
 			delim = find_delimeter(msh, str, i);
-			if (!delim[0])
+			if (!delim)
 			{
 				close_all_hd_fd(msh);
 				free(delim);

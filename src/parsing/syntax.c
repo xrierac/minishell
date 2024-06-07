@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:43:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/04 14:30:38 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:59:51 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	pre_check(t_sh *msh, char *str)
 
 static void	env_variable(t_sh *msh)
 {
-	if (ft_strchr(msh->cmd, '$'))
+	if (ft_strchr(msh->cmd, '$') || ft_strchr(msh->cmd, '~'))
 	{
 		msh->cmd = expand_env(msh, msh->cmd);
 		msh->buffer = NULL;
@@ -47,7 +47,7 @@ char	*syntax_check(t_sh *msh, char *temp)
 	{
 		count_quotes(msh, msh->cmd);
 		count_pipes(msh, msh->cmd);
-		if (find_hd(msh->cmd) && msh->error == 0)
+		if (msh->error == 0 && find_hd(msh->cmd))
 			heredoc(msh, msh->cmd);
 		if (msh->error == 1)
 			return (msh->cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:32:22 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 14:16:07 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:53:29 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static int	input_validity(char **cmd)
 	i = 0;
 	if (ft_strlen(cmd[1]) > 20)
 	{
-		ft_printf(2, "minishell: exit: %s: numeric argument required\n", cmd[1]);
+		ft_printf(2, "minishell: ");
+		ft_printf(2, "exit: %s: numeric argument required\n", cmd[1]);
 		return (1);
 	}
 	if (cmd[1][i] == '-' || cmd[1][i] == '+')
@@ -56,8 +57,8 @@ static int	input_validity(char **cmd)
 	n = ft_atoll(cmd[1]);
 	while (cmd[1][i])
 	{
-		if (ft_isdigit(cmd[1][i]) == -1 || n > 9223372036854775807 &&
-			ft_strncmp(cmd[1], "-9223372036854775808", 20) != 0)
+		if (ft_isdigit(cmd[1][i]) == -1 || (n > 9223372036854775807 &&
+			ft_strncmp(cmd[1], "-9223372036854775808", 20) != 0))
 		{
 			ft_printf(2, "minishell: exit: %s: numeric argument required\n",
 				cmd[1]);

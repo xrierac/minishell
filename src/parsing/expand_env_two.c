@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:01:05 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/05 14:41:50 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 11:39:38 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	handle_expansion(t_sh *msh, char *cmd)
 			if (msh->var == NULL && *ptr == '\0')
 				break ;
 		}
+		else if (valid_home_deref(ptr))
+			ptr = deref_home(msh, ptr + 1);
 		else
 			msh->buffer[msh->buf_len++] = *ptr++;
 	}

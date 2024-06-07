@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/05 18:46:23 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:16:50 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 
 # define MAX_FD 256
 # define MAX_ARGS 262144
+# define INT_MAX 2147483647
 
 extern int	g_num;
 
@@ -68,6 +69,7 @@ typedef struct s_env
 	char	**path_arr;
 	int		shlvl;
 	int		var_len;
+	char	*home;
 }	t_env;
 
 typedef struct s_sh
@@ -111,6 +113,8 @@ void	ft_envcpy(t_sh *msh, t_env *env, char **ev);
 int		env_memory(t_sh *msh);
 void	load_termios(t_sh *msh);
 char	*tcsetreadline(t_sh *msh, int n);
+void	get_home(t_sh *msh, char **env);
+void	new_pwd(t_sh *msh, t_env *env_s);
 
 //TOKENS
 void	lexer(char *input, t_sh *msh);
@@ -120,7 +124,7 @@ void	is_token(t_sh *msh, char *str);
 void	count_pipes(t_sh *msh, char *input);
 int		tokenise_cmd(t_sh *msh, t_lex *lex, char *cmd, int j);
 int		tokenise_op(t_sh *msh, t_lex *lex, char *cmd, int j);
-void	token_type(t_sh *msh, t_lex *lex, char *cmd, int j);
+void	token_type(t_lex *lex, char *cmd, int j);
 
 //SYNTAX
 void	check_str(t_sh *msh, char *temp);
@@ -180,6 +184,8 @@ void	handle_expansion(t_sh *msh, char *cmd);
 int		redirect_check(char *ptr);
 char	*cpy_og_var(t_sh *msh, char *ptr, int hd_flag);
 char	*amb_redirect_check(t_sh *msh, char *ptr);
+char	*deref_home(t_sh *msh, char *ptr);
+int		valid_home_deref(char *ptr);
 
 //EXECUTION
 int		execute(t_lex *lex, t_env *env);

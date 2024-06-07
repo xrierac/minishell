@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:44:06 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/05 13:19:06 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:17:15 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	check_amb_rd(t_lex *lex, char *cmd, int j)
 		lex->token = AMB_RD;
 }
 
-void	token_type(t_sh *msh, t_lex *lex, char *cmd, int j)
+void	token_type(t_lex *lex, char *cmd, int j)
 {
 	if (cmd[j] == '<' && cmd[j + 1] != '<')
 	{
@@ -79,7 +79,7 @@ int	tokenise_op(t_sh *msh, t_lex *lex, char *cmd, int j)
 
 	temp = NULL;
 	lex->cmd_arr = init_cmd_arr(msh);
-	token_type(msh, lex, cmd, j);
+	token_type(lex, cmd, j);
 	if (lex->token == R_INPUT || lex->token == R_OUTPUT)
 		j++;
 	else if (lex->token == APPEND || lex->token == VALID_HD \

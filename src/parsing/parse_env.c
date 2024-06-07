@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:36:36 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/03 14:05:16 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:35:59 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//Creates path directory 2d array
 void	get_path(t_sh *msh, t_env *env, char **ev, int i)
 {
 	if (ft_strncmp(ev[i], "PATH=", 5) == 0)
@@ -54,6 +53,14 @@ void	get_lvl(t_sh *msh, char **temp, int i)
 	char	*lvl;
 
 	msh->env->shlvl = cur_lvl(temp[i]) + 1;
+	if (msh->env->shlvl < 0 || msh->env->shlvl > INT_MAX)
+		msh->env->shlvl = 0;
+	else if (msh->env->shlvl > 999)
+	{
+		ft_printf(2, "minishell: warning: shell level ");
+		ft_printf(2, "(%i) too high, resetting to 1\n", msh->env->shlvl);
+		msh->env->shlvl = 1;
+	}
 	free(temp[i]);
 	lvl = ft_itoa(msh->env->shlvl);
 	if (!lvl)
@@ -92,6 +99,7 @@ void	ft_envcpy(t_sh *msh, t_env *env, char **ev)
 	}
 	temp[i] = NULL;
 	env->env_arr = temp;
+	new_pwd(msh, env);
 }
 
 int	env_memory(t_sh *msh)

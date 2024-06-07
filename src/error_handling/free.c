@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:18:28 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/05 14:53:46 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 11:25:39 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	free_env(t_env *env)
 		free(env->env_path);
 	if (env->path_arr != NULL)
 		ft_free_array(env->path_arr);
+	if (env->home != NULL)
+		free(env->home);
 	free(env);
 	env = NULL;
 }

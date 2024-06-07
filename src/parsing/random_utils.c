@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   random_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:13:46 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/05/28 16:33:24 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/06 09:13:00 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	is_file(t_sh *msh, char *str, int i)
 		i++;
 	if (ft_isspace(str[i]) == false)
 	{
-		while (ft_isspace(str[i]) == false && str[i])
+		while (ft_isspace(str[i]) == false && str[i] \
+					&& is_op(str, i) == false)
 			i++;
 	}
 	return (i);
@@ -49,7 +50,8 @@ int	find_space(char *str, int i)
 {
 	while (ft_isspace(str[i]) && str[i])
 		i++;
-	while (ft_isspace(str[i]) == false && str[i])
+	while (ft_isspace(str[i]) == false && str[i] \
+			&& is_op(str, i) == false)
 		i++;
 	return (i);
 }

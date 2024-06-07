@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 10:40:55 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/05 15:07:00 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:19:56 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	ft_echo(char **arr, char **env)
 {
 	int		i;
 	int		j;
-	char	*str;
 
 	i = 0;
 	j = 0;
