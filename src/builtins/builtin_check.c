@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:48:20 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/05 17:32:45 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/07 13:27:57 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	run_builtin(t_sh *sh_data, char **cmd)
 int	builtin_check(char **cmd, t_env *env)
 {
 	if (!ft_strncmp(cmd[0], "echo", 4) && ft_strlen(cmd[0]) == 4)
-		return (ft_echo(cmd, env->env_arr));
+		return (ft_echo(cmd));
 	if (!ft_strncmp(cmd[0], "pwd", 3) && ft_strlen(cmd[0]) == 3)
 		return (ft_pwd(env));
 	if (!ft_strncmp(cmd[0], "env", 3) && ft_strlen(cmd[0]) == 3)
