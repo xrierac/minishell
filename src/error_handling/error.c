@@ -34,7 +34,7 @@ void	close_all_hd_fd(t_sh *msh)
 
 	i = 0;
 	len = msh->pipes + 1;
-	while (i < len)
+	while (i < len && i < 16)
 	{
 		if (msh->hd_fd[i][0] > 0)
 			close(msh->hd_fd[i][0]);
