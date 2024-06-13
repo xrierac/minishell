@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/07 10:54:32 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:53:35 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static void	child_start(t_sh *sh, int index, int in, int fd[])
 		}
 		i++;
 	}
+	close_other_hd_fd(sh);
 	if (cmd_id != -1)
 		i = execute(sh->lex_arr[index][cmd_id], sh->env);
 	else

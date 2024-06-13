@@ -6,11 +6,32 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:13:51 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/07 10:50:43 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:52:44 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	close_other_hd_fd(t_sh *msh)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (msh->lex_arr[++i])
+	{
+		j = -1;
+		while (msh->lex_arr[i][++j])
+		{
+			if (msh->lex_arr[i][j]->token == VALID_HD)
+			{
+				if (msh->lex_arr[i][j]->fd > 0)
+					close(msh->lex_arr[i][j]->fd);
+			}
+		}
+	}
+	return (0);
+}
 
 int	close_pipes(int in, int fda, int fdb)
 {

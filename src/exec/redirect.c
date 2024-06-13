@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:48:01 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/05 11:39:09 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:53:09 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,10 @@ int	r_heredoc(t_lex *lex)
 	if (dup2(lex->fd, STDIN_FILENO) == -1)
 	{
 		close(lex->fd);
+		lex->fd = 0;
 		return (generic_error("", lex->cmd_arr[0]));
 	}
 	close(lex->fd);
+	lex->fd = 0;
 	return (0);
 }

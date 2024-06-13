@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/11 10:32:08 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:51:32 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ t_bool	is_hd_valid(char *cmd, int j);
 int		is_eof(char *str, int i);
 int		heredoc_cleaning(int *fd, int stdin_cpy, char *delim, char *input);
 int		find_hd(char *str);
+int		close_other_hd_fd(t_sh *msh);
 
 //ERROR/FREE/CLOSE
 void	exit_error(t_sh *msh, char *msg, int status);
