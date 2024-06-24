@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:43:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 10:59:51 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/24 10:22:11 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,8 @@ char	*syntax_check(t_sh *msh, char *temp)
 
 void	check_str(t_sh *msh, char *res)
 {
-	int		i;
 	char	*temp;
 
-	i = 0;
 	temp = res;
 	while (*temp)
 	{
