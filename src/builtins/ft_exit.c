@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:32:22 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 14:53:29 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:36:39 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int	check_exit_input(t_sh *msh, char **cmd)
 	}
 	if (input_validity(cmd) == 1)
 		return (2);
-	n = ft_atoll(cmd[1]);
+	n = ft_atol(cmd[1]);
 	free_all(msh);
 	exit((unsigned char)n);
 	return (0);
