@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/06 18:16:50 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:57:31 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ t_bool	is_hd_valid(char *cmd, int j);
 int		is_eof(char *str, int i);
 int		heredoc_cleaning(int *fd, int stdin_cpy, char *delim, char *input);
 int		find_hd(char *str);
+int		close_other_hd_fd(t_sh *msh);
 
 //ERROR/FREE/CLOSE
 void	exit_error(t_sh *msh, char *msg, int status);
@@ -194,13 +195,13 @@ int		r_output(char **cmd_arr);
 int		r_append(char **cmd_arr);
 int		r_heredoc(t_lex *lex);
 int		execution_branch(t_sh *sh);
-int		pipe_management(t_sh *sh, int index, int in, int out);
+int		pipe_management(t_sh *sh, int index, int in, int fd[]);
 int		close_pipes(int in, int fda, int fdb);
 
 //BUILTINS
 int		builtin_check(char **cmd, t_env *env);
 int		run_builtin(t_sh *sh_data, char **cmd);
-int		ft_echo(char **arr, char **env);
+int		ft_echo(char **arr);
 int		ft_cd(char *str, t_env *env_s);
 int		ft_pwd(t_env *env);
 int		ft_env(char **env);
