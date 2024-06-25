@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:01:05 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 11:39:38 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:58:26 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*fetch_exit_code(t_sh *msh, char *ptr)
 	if (!exit_code)
 	{
 		free(ptr);
-		exit_error(msh, "malloc", 1);
+		exit_error(msh, "malloc", 2);
 	}
 	return (exit_code);
 }

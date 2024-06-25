@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:08:08 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/04 18:35:49 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:58:29 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*extract_var(t_sh *msh, char *start, int len)
 	{
 		var_name = ft_strdup("");
 		if (!var_name)
-			exit_error(msh, "malloc", 1);
+			exit_error(msh, "malloc", 2);
 	}
 	else if (start[0] == '?')
 		var_name = fetch_exit_code(msh, start);
@@ -82,7 +82,7 @@ char	*extract_var(t_sh *msh, char *start, int len)
 	{
 		var_name = ft_substr(start, 0, len);
 		if (!var_name)
-			exit_error(msh, "malloc", 1);
+			exit_error(msh, "malloc", 2);
 	}
 	return (var_name);
 }

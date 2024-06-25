@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:28:32 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 18:32:33 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:59:15 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ char	*cpy_og_var(t_sh *msh, char *ptr, int hd_flag)
 		msh->buffer[msh->buf_len++] = *ptr++;
 	}
 	if (hd_flag == 0)
+	{
+		msh->exit_code = 1;
 		ft_printf(2, ": ambiguous redirect\n");
+	}
 	return (ptr);
 }
 
