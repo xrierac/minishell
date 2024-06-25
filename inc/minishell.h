@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:58:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/06/25 15:57:31 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:06:59 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define SYNTAX_ERROR "syntax error near unexpected token"
 
 # define MAX_FD 256
-# define MAX_ARGS 262144
+# define MAX_ARGS 2097152
 # define INT_MAX 2147483647
 
 extern int	g_num;
