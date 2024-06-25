@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:44:04 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/25 15:55:40 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:27:51 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static int	open_heredoc(t_sh *msh, char *delim, int *fd)
 		input = tcsetreadline(msh, 1);
 		if (g_num == SIGINT)
 		{
+			msh->exit_code = 130;
 			when_sigint(msh, fd, stdin_cpy);
 			break ;
 		}

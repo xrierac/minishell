@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:43:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/06/25 15:55:05 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:26:27 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ void	check_str(t_sh *msh, char *res)
 		else
 			temp++;
 		if (msh->error == 1)
+		{
+			msh->exit_code = 2;
 			return ;
+		}
 	}
 }
