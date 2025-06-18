@@ -6,6 +6,7 @@
 
 This project was developed as part of the curriculum at 42 School.
 
+![Demo of Minishell](minishell.gif)
 ---
 
 ## Features
