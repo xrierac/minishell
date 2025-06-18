@@ -3,7 +3,7 @@ NAME	:= minishell
 #Compiler options#
 
 CC		:= cc
-CFLAGS	:= -Wextra -Wall -Werror 
+CFLAGS	:= -Wextra -Wall -Werror --std=c11 
 LFLAGS	:= -l readline -L /Users/$(USER)/.brew/opt/readline/lib
 DFLAGS	:= -g -fsanitize=address,undefined
 
